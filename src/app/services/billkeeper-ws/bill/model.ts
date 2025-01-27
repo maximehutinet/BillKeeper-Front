@@ -1,18 +1,24 @@
 export interface Bill {
-  id: string;
+  id?: string;
   dateTime?: Date;
-  name: string;
+  name?: string;
   amount?: number;
+  currency?: Currency;
   paidDateTime?: Date;
   provider?: string;
-  status: BillStatus;
-  beneficiary: Beneficiary;
+  status?: BillStatus;
+  beneficiary?: Beneficiary;
+}
+
+export enum Currency {
+  CHF = "CHF",
+  EURO = "EURO"
 }
 
 export enum BillStatus {
-  TO_FILE,
-  FILED,
-  REIMBURSED
+  TO_FILE = "TO_FILE",
+  FILED = "FILED",
+  REIMBURSED = "REIMBURSED"
 }
 
 export interface Beneficiary {

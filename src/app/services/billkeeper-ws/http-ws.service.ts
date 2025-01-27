@@ -22,6 +22,32 @@ export class HttpWsService {
     }
   }
 
+  async getBlob(path: string, params?: HttpParams | { [param: string]: string | string[] }): Promise<Blob> {
+    try {
+      return await lastValueFrom<Blob>(this.httpClient.get(this.url(path), {params, responseType: 'blob'}));
+    } catch (error) {
+      await this.handleError(error);
+      return Promise.reject();
+    }
+  }
+
+  async downloadBlob(path: string, filename: string): Promise<void> {
+    const blob = await this.getBlob(path);
+    const nav = (window.navigator as any);
+    if (nav.msSaveOrOpenBlob) {
+      nav.msSaveOrOpenBlob(blob, filename);
+    } else {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a') as HTMLAnchorElement;
+      link.href = url;
+      link.download = filename;
+      document.body.append(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+  }
+
   async post<T>(path: string, body: any, params?: HttpParams | { [param: string]: string | string[] }): Promise<any> {
     try {
       const headers = await this.builderHeaders();

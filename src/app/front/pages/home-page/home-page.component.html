@@ -1,20 +1,39 @@
-<p-table [value]="bills">
-  <ng-template #header>
-    <tr>
-      <th>Date</th>
-      <th>Name</th>
-      <th>Amount</th>
-      <th>Beneficiary</th>
-      <th>Status</th>
-    </tr>
-  </ng-template>
-  <ng-template #body let-bill>
-    <tr>
-      <td>{{ bill.dateTime }}</td>
-      <td>{{ bill.name }}</td>
-      <td>{{ bill.amount }}</td>
-      <td>{{ bill.beneficiary.firstname }}</td>
-      <td>{{ bill.status }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+<app-main-layout [loading]="pageLoading">
+  <ng-container main-content>
+    <div id="top-bar">
+      <div id="upload-file-btn" (click)="uploadInput.click()">
+        <p-button label="Upload bills" icon="pi pi-file-arrow-up"></p-button>
+        <input #uploadInput type="file" accept=".pdf" [multiple]="true" (change)="onUpload($event)">
+      </div>
+      <p-button *ngIf="billsToMerge.length > 1"
+                (click)="downloadMergedBillsDocuments()"
+                label="Merge and download {{billsToMerge.length}} bills"
+                icon="pi pi-file-check"
+      />
+    </div>
+
+    <p-table [value]="bills">
+      <ng-template #header>
+        <tr>
+          <th></th>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Beneficiary</th>
+          <th>Status</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-bill>
+        <tr [ngClass]="{'incomplete-bill' : !bill.name || !bill.amount || !bill.beneficiary}">
+          <td><p-checkbox (onChange)="onCheckboxChange($event, bill)" [binary]="true" /></td>
+          <td>{{ bill.dateTime | date: 'medium' }}</td>
+          <td>{{ bill.name }}</td>
+          <td>{{ bill.amount ?? 'N/A' }} {{ bill.currency | currency }}</td>
+          <td>{{ bill.beneficiary?.firstname ?? "" }}</td>
+          <td>{{ billStatusToString(bill.status) }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+</app-main-layout>
+

@@ -4,7 +4,7 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {providePrimeNG} from 'primeng/config';
-import Aura from '@primeng/themes/aura'
+import PrimeNgPreset from '../theme/primeng-preset'
 import {ConfigurationService} from './services/configuration.service';
 import {HttpBackend, HttpClient, provideHttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     ),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: PrimeNgPreset
       }
     })
   ]

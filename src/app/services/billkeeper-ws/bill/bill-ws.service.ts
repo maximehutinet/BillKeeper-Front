@@ -11,7 +11,17 @@ export class BillWsService {
     private httpWsService: HttpWsService
   ) { }
 
-  async getAllBills() {
+  async getAllBills(): Promise<Bill[]> {
     return this.httpWsService.get<Bill>("/bills");
+  }
+
+  async createBill(bill: Bill): Promise<Bill> {
+    return this.httpWsService.post<Bill>("/bills", bill);
+  }
+
+  async uploadBillDocument(billId: string, document: File): Promise<void> {
+    const formData = new FormData();
+    formData.append("file", document);
+    return this.httpWsService.post(`/bills/${billId}/document`, formData);
   }
 }
