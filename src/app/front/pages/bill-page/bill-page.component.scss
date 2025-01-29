@@ -2,11 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  .buttons-wrapper {
-    display: flex;
-    gap: 0.5rem;
-  }
 }
 
 p-card {
@@ -25,5 +20,22 @@ p-card {
       }
     }
   }
+}
 
+#upload-file-button-wrapper {
+  display: flex;
+  justify-content: right;
+  padding: 2rem;
+
+  #upload-file-btn {
+    input {
+      display: none;
+    }
+  }
+}
+
+.p-tabpanels.p-component {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
 }

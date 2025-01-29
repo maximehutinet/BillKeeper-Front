@@ -32,7 +32,7 @@
           <td>{{ bill.amount ?? 'N/A' }} {{ bill.currency | currency }}</td>
           <td>{{ bill.beneficiary?.firstname ?? "" }}</td>
           <td><p-badge [value]="billStatusToString(bill.status)" [severity]="billStatusBadge(bill.status)" /></td>
-          <td class="bill-action">
+          <td class="bill-action buttons-wrapper">
             <p-button icon="pi pi-dollar" [rounded]="true" pTooltip="Mark as paid" showDelay="500" hideDelay="300" severity="help" />
             <p-button icon="pi pi-check-circle" [rounded]="true" pTooltip="Mark as reimbursed" showDelay="500" hideDelay="300" severity="success" />
             <p-button icon="pi pi-pencil" [rounded]="true" pTooltip="Edit" showDelay="500" hideDelay="300" severity="info" />

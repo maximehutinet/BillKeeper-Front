@@ -70,7 +70,7 @@ export class HomePageComponent {
     for (const file of Array.from(files)) {
       const newBill: Bill = await this.createNewBill();
       if (newBill.id) {
-        await this.billWsService.uploadBillDocument(newBill.id, file as File);
+        await this.billWsService.uploadBillDocument(newBill.id, file as File, true);
         this.bills = await this.billWsService.getAllBills();
       }
     }

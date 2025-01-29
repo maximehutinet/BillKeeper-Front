@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpWsService} from '../http-ws.service';
 
 @Injectable({
@@ -12,5 +12,13 @@ export class DocumentWsService {
 
   public getMergedBillsDocuments(billIds: string[]) {
     return this.httpWsService.downloadBlob(`/documents/bills/${billIds.join(",")}`, "MergedFile.pdf")
+  }
+
+  public downloadBillDocument(documentId: string) {
+    return this.httpWsService.downloadBlob(`/documents/${documentId}`, `${documentId}.pdf`);
+  }
+
+  async deleteBillDocuments(documentId: string): Promise<void> {
+    return this.httpWsService.delete(`/documents/${documentId}`);
   }
 }

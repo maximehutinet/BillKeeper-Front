@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpWsService} from '../http-ws.service';
 import {Bill} from './model';
+import {BillDocument} from '../document/model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,16 @@ export class BillWsService {
     return this.httpWsService.post<Bill>("/bills", bill);
   }
 
-  async uploadBillDocument(billId: string, document: File): Promise<void> {
+  async uploadBillDocument(billId: string, document: File, parseAndUpdateBill: boolean = false): Promise<void> {
     const formData = new FormData();
     formData.append("file", document);
-    return this.httpWsService.post(`/bills/${billId}/document`, formData);
+    if (parseAndUpdateBill) {
+      return this.httpWsService.post(`/bills/${billId}/documents?parse=true`, formData);
+    }
+    return this.httpWsService.post(`/bills/${billId}/documents`, formData);
+  }
+
+  async getBillDocuments(billId: string): Promise<BillDocument[]> {
+    return this.httpWsService.get<BillDocument[]>(`/bills/${billId}/documents`);
   }
 }
