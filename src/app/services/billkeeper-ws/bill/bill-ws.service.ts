@@ -12,7 +12,11 @@ export class BillWsService {
   ) { }
 
   async getAllBills(): Promise<Bill[]> {
-    return this.httpWsService.get<Bill>("/bills");
+    return this.httpWsService.get<Bill[]>("/bills");
+  }
+
+  async getBill(billId: string): Promise<Bill> {
+    return this.httpWsService.get<Bill>(`/bills/${billId}`);
   }
 
   async createBill(bill: Bill): Promise<Bill> {

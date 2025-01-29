@@ -6,7 +6,7 @@ import {Currency} from '../billkeeper-ws/bill/model';
 })
 export class CurrencyPipe implements PipeTransform {
 
-  transform(currency: String): string {
+  transform(currency: string | undefined): string {
     switch (currency) {
       case Currency.CHF:
         return "CHF";

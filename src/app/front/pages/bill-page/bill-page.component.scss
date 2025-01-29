@@ -1,0 +1,29 @@
+#top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .buttons-wrapper {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+p-card {
+  display: block;
+  margin-top: 1rem;
+
+  .card-body {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .card-entry {
+      label {
+        font-weight: bold;
+      }
+    }
+  }
+
+}

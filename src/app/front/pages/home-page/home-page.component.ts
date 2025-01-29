@@ -3,13 +3,16 @@ import {Bill} from '../../../services/billkeeper-ws/bill/model';
 import {BillWsService} from '../../../services/billkeeper-ws/bill/bill-ws.service';
 import {TableModule} from 'primeng/table';
 import {DatePipe, NgClass, NgIf} from '@angular/common';
-import {billStatusToString} from '../../../services/utils';
+import {billStatusBadge, billStatusToString} from '../../../services/utils';
 import {MainLayoutComponent} from '../../layouts/main-layout/main-layout.component';
 import {CurrencyPipe} from '../../../services/pipes/currency.pipe';
 import {Checkbox, CheckboxChangeEvent} from 'primeng/checkbox';
 import {FormsModule} from '@angular/forms';
 import {Button} from 'primeng/button';
 import {DocumentWsService} from '../../../services/billkeeper-ws/document/document-ws.service';
+import {Badge} from 'primeng/badge';
+import {Tooltip} from 'primeng/tooltip';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -22,13 +25,17 @@ import {DocumentWsService} from '../../../services/billkeeper-ws/document/docume
     Checkbox,
     FormsModule,
     Button,
-    NgIf
+    NgIf,
+    Badge,
+    Tooltip,
+    RouterLink
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent {
   protected readonly billStatusToString = billStatusToString;
+  protected readonly billStatusBadge = billStatusBadge;
 
   bills: Bill[] = [];
   pageLoading = false;
@@ -42,7 +49,9 @@ export class HomePageComponent {
 
   async ngOnInit() {
     try {
+      this.pageLoading = true;
       this.bills = await this.billWsService.getAllBills();
+      this.pageLoading = false;
     } catch (e) {
       console.log(e)
     }

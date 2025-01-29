@@ -12,3 +12,15 @@
     display: none;
   }
 }
+
+p-table {
+  .bill-name {
+    cursor: pointer;
+  }
+
+  .bill-action {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
