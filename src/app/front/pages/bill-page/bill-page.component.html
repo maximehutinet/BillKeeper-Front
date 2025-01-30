@@ -1,14 +1,22 @@
-<app-main-layout [loading]="pageLoading">
+<app-main-layout>
   <ng-container main-content>
     <div id="top-bar">
       <p-button routerLink="" icon="pi pi-arrow-left" [rounded]="true"/>
       <div class="buttons-wrapper">
-        <p-button severity="help" icon="pi pi-dollar" pTooltip="Mark as paid" showDelay="500"
+        <p-button *ngIf="!bill.paidDateTime" severity="help"
+                  icon="pi pi-dollar"
+                  (onClick)="onMarkAsPaid()"
+                  pTooltip="Mark as paid"
+                  showDelay="500"
                   hideDelay="300"></p-button>
-        <p-button severity="success" icon="pi pi-check-circle" pTooltip="Mark as reimbursed" showDelay="500"
+        <p-button *ngIf="bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()" severity="success"
+                  icon="pi pi-check-circle"
+                  (onClick)="onMarkAsReimbursed()"
+                  pTooltip="Mark as reimbursed"
+                  showDelay="500"
                   hideDelay="300"></p-button>
         <p-button severity="info" icon="pi pi-pencil"></p-button>
-        <p-button severity="danger" icon="pi pi-trash"></p-button>
+        <p-button (onClick)="onDeleteBill()" severity="danger" icon="pi pi-trash"></p-button>
       </div>
     </div>
 

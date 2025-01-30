@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {MainLayoutComponent} from '../../layouts/main-layout/main-layout.component';
 import {BillWsService} from '../../../services/billkeeper-ws/bill/bill-ws.service';
-import {ActivatedRoute, RouterLink} from '@angular/router';
-import {Bill} from '../../../services/billkeeper-ws/bill/model';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {Bill, BillStatus} from '../../../services/billkeeper-ws/bill/model';
 import {Card} from 'primeng/card';
 import {Button} from 'primeng/button';
 import {CurrencyPipe} from '../../../services/pipes/currency.pipe';
@@ -14,6 +14,9 @@ import {PdfViewerModule} from 'ng2-pdf-viewer';
 import {BillDocument} from '../../../services/billkeeper-ws/document/model';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
 import {DocumentWsService} from '../../../services/billkeeper-ws/document/document-ws.service';
+import {LayoutService} from '../../../services/layout.service';
+import {ValidationService} from '../../../services/validation.service';
+import {ToastMessageService} from '../../../services/toast-message.service';
 
 @Component({
   selector: 'app-bill-page',
@@ -32,7 +35,7 @@ import {DocumentWsService} from '../../../services/billkeeper-ws/document/docume
     TabList,
     TabPanels,
     Tab,
-    TabPanel
+    TabPanel,
   ],
   templateUrl: './bill-page.component.html',
   styleUrl: './bill-page.component.scss'
@@ -41,14 +44,18 @@ export class BillPageComponent {
 
   protected readonly billStatusBadge = billStatusBadge;
   protected readonly billStatusToString = billStatusToString;
+  protected readonly BillStatus = BillStatus;
   bill: Bill = {};
-  pageLoading = false;
   documents: BillDocument[] = [];
 
   constructor(
     private billWsService: BillWsService,
     private documentWsService: DocumentWsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private layoutService: LayoutService,
+    private router: Router,
+    private validationService: ValidationService,
+    private toastMessageService: ToastMessageService
   ) {
   }
 
@@ -58,7 +65,7 @@ export class BillPageComponent {
       this.bill = await this.billWsService.getBill(billId);
       await this.loadBillDocuments();
     } catch (e) {
-      console.log(e);
+      this.toastMessageService.displayError(e);
     }
   }
 
@@ -68,15 +75,15 @@ export class BillPageComponent {
 
   async onUploadDocuments(event: any) {
     try {
-      this.pageLoading = true;
-      if (!event.target.files && !event.target.files[0]) {
-        return;
-      }
-      await this.uploadDocuments(event.target.files);
-      await this.loadBillDocuments();
-      this.pageLoading = false;
+      await this.layoutService.withPageLoading(async () => {
+        if (!event.target.files && !event.target.files[0]) {
+          return;
+        }
+        await this.uploadDocuments(event.target.files);
+        await this.loadBillDocuments();
+      });
     } catch (e) {
-      console.log(e);
+      this.toastMessageService.displayError(e);
     }
   }
 
@@ -88,23 +95,61 @@ export class BillPageComponent {
 
   async downloadBillDocument(documentId: string) {
     try {
-      this.pageLoading = true;
-      await this.documentWsService.downloadBillDocument(documentId);
-      this.pageLoading = false;
+      await this.layoutService.withPageLoading(async () => {
+        await this.documentWsService.downloadBillDocument(documentId);
+      });
     } catch (e) {
-      console.log(e);
+      this.toastMessageService.displayError(e);
     }
   }
 
   async onDeleteBillDocument(documentId: string) {
     try {
-      this.pageLoading = true;
-      await this.documentWsService.deleteBillDocuments(documentId);
-      await this.loadBillDocuments();
-      this.pageLoading = false;
+      this.validationService.showConfirmationDialog(async () => {
+        await this.documentWsService.deleteBillDocuments(documentId);
+        await this.loadBillDocuments();
+      });
     } catch (e) {
-      console.log(e);
+      this.toastMessageService.displayError(e);
     }
   }
 
+  async onMarkAsReimbursed() {
+    try {
+      await this.layoutService.withPageLoading(async () => {
+        await this.billWsService.markBillAsReimbursed(this.bill.id!);
+        this.bill = await this.billWsService.getBill(this.bill.id!);
+      });
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onMarkAsPaid() {
+    try {
+      await this.layoutService.withPageLoading(async () => {
+        await this.billWsService.markBillAsPaid(this.bill.id!);
+        this.bill = await this.billWsService.getBill(this.bill.id!);
+      });
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onDeleteBill() {
+    this.validationService.showConfirmationDialog(async () => {
+      await this.deleteBill();
+    });
+  }
+
+  private async deleteBill() {
+    try {
+      await this.layoutService.withPageLoading(async () => {
+        await this.billWsService.deleteBill(this.bill.id!);
+      });
+      await this.router.navigate([""])
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
 }

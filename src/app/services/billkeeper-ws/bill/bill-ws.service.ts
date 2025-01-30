@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpWsService} from '../http-ws.service';
-import {Bill} from './model';
+import {Bill, BillStatus} from './model';
 import {BillDocument} from '../document/model';
 
 @Injectable({
@@ -35,5 +35,23 @@ export class BillWsService {
 
   async getBillDocuments(billId: string): Promise<BillDocument[]> {
     return this.httpWsService.get<BillDocument[]>(`/bills/${billId}/documents`);
+  }
+
+  async markBillAsReimbursed(billId: string): Promise<void> {
+    const requestBody: Bill = {
+      status: BillStatus.REIMBURSED
+    }
+    return this.httpWsService.post(`/bills/${billId}`, requestBody);
+  }
+
+  async markBillAsPaid(billId: string): Promise<void> {
+    const requestBody: Bill = {
+      paidDateTime: new Date()
+    }
+    return this.httpWsService.post(`/bills/${billId}`, requestBody);
+  }
+
+  async deleteBill(billId: string): Promise<void> {
+    return this.httpWsService.delete(`/bills/${billId}`);
   }
 }

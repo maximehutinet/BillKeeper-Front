@@ -9,6 +9,7 @@ import {ConfigurationService} from './services/configuration.service';
 import {HttpBackend, HttpClient, provideHttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
 import {Configuration} from './services/model/configuration';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,8 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: PrimeNgPreset
       }
-    })
+    }),
+    ConfirmationService,
+    MessageService
   ]
 };

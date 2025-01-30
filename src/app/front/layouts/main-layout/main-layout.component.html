@@ -1,4 +1,6 @@
 <div id="main-content">
   <ng-content select="[main-content]"></ng-content>
-  <app-full-screen-loading *ngIf="loading"></app-full-screen-loading>
+  <app-validation-dialog></app-validation-dialog>
+  <app-toast-message></app-toast-message>
+  <app-full-screen-loading *ngIf="layoutService.pageLoading"></app-full-screen-loading>
 </div>

@@ -13,6 +13,8 @@ import {DocumentWsService} from '../../../services/billkeeper-ws/document/docume
 import {Badge} from 'primeng/badge';
 import {Tooltip} from 'primeng/tooltip';
 import {RouterLink} from '@angular/router';
+import {LayoutService} from '../../../services/layout.service';
+import {ToastMessageService} from '../../../services/toast-message.service';
 
 @Component({
   selector: 'app-home-page',
@@ -38,32 +40,33 @@ export class HomePageComponent {
   protected readonly billStatusBadge = billStatusBadge;
 
   bills: Bill[] = [];
-  pageLoading = false;
   billsToMerge: Bill[] = [];
 
   constructor(
     private billWsService: BillWsService,
-    private documentWsService: DocumentWsService
+    private documentWsService: DocumentWsService,
+    private layoutService: LayoutService,
+    private toastMessageService: ToastMessageService
   ) {
   }
 
   async ngOnInit() {
     try {
-      this.pageLoading = true;
-      this.bills = await this.billWsService.getAllBills();
-      this.pageLoading = false;
+      await this.layoutService.withPageLoading(async () => {
+        this.bills = await this.billWsService.getAllBills();
+      });
     } catch (e) {
       console.log(e)
     }
   }
 
   async onUpload(event: any) {
-    this.pageLoading = true;
-    if (!event.target.files && !event.target.files[0]) {
-      return;
-    }
-    await this.uploadBills(event.target.files);
-    this.pageLoading = false;
+    await this.layoutService.withPageLoading(async () => {
+      if (!event.target.files && !event.target.files[0]) {
+        return;
+      }
+      await this.uploadBills(event.target.files);
+    });
   }
 
   private async uploadBills(files: FileList) {
@@ -80,7 +83,7 @@ export class HomePageComponent {
     try {
       return await this.billWsService.createBill({ });
     } catch (e) {
-      console.log(e);
+      this.toastMessageService.displayError(e);
       return {}
     }
   }
@@ -95,14 +98,14 @@ export class HomePageComponent {
 
   public async downloadMergedBillsDocuments() {
     try {
-      this.pageLoading = true;
-      const billIds: string[] = this.billsToMerge
-        .map(bill => bill.id)
-        .filter(id => id != undefined);
-      await this.documentWsService.getMergedBillsDocuments(billIds);
-      this.pageLoading = false;
+      await this.layoutService.withPageLoading(async () => {
+        const billIds: string[] = this.billsToMerge
+          .map(bill => bill.id)
+          .filter(id => id != undefined);
+        await this.documentWsService.getMergedBillsDocuments(billIds);
+      });
     } catch (e) {
-      console.log(e);
+      this.toastMessageService.displayError(e);
     }
   }
 }
