@@ -12,7 +12,7 @@ export interface Bill {
 
 export enum Currency {
   CHF = "CHF",
-  EURO = "EURO"
+  EURO = "EUR"
 }
 
 export enum BillStatus {

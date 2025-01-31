@@ -24,6 +24,7 @@ export const appConfig: ApplicationConfig = {
         configurationService.configuration = response as Configuration;
       }
     ),
+    provideAnimationsAsync(),
     providePrimeNG({
       theme: {
         preset: PrimeNgPreset

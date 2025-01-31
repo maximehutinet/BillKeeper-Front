@@ -1,0 +1,73 @@
+<app-main-layout>
+  <ng-container main-content>
+    <div id="top-bar">
+      <p-button (click)="location.back()" icon="pi pi-arrow-left" [rounded]="true"/>
+      <p-button icon="pi pi-save" (onClick)="onSaveBill()" severity="success" label="Save"/>
+    </div>
+
+    <form *ngIf="form" [formGroup]="form">
+      <p-floatlabel>
+        <input id="bill-name-input" pInputText formControlName="name" />
+        <label for="bill-name-input">Name</label>
+      </p-floatlabel>
+
+      <div class="inline-fields-wrapper">
+        <p-floatlabel>
+          <p-inputnumber inputId="bill-amount-input" mode="currency" [currency]="billCurrency?.value ?? 'CHF'" locale="en-US" formControlName="amount" />
+          <label for="bill-amount-input">Amount</label>
+        </p-floatlabel>
+
+        <p-floatlabel>
+          <p-dropdown
+            id="bill-currency-dropdown"
+            [(ngModel)]="billCurrency"
+            [ngModelOptions]="{standalone: true}"
+            [options]="currencyOptions"
+            optionLabel="name"
+            optionValue="currency"
+          />
+          <label for="bill-currency-dropdown">Currency</label>
+        </p-floatlabel>
+
+      </div>
+
+      <p-floatlabel>
+        <input id="bill-provider-input" pInputText formControlName="provider" />
+        <label for="bill-provider-input">Provider</label>
+      </p-floatlabel>
+
+      <p-floatlabel>
+        <p-dropdown
+          id="bill-status-dropdown"
+          [(ngModel)]="billStatus"
+          [ngModelOptions]="{standalone: true}"
+          [options]="statusOptions"
+          optionLabel="name"
+          optionValue="billStatus"
+        />
+        <label for="bill-status-dropdown">Status</label>
+      </p-floatlabel>
+
+      <div *ngIf="this.form.value.paidDateTime" class="inline-fields-wrapper">
+        <p-floatlabel>
+          <p-inputmask id="bill-paiddatetime-input" mask="9999/99/99" slotChar="yyyy/mm/dd" formControlName="paidDateTime" />
+          <label for="bill-paiddatetime-input">Paid on</label>
+        </p-floatlabel>
+
+        <p-button (onClick)="onDeletePaidOn()" severity="danger" icon="pi pi-times"></p-button>
+      </div>
+
+      <p-floatlabel>
+        <p-dropdown
+          id="bill-beneficiary-dropdown"
+          formControlName="beneficiary"
+          [options]="beneficiaryOptions"
+          optionLabel="name"
+          optionValue="beneficiary"
+          placeholder="Select a beneficiary"
+        />
+        <label for="bill-beneficiary-dropdown">Beneficiary</label>
+      </p-floatlabel>
+    </form>
+  </ng-container>
+</app-main-layout>

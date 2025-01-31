@@ -33,10 +33,41 @@
           <td>{{ bill.beneficiary?.firstname ?? "" }}</td>
           <td><p-badge [value]="billStatusToString(bill.status)" [severity]="billStatusBadge(bill.status)" /></td>
           <td class="bill-action buttons-wrapper">
-            <p-button icon="pi pi-dollar" [rounded]="true" pTooltip="Mark as paid" showDelay="500" hideDelay="300" severity="help" />
-            <p-button icon="pi pi-check-circle" [rounded]="true" pTooltip="Mark as reimbursed" showDelay="500" hideDelay="300" severity="success" />
-            <p-button icon="pi pi-pencil" [rounded]="true" pTooltip="Edit" showDelay="500" hideDelay="300" severity="info" />
-            <p-button icon="pi pi-arrow-right" [rounded]="true"  [routerLink]="'/bill/' + bill.id" pTooltip="See bill" showDelay="500" hideDelay="300" />
+            <p-button *ngIf="!bill.paidDateTime"
+                      icon="pi pi-dollar"
+                      (onClick)="onMarkAsPaid(bill)"
+                      [rounded]="true"
+                      pTooltip="Mark as paid"
+                      showDelay="500"
+                      hideDelay="300"
+                      severity="help"
+            />
+            <p-button *ngIf="bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()"
+                      icon="pi pi-check-circle"
+                      (onClick)="onMarkAsReimbursed(bill)"
+                      [rounded]="true"
+                      pTooltip="Mark as reimbursed"
+                      showDelay="500"
+                      hideDelay="300"
+                      severity="success"
+            />
+            <p-button
+              icon="pi pi-pencil"
+              [routerLink]="'/bill/' + bill.id + '/edit'"
+              [rounded]="true"
+              pTooltip="Edit"
+              showDelay="500"
+              hideDelay="300"
+              severity="info"
+            />
+            <p-button
+              icon="pi pi-arrow-right"
+              [routerLink]="'/bill/' + bill.id"
+              [rounded]="true"
+              pTooltip="See bill"
+              showDelay="500"
+              hideDelay="300"
+            />
           </td>
         </tr>
       </ng-template>

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Bill} from '../../../services/billkeeper-ws/bill/model';
+import {Bill, BillStatus} from '../../../services/billkeeper-ws/bill/model';
 import {BillWsService} from '../../../services/billkeeper-ws/bill/bill-ws.service';
 import {TableModule} from 'primeng/table';
 import {DatePipe, NgClass, NgIf} from '@angular/common';
@@ -38,6 +38,7 @@ import {ToastMessageService} from '../../../services/toast-message.service';
 export class HomePageComponent {
   protected readonly billStatusToString = billStatusToString;
   protected readonly billStatusBadge = billStatusBadge;
+  protected readonly BillStatus = BillStatus;
 
   bills: Bill[] = [];
   billsToMerge: Bill[] = [];
@@ -51,12 +52,16 @@ export class HomePageComponent {
   }
 
   async ngOnInit() {
+    await this.layoutService.withPageLoading(async () => {
+      await this.loadAllBills();
+    });
+  }
+
+  async loadAllBills() {
     try {
-      await this.layoutService.withPageLoading(async () => {
-        this.bills = await this.billWsService.getAllBills();
-      });
+      this.bills = await this.billWsService.getAllBills();
     } catch (e) {
-      console.log(e)
+      this.toastMessageService.displayError(e);
     }
   }
 
@@ -81,7 +86,7 @@ export class HomePageComponent {
 
   private async createNewBill(): Promise<Bill> {
     try {
-      return await this.billWsService.createBill({ });
+      return await this.billWsService.createBill({});
     } catch (e) {
       this.toastMessageService.displayError(e);
       return {}
@@ -108,4 +113,23 @@ export class HomePageComponent {
       this.toastMessageService.displayError(e);
     }
   }
+
+  async onMarkAsPaid(bill: Bill) {
+    try {
+      await this.billWsService.markBillAsPaid(bill.id!);
+      await this.loadAllBills();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onMarkAsReimbursed(bill: Bill) {
+    try {
+      await this.billWsService.markBillAsReimbursed(bill.id!);
+      await this.loadAllBills();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
 }

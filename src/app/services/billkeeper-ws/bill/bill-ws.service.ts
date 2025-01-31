@@ -36,6 +36,9 @@ export class BillWsService {
   async getBillDocuments(billId: string): Promise<BillDocument[]> {
     return this.httpWsService.get<BillDocument[]>(`/bills/${billId}/documents`);
   }
+  async updateBill(billId: string, updatedBill: Bill): Promise<void> {
+    return this.httpWsService.post(`/bills/${billId}`, updatedBill);
+  }
 
   async markBillAsReimbursed(billId: string): Promise<void> {
     const requestBody: Bill = {

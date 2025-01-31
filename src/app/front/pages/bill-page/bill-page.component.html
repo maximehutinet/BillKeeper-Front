@@ -15,7 +15,7 @@
                   pTooltip="Mark as reimbursed"
                   showDelay="500"
                   hideDelay="300"></p-button>
-        <p-button severity="info" icon="pi pi-pencil"></p-button>
+        <p-button severity="info" icon="pi pi-pencil" [routerLink]="'/bill/' + bill.id + '/edit'"></p-button>
         <p-button (onClick)="onDeleteBill()" severity="danger" icon="pi pi-trash"></p-button>
       </div>
     </div>
@@ -74,7 +74,6 @@
               <p-button icon="pi pi-download" (onClick)="downloadBillDocument(document.id)"></p-button>
               <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteBillDocument(document.id)"></p-button>
             </div>
-
             <pdf-viewer
               [src]="document.url"
               [render-text]="true"
