@@ -18,20 +18,20 @@ import {ToastMessageService} from '../../../services/toast-message.service';
 
 @Component({
   selector: 'app-home-page',
-  imports: [
-    TableModule,
-    DatePipe,
-    MainLayoutComponent,
-    CurrencyPipe,
-    NgClass,
-    Checkbox,
-    FormsModule,
-    Button,
-    NgIf,
-    Badge,
-    Tooltip,
-    RouterLink
-  ],
+    imports: [
+        TableModule,
+        DatePipe,
+        MainLayoutComponent,
+        CurrencyPipe,
+        NgClass,
+        Checkbox,
+        FormsModule,
+        Button,
+        NgIf,
+        Badge,
+        Tooltip,
+        RouterLink
+    ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })

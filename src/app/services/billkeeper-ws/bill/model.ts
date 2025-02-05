@@ -1,3 +1,5 @@
+import {Beneficiary} from '../beneficiary/model';
+
 export interface Bill {
   id?: string;
   dateTime?: Date;
@@ -21,7 +23,4 @@ export enum BillStatus {
   REIMBURSED = "REIMBURSED"
 }
 
-export interface Beneficiary {
-  id: string;
-  firstname: string;
-}
+

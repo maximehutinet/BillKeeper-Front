@@ -1,0 +1,15 @@
+:root {
+  font-family: 'Roboto', serif, sans-serif;
+
+  --app-font-light: 300;
+  --app-font-regular: 400;
+  --app-font-medium: 500;
+  --app-font-bold: 700;
+  --app-font-extra-bold: 800;
+  --app-font-black: 900;
+
+  --app-base-font-size: 1rem;
+  --app-text-font-size: var(--app-base-font-size);
+  --app-comment-text-font-size: 0.9rem;
+  --app-comment-datetime-font-size: 0.8rem;
+}

@@ -1,0 +1,29 @@
+<div class="comment">
+  <div class="comment-header">
+    <div class="comment-actions">
+      <p-button
+        icon="pi pi-pencil"
+        (onClick)="onEditEvent.emit()"
+        size="small"
+        [rounded]="true"
+        [text]="true"
+        severity="info"
+      >
+      </p-button>
+      <p-button
+        icon="pi pi-trash"
+        (onClick)="onDeleteEvent.emit()"
+        size="small"
+        [rounded]="true"
+        [text]="true"
+        severity="danger"
+      ></p-button>
+    </div>
+  </div>
+  <div class="comment-content">
+    {{ comment.content }}
+  </div>
+  <div class="comment-footer">
+    <span class="comment-dateTime">{{ comment.dateTime | date: 'longDate' }}</span>
+  </div>
+</div>

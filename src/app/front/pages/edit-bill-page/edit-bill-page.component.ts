@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Beneficiary, Bill, BillStatus, Currency} from '../../../services/billkeeper-ws/bill/model';
+import {Bill, BillStatus, Currency} from '../../../services/billkeeper-ws/bill/model';
 import {MainLayoutComponent} from '../../layouts/main-layout/main-layout.component';
 import {Button} from 'primeng/button';
 import {ActivatedRoute} from '@angular/router';
@@ -14,6 +14,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {InputMask} from 'primeng/inputmask';
 import {BeneficiaryWsService} from '../../../services/billkeeper-ws/beneficiary/beneficiary-ws.service';
 import {EnumDropdownOption} from '../../../services/model/commun';
+import {Beneficiary} from '../../../services/billkeeper-ws/beneficiary/model';
 
 @Component({
   selector: 'app-edit-bill-page',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpWsService} from '../http-ws.service';
-import {Beneficiary} from '../bill/model';
+import {Beneficiary} from './model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,0 +1,17 @@
+.comment {
+  padding-bottom: 1rem;
+
+  .comment-header, .comment-footer {
+    display: flex;
+    justify-content: end;
+  }
+
+  .comment-content {
+    font-size: var(--app-comment-text-font-size);
+  }
+
+  .comment-footer {
+    font-size: var(--app-comment-datetime-font-size);
+    font-weight: var(--app-font-regular);
+  }
+}

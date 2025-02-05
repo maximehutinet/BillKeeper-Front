@@ -5,7 +5,7 @@
   padding: 1rem;
 }
 
-p-card {
+p-fieldset {
   display: block;
   margin-top: 1rem;
 
@@ -39,4 +39,23 @@ p-card {
   display: flex;
   justify-content: center;
   margin-top: 3rem;
+}
+
+#comments-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+
+  app-comment {
+    display: block;
+    width: 100%;
+  }
+  #post-comment-wrapper {
+    margin-top: 2rem;
+  }
+
+  #post-comment-wrapper, .p-floatlabel, textarea {
+    width: 100%;
+  }
 }

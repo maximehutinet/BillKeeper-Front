@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <p-card header="Bill detail">
+    <p-fieldset legend="Bill detail" [toggleable]="true">
       <div class="card-body">
         <div class="card-entry">
           <label>Name: </label>
@@ -51,42 +51,67 @@
           <span>{{ bill.beneficiary?.firstname }}</span>
         </div>
       </div>
-    </p-card>
+    </p-fieldset>
 
-    <div id="upload-file-button-wrapper">
-      <div id="upload-file-btn" (click)="uploadInput.click()">
-        <p-button label="Upload documents" icon="pi pi-file-arrow-up"></p-button>
-        <input #uploadInput type="file" accept=".pdf" [multiple]="true" (change)="onUploadDocuments($event)">
+    <p-fieldset [legend]="'Comments (' + comments.length + ')'" [toggleable]="true" [collapsed]="false">
+      <div id="comments-wrapper">
+        <app-comment
+          *ngFor="let comment of comments"
+          [comment]="comment"
+          (onEditEvent)="onShowEditCommentDialog(comment)"
+          (onDeleteEvent)="onDeleteComment(comment.id)"
+        ></app-comment>
+
+        <div id="post-comment-wrapper" class="textarea-wrapper">
+          <p-floatlabel>
+            <textarea pTextarea id="bill-comment-input"  [(ngModel)]="newCommentContent" rows="5" cols="40" style="resize: none"></textarea>
+            <label for="bill-comment-input">Comment</label>
+          </p-floatlabel>
+          <p-button [disabled]="newCommentContent.length === 0" severity="success" label="Add" (click)="onAddComment()"/>
+        </div>
       </div>
-    </div>
+    </p-fieldset>
 
+    <app-edit-comment-dialog
+      [comment]="editComment"
+      (onValidateCommentEdit)="onEditComment($event)"
+      [(showDialog)]="editCommentDialogVisible"
+    ></app-edit-comment-dialog>
 
-    <p-tabs [value]="documents[0].id" *ngIf="documents.length > 0">
-      <p-tablist>
-        @for (document of documents; track document.id; let idx = $index) {
-          <p-tab [value]="document.id">Document {{ idx + 1 }}</p-tab>
-        }
-      </p-tablist>
-      <p-tabpanels>
-        @for (document of documents; track document.id) {
-          <p-tabpanel [value]="document.id">
-            <div class="buttons-wrapper">
-              <p-button icon="pi pi-download" (onClick)="downloadBillDocument(document.id)"></p-button>
-              <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteBillDocument(document.id)"></p-button>
-            </div>
-            <pdf-viewer
-              [src]="document.url"
-              [render-text]="true"
-              [original-size]="false"
-              [show-borders]="true"
-              [fit-to-page]="true"
-              style="width: 50vw; height: 100vh"
-            >
-            </pdf-viewer>
-          </p-tabpanel>
-        }
-      </p-tabpanels>
-    </p-tabs>
+    <p-fieldset [legend]="'Documents (' + documents.length + ')'" [toggleable]="true">
+      <div id="upload-file-button-wrapper">
+        <div id="upload-file-btn" (click)="uploadInput.click()">
+          <p-button label="Upload documents" icon="pi pi-file-arrow-up"></p-button>
+          <input #uploadInput type="file" accept=".pdf" [multiple]="true" (change)="onUploadDocuments($event)">
+        </div>
+      </div>
 
+      <p-tabs [value]="documents[0].id" *ngIf="documents.length > 0">
+        <p-tablist>
+          @for (document of documents; track document.id; let idx = $index) {
+            <p-tab [value]="document.id">Document {{ idx + 1 }}</p-tab>
+          }
+        </p-tablist>
+        <p-tabpanels>
+          @for (document of documents; track document.id) {
+            <p-tabpanel [value]="document.id">
+              <div class="buttons-wrapper">
+                <p-button icon="pi pi-download" (onClick)="downloadBillDocument(document.id)"></p-button>
+                <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteBillDocument(document.id)"></p-button>
+              </div>
+              <pdf-viewer
+                [src]="document.url"
+                [render-text]="true"
+                [original-size]="false"
+                [show-borders]="true"
+                [fit-to-page]="true"
+                style="width: 50vw; height: 100vh"
+              >
+              </pdf-viewer>
+            </p-tabpanel>
+          }
+        </p-tabpanels>
+      </p-tabs>
+    </p-fieldset>
   </ng-container>
 </app-main-layout>

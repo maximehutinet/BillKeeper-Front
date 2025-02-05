@@ -3,10 +3,9 @@ import {MainLayoutComponent} from '../../layouts/main-layout/main-layout.compone
 import {BillWsService} from '../../../services/billkeeper-ws/bill/bill-ws.service';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Bill, BillStatus} from '../../../services/billkeeper-ws/bill/model';
-import {Card} from 'primeng/card';
 import {Button} from 'primeng/button';
 import {CurrencyPipe} from '../../../services/pipes/currency.pipe';
-import {DatePipe, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {Badge} from 'primeng/badge';
 import {billStatusBadge, billStatusToString} from '../../../services/utils';
 import {Tooltip} from 'primeng/tooltip';
@@ -17,12 +16,19 @@ import {DocumentWsService} from '../../../services/billkeeper-ws/document/docume
 import {LayoutService} from '../../../services/layout.service';
 import {ValidationService} from '../../../services/validation.service';
 import {ToastMessageService} from '../../../services/toast-message.service';
+import {FloatLabel} from 'primeng/floatlabel';
+import {Textarea} from 'primeng/textarea';
+import {FormsModule} from '@angular/forms';
+import {CommentWsService} from '../../../services/billkeeper-ws/comment/comment-ws.service';
+import {Fieldset} from 'primeng/fieldset';
+import {CommentComponent} from '../../components/comment/comment.component';
+import {BillComment} from '../../../services/billkeeper-ws/comment/model';
+import {EditCommentDialogComponent} from '../../components/edit-comment-dialog/edit-comment-dialog.component';
 
 @Component({
   selector: 'app-bill-page',
   imports: [
     MainLayoutComponent,
-    Card,
     Button,
     RouterLink,
     CurrencyPipe,
@@ -36,6 +42,13 @@ import {ToastMessageService} from '../../../services/toast-message.service';
     TabPanels,
     Tab,
     TabPanel,
+    FloatLabel,
+    Textarea,
+    FormsModule,
+    Fieldset,
+    CommentComponent,
+    NgForOf,
+    EditCommentDialogComponent
   ],
   templateUrl: './bill-page.component.html',
   styleUrl: './bill-page.component.scss'
@@ -47,10 +60,19 @@ export class BillPageComponent {
   protected readonly BillStatus = BillStatus;
   bill: Bill = {};
   documents: BillDocument[] = [];
+  comments: BillComment[] = [];
+  newCommentContent: string = "";
+  editComment: BillComment = {
+    id: "",
+    content: "",
+    dateTime: new Date()
+  };
+  editCommentDialogVisible = false;
 
   constructor(
     private billWsService: BillWsService,
     private documentWsService: DocumentWsService,
+    private commentWsService: CommentWsService,
     private activatedRoute: ActivatedRoute,
     private layoutService: LayoutService,
     private router: Router,
@@ -61,9 +83,12 @@ export class BillPageComponent {
 
   async ngOnInit() {
     try {
-      const billId = await this.activatedRoute.snapshot.params['billId'];
-      this.bill = await this.billWsService.getBill(billId);
-      await this.loadBillDocuments();
+      await this.layoutService.withPageLoading(async () => {
+        const billId = await this.activatedRoute.snapshot.params['billId'];
+        this.bill = await this.billWsService.getBill(billId);
+        await this.loadBillDocuments();
+        await this.loadBillComments();
+      });
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
@@ -71,6 +96,10 @@ export class BillPageComponent {
 
   async loadBillDocuments() {
     this.documents = await this.billWsService.getBillDocuments(this.bill.id!);
+  }
+
+  async loadBillComments() {
+    this.comments = await this.commentWsService.getAllBillComments(this.bill.id!);
   }
 
   async onUploadDocuments(event: any) {
@@ -148,6 +177,40 @@ export class BillPageComponent {
         await this.billWsService.deleteBill(this.bill.id!);
       });
       await this.router.navigate([""])
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onAddComment() {
+    try {
+      await this.commentWsService.createComment(this.bill.id!, this.newCommentContent);
+      this.newCommentContent = "";
+      await this.loadBillComments();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onShowEditCommentDialog(comment: BillComment) {
+    this.editComment = comment;
+    this.editCommentDialogVisible = true;
+  }
+
+  async onEditComment(comment: BillComment) {
+    try {
+      this.editCommentDialogVisible = false;
+      await this.commentWsService.updateComment(comment.id, comment.content);
+      await this.loadBillComments();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onDeleteComment(commentId: string) {
+    try {
+      await this.commentWsService.deleteComment(commentId);
+      await this.loadBillComments()
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
