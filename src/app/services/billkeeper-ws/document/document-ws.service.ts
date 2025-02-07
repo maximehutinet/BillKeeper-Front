@@ -11,7 +11,7 @@ export class DocumentWsService {
   ) { }
 
   public getMergedBillsDocuments(billIds: string[]) {
-    return this.httpWsService.downloadBlob(`/documents/bills/${billIds.join(",")}`, "MergedFile.pdf")
+    return this.httpWsService.downloadBlob(`/documents?billIds=${billIds.join(",")}`, "MergedFile.pdf")
   }
 
   public downloadBillDocument(documentId: string) {

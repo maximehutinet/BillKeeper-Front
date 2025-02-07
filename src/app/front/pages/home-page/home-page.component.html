@@ -9,10 +9,11 @@
                 (click)="downloadMergedBillsDocuments()"
                 label="Merge and download {{billsToMerge.length}} bills"
                 icon="pi pi-file-check"
+                severity="success"
       />
     </div>
 
-    <p-table [value]="bills">
+    <p-table [value]="bills" stripedRows>
       <ng-template #header>
         <tr>
           <th></th>

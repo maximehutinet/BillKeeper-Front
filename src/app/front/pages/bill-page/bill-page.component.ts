@@ -215,4 +215,12 @@ export class BillPageComponent {
       this.toastMessageService.displayError(e);
     }
   }
+
+  async downloadBillDocumentsMerged() {
+    try {
+      await this.documentWsService.getMergedBillsDocuments([this.bill.id!]);
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
 }

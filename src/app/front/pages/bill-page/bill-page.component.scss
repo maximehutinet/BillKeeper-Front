@@ -23,10 +23,10 @@ p-fieldset {
   }
 }
 
-#upload-file-button-wrapper {
+#documents-buttons-wrapper {
   display: flex;
-  justify-content: right;
-  padding: 2rem;
+  justify-content: space-between;
+  padding: 2rem 0;
 
   #upload-file-btn {
     input {
