@@ -5,74 +5,38 @@
         <p-button label="Upload bills" icon="pi pi-file-arrow-up"></p-button>
         <input #uploadInput type="file" accept=".pdf" [multiple]="true" (change)="onUpload($event)">
       </div>
-      <p-button *ngIf="billsToMerge.length > 1"
-                (click)="downloadMergedBillsDocuments()"
-                label="Merge and download {{billsToMerge.length}} bills"
-                icon="pi pi-file-check"
-                severity="success"
-      />
+      <div class="buttons-wrapper">
+        <p-button *ngIf="selectedBills.length > 0"
+                  (click)="showSubmissionNameDialog = true"
+                  label="Create new submission"
+                  icon="pi pi-folder-plus"
+                  severity="info"
+        />
+        <p-button *ngIf="selectedBills.length > 1"
+                  (click)="downloadMergedBillsDocuments()"
+                  label="Merge and download"
+                  icon="pi pi-file-check"
+                  severity="success"
+        />
+      </div>
     </div>
 
-    <p-table [value]="bills" stripedRows>
-      <ng-template #header>
-        <tr>
-          <th></th>
-          <th>Date</th>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Beneficiary</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-bill>
-        <tr [ngClass]="{'incomplete-bill' : !bill.name || !bill.amount || !bill.beneficiary}">
-          <td><p-checkbox (onChange)="onCheckboxChange($event, bill)" [binary]="true" /></td>
-          <td>{{ bill.dateTime | date: 'longDate' }}</td>
-          <td class="bill-name" [routerLink]="'/bill/' + bill.id">{{ bill.name }}</td>
-          <td>{{ bill.amount ?? 'N/A' }} {{ bill.currency | currency }}</td>
-          <td>{{ bill.beneficiary?.firstname ?? "" }}</td>
-          <td><p-badge [value]="billStatusToString(bill.status)" [severity]="billStatusBadge(bill.status)" /></td>
-          <td class="bill-action buttons-wrapper">
-            <p-button *ngIf="!bill.paidDateTime"
-                      icon="pi pi-dollar"
-                      (onClick)="onMarkAsPaid(bill)"
-                      [rounded]="true"
-                      pTooltip="Mark as paid"
-                      showDelay="500"
-                      hideDelay="300"
-                      severity="help"
-            />
-            <p-button *ngIf="bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()"
-                      icon="pi pi-check-circle"
-                      (onClick)="onMarkAsReimbursed(bill)"
-                      [rounded]="true"
-                      pTooltip="Mark as reimbursed"
-                      showDelay="500"
-                      hideDelay="300"
-                      severity="success"
-            />
-            <p-button
-              icon="pi pi-pencil"
-              [routerLink]="'/bill/' + bill.id + '/edit'"
-              [rounded]="true"
-              pTooltip="Edit"
-              showDelay="500"
-              hideDelay="300"
-              severity="info"
-            />
-            <p-button
-              icon="pi pi-arrow-right"
-              [routerLink]="'/bill/' + bill.id"
-              [rounded]="true"
-              pTooltip="See bill"
-              showDelay="500"
-              hideDelay="300"
-            />
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <app-edit-name-dialog
+      header="Submission name"
+      [(showDialog)]="showSubmissionNameDialog"
+      (onValidate)="onValidateNewSubmissionName($event)"
+    >
+    </app-edit-name-dialog>
+
+    <app-bills-table
+      [bills]="bills"
+      [makeBillSelectable]="true"
+      [(selectedBills)]="selectedBills"
+      [displayMarkAsPaidButton]="true"
+      [displayMarkAsReimbursedButton]="true"
+      (onMarkBillAsPaid)="onMarkAsPaid($event)"
+      (onMarkBillAsReimbursed)="onMarkAsReimbursed($event)"
+    ></app-bills-table>
   </ng-container>
 </app-main-layout>
 

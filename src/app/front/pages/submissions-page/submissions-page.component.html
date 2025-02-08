@@ -1,0 +1,56 @@
+<app-main-layout>
+  <ng-container main-content>
+    <p-table [value]="submissions" dataKey="id">
+      <ng-template #header>
+        <tr>
+          <th style="width: 5rem"></th>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-submission let-expanded="expanded">
+        <tr>
+          <td>
+            <p-button type="button" pRipple [pRowToggler]="submission" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+          </td>
+          <td>{{ submission.name }}</td>
+          <td>{{ submission.dateTime | date: 'longDate' }}</td>
+          <td class="bill-action buttons-wrapper">
+            <p-button icon="pi pi-dollar"
+                      [rounded]="true"
+                      pTooltip="Mark as paid"
+                      showDelay="500"
+                      hideDelay="300"
+                      severity="help"
+            />
+            <p-button icon="pi pi-check-circle"
+                      [rounded]="true"
+                      pTooltip="Mark as reimbursed"
+                      showDelay="500"
+                      hideDelay="300"
+                      severity="success"
+            />
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              pTooltip="Edit"
+              showDelay="500"
+              hideDelay="300"
+              severity="info"
+            />
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template #expandedrow let-submission>
+        <tr>
+          <td colspan="7" style="padding-left: 5rem">
+            <app-bills-table
+              [bills]="submission.bills"
+            ></app-bills-table>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+</app-main-layout>

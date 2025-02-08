@@ -10,9 +10,14 @@ export class LayoutService {
   constructor() { }
 
   async withPageLoading(fn: () => Promise<void>) {
-    this.pageLoading = true;
-    await fn();
-    this.pageLoading = false;
+    try {
+      this.pageLoading = true;
+      await fn();
+      this.pageLoading = false;
+    } catch (e) {
+      this.pageLoading = false
+      throw e;
+    }
   }
 
 }

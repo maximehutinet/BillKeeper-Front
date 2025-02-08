@@ -2,52 +2,48 @@ import {Component} from '@angular/core';
 import {Bill, BillStatus} from '../../../services/billkeeper-ws/bill/model';
 import {BillWsService} from '../../../services/billkeeper-ws/bill/bill-ws.service';
 import {TableModule} from 'primeng/table';
-import {DatePipe, NgClass, NgIf} from '@angular/common';
-import {billStatusBadge, billStatusToString} from '../../../services/utils';
+import {NgIf} from '@angular/common';
 import {MainLayoutComponent} from '../../layouts/main-layout/main-layout.component';
-import {CurrencyPipe} from '../../../services/pipes/currency.pipe';
-import {Checkbox, CheckboxChangeEvent} from 'primeng/checkbox';
 import {FormsModule} from '@angular/forms';
 import {Button} from 'primeng/button';
 import {DocumentWsService} from '../../../services/billkeeper-ws/document/document-ws.service';
-import {Badge} from 'primeng/badge';
-import {Tooltip} from 'primeng/tooltip';
-import {RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {LayoutService} from '../../../services/layout.service';
-import {ToastMessageService} from '../../../services/toast-message.service';
+import {MessageType, ToastMessageService} from '../../../services/toast-message.service';
+import {SubmissionWsService} from '../../../services/billkeeper-ws/submission/submission-ws.service';
+import {EditNameDialogComponent} from '../../components/edit-name-dialog/edit-name-dialog.component';
+import {CreateUpdateInsuranceSubmissionRequest} from '../../../services/billkeeper-ws/submission/model';
+import {BillsTableComponent} from '../../components/bills-table/bills-table.component';
 
 @Component({
   selector: 'app-home-page',
-    imports: [
-        TableModule,
-        DatePipe,
-        MainLayoutComponent,
-        CurrencyPipe,
-        NgClass,
-        Checkbox,
-        FormsModule,
-        Button,
-        NgIf,
-        Badge,
-        Tooltip,
-        RouterLink
-    ],
+  imports: [
+    TableModule,
+    MainLayoutComponent,
+    FormsModule,
+    Button,
+    NgIf,
+    EditNameDialogComponent,
+    BillsTableComponent
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent {
-  protected readonly billStatusToString = billStatusToString;
-  protected readonly billStatusBadge = billStatusBadge;
   protected readonly BillStatus = BillStatus;
 
   bills: Bill[] = [];
-  billsToMerge: Bill[] = [];
+  selectedBills: Bill[] = [];
+  showSubmissionNameDialog = false;
+  newSubmissionName = "";
 
   constructor(
     private billWsService: BillWsService,
     private documentWsService: DocumentWsService,
+    private submissionWsService: SubmissionWsService,
     private layoutService: LayoutService,
-    private toastMessageService: ToastMessageService
+    private toastMessageService: ToastMessageService,
+    private router: Router
   ) {
   }
 
@@ -93,18 +89,10 @@ export class HomePageComponent {
     }
   }
 
-  public onCheckboxChange(event: CheckboxChangeEvent, bill: Bill) {
-    if (event.checked) {
-      this.billsToMerge.push(bill);
-    } else {
-      this.billsToMerge = this.billsToMerge.filter(b => b != bill);
-    }
-  }
-
   public async downloadMergedBillsDocuments() {
     try {
       await this.layoutService.withPageLoading(async () => {
-        const billIds: string[] = this.billsToMerge
+        const billIds: string[] = this.selectedBills
           .map(bill => bill.id)
           .filter(id => id != undefined);
         await this.documentWsService.getMergedBillsDocuments(billIds);
@@ -130,6 +118,29 @@ export class HomePageComponent {
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
+  }
+
+  async createNewSubmission() {
+    try {
+      if (this.newSubmissionName.length === 0) {
+        this.toastMessageService.displayMessage("The submission name can't be empty", MessageType.Error, "Error");
+        return;
+      }
+      const request: CreateUpdateInsuranceSubmissionRequest = {
+        name: this.newSubmissionName,
+        billIds: this.selectedBills.map(b => b.id!)
+      };
+      await this.submissionWsService.createSubmission(request);
+      await this.router.navigate(["submissions"]);
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onValidateNewSubmissionName(name: string) {
+    this.newSubmissionName = name;
+    this.showSubmissionNameDialog = false;
+    await this.createNewSubmission();
   }
 
 }
