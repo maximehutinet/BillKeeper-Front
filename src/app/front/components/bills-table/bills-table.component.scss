@@ -1,0 +1,13 @@
+p-table {
+  .bill-name {
+    cursor: pointer;
+  }
+
+  .bill-action {
+    align-items: center;
+  }
+}
+
+.incomplete-bill {
+  background-color: orange;
+}

@@ -4,22 +4,8 @@
   padding: 1rem;
 }
 
-.incomplete-bill {
-  background-color: orange;
-}
-
 #upload-file-btn {
   input {
     display: none;
-  }
-}
-
-p-table {
-  .bill-name {
-    cursor: pointer;
-  }
-
-  .bill-action {
-    align-items: center;
   }
 }

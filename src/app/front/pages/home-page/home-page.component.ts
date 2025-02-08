@@ -36,6 +36,7 @@ export class HomePageComponent {
   selectedBills: Bill[] = [];
   showSubmissionNameDialog = false;
   newSubmissionName = "";
+  createNewSubmissionButtonVisible = false;
 
   constructor(
     private billWsService: BillWsService,
@@ -99,6 +100,19 @@ export class HomePageComponent {
       });
     } catch (e) {
       this.toastMessageService.displayError(e);
+    }
+  }
+
+  onSelectedBillChange() {
+    if (this.selectedBills.length === 0) {
+      this.createNewSubmissionButtonVisible = false;
+      return;
+    }
+    const selectedBillsCanBeInNewSubmission = this.selectedBills
+      .filter((bill) => bill.status !== BillStatus.TO_FILE)
+      .length === 0;
+    if (selectedBillsCanBeInNewSubmission) {
+      this.createNewSubmissionButtonVisible = true;
     }
   }
 

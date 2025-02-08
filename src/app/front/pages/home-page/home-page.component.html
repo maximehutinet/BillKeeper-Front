@@ -6,7 +6,7 @@
         <input #uploadInput type="file" accept=".pdf" [multiple]="true" (change)="onUpload($event)">
       </div>
       <div class="buttons-wrapper">
-        <p-button *ngIf="selectedBills.length > 0"
+        <p-button *ngIf="createNewSubmissionButtonVisible"
                   (click)="showSubmissionNameDialog = true"
                   label="Create new submission"
                   icon="pi pi-folder-plus"
@@ -32,6 +32,7 @@
       [bills]="bills"
       [makeBillSelectable]="true"
       [(selectedBills)]="selectedBills"
+      (selectedBillsChange)="onSelectedBillChange()"
       [displayMarkAsPaidButton]="true"
       [displayMarkAsReimbursedButton]="true"
       (onMarkBillAsPaid)="onMarkAsPaid($event)"
