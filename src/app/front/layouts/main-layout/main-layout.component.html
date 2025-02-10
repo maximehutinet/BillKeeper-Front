@@ -1,6 +1,12 @@
-<div id="main-content">
-  <ng-content select="[main-content]"></ng-content>
-  <app-validation-dialog></app-validation-dialog>
-  <app-toast-message></app-toast-message>
-  <app-full-screen-loading *ngIf="layoutService.pageLoading"></app-full-screen-loading>
+<div id="page-wrapper">
+  <div id="side-menu-wrapper">
+      <app-side-menu></app-side-menu>
+  </div>
+  <div id="main-content-wrapper">
+    <ng-content select="[main-content]">
+      <app-toast-message></app-toast-message>
+      <app-validation-dialog></app-validation-dialog>
+      <app-full-screen-loading *ngIf="layoutService.pageLoading"></app-full-screen-loading>
+    </ng-content>
+  </div>
 </div>

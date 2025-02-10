@@ -4,6 +4,7 @@ import {NgIf} from '@angular/common';
 import {LayoutService} from '../../../services/layout.service';
 import {ValidationDialogComponent} from '../../components/validation-dialog/validation-dialog.component';
 import {ToastMessageComponent} from '../../components/toast-message/toast-message.component';
+import {SideMenuComponent} from '../../components/side-menu/side-menu.component';
 
 @Component({
   selector: 'app-main-layout',
@@ -11,7 +12,8 @@ import {ToastMessageComponent} from '../../components/toast-message/toast-messag
     FullScreenLoadingComponent,
     NgIf,
     ValidationDialogComponent,
-    ToastMessageComponent
+    ToastMessageComponent,
+    SideMenuComponent
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'

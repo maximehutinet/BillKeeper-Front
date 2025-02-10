@@ -1,3 +1,20 @@
-#main-content {
-  margin: 0 15rem;
+#page-wrapper {
+  display: flex;
+  flex-direction: row;
+
+  #side-menu-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: var(--app-side-menu-width);
+  }
+
+  #main-content-wrapper {
+    display: block;
+    margin-left: var(--app-side-menu-width);
+    padding: var(--app-content-padding-y) var(--app-content-padding-x);
+    flex-grow: 1;
+  }
 }

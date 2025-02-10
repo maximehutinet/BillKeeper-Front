@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {SubmissionWsService} from '../../../services/billkeeper-ws/submission/submission-ws.service';
 import {LayoutService} from '../../../services/layout.service';
-import {InsuranceSubmission} from '../../../services/billkeeper-ws/submission/model';
+import {InsuranceSubmissionWithBills} from '../../../services/billkeeper-ws/submission/model';
 import {MainLayoutComponent} from '../../layouts/main-layout/main-layout.component';
 import {TableModule} from 'primeng/table';
 import {Button} from 'primeng/button';
@@ -29,7 +29,7 @@ export class SubmissionsPageComponent {
 
   protected readonly BillStatus = BillStatus;
 
-  submissions: InsuranceSubmission[] = [];
+  submissions: InsuranceSubmissionWithBills[] = [];
 
   constructor(
     private submissionWsService: SubmissionWsService,

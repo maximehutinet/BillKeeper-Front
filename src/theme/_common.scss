@@ -1,3 +1,9 @@
+:root {
+  --app-side-menu-width: 15rem;
+  --app-content-padding-x: 3rem;
+  --app-content-padding-y: 2rem;
+}
+
 .buttons-wrapper {
   display: flex;
   gap: 0.5rem;
@@ -8,4 +14,22 @@
   flex-direction: column;
   align-items: end;
   gap: 1rem;
+}
+
+p-fieldset {
+  display: block;
+  margin-top: 1rem;
+
+  .card-body {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .card-entry {
+      label {
+        font-weight: bold;
+      }
+    }
+  }
 }

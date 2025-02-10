@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpWsService} from '../http-ws.service';
-import {CreateUpdateInsuranceSubmissionRequest, InsuranceSubmission} from './model';
+import {CreateUpdateInsuranceSubmissionRequest, InsuranceSubmissionWithBills} from './model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +11,19 @@ export class SubmissionWsService {
     private httpWsService: HttpWsService
   ) { }
 
-  async getAllSubmissions(): Promise<InsuranceSubmission[]> {
-    return this.httpWsService.get<InsuranceSubmission[]>("/submissions");
+  async getAllSubmissions(): Promise<InsuranceSubmissionWithBills[]> {
+    return this.httpWsService.get<InsuranceSubmissionWithBills[]>("/submissions");
   }
 
-  async getSubmission(submissionId: string): Promise<InsuranceSubmission> {
-    return this.httpWsService.get<InsuranceSubmission>(`/submissions/${submissionId}`);
+  async getSubmission(submissionId: string): Promise<InsuranceSubmissionWithBills> {
+    return this.httpWsService.get<InsuranceSubmissionWithBills>(`/submissions/${submissionId}`);
   }
 
   async createSubmission(submission: CreateUpdateInsuranceSubmissionRequest): Promise<void> {
     return this.httpWsService.post(`/submissions`, submission);
   }
 
-  async updateSubmission(submissionId: string, submission: InsuranceSubmission): Promise<void> {
+  async updateSubmission(submissionId: string, submission: InsuranceSubmissionWithBills): Promise<void> {
     return this.httpWsService.post(`/submissions/${submissionId}`, submission);
   }
 

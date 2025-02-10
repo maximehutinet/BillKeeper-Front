@@ -2,25 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
-}
-
-p-fieldset {
-  display: block;
-  margin-top: 1rem;
-
-  .card-body {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    .card-entry {
-      label {
-        font-weight: bold;
-      }
-    }
-  }
+  padding-bottom: 1rem;
 }
 
 #documents-buttons-wrapper {

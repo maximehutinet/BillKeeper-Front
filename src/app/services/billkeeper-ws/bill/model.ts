@@ -1,4 +1,5 @@
 import {Beneficiary} from '../beneficiary/model';
+import {InsuranceSubmission} from '../submission/model';
 
 export interface Bill {
   id?: string;
@@ -10,6 +11,7 @@ export interface Bill {
   provider?: string;
   status?: BillStatus;
   beneficiary?: Beneficiary;
+  submission?: InsuranceSubmission;
 }
 
 export enum Currency {
