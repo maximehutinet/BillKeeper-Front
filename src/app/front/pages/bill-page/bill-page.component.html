@@ -36,7 +36,7 @@
         </div>
         <div class="card-entry">
           <label>Status: </label>
-          <span><p-badge [value]="billStatusToString(bill.status)" [severity]="billStatusBadge(bill.status)"/></span>
+          <span><app-bill-status-badge [bill]="bill"></app-bill-status-badge></span>
         </div>
         <div *ngIf="bill.paidDateTime" class="card-entry">
           <label>Paid on: </label>

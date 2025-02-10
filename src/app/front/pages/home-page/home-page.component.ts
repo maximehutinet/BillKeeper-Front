@@ -30,7 +30,6 @@ import {BillsTableComponent} from '../../components/bills-table/bills-table.comp
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent {
-  protected readonly BillStatus = BillStatus;
 
   bills: Bill[] = [];
   selectedBills: Bill[] = [];

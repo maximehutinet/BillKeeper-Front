@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Badge} from "primeng/badge";
 import {Button} from "primeng/button";
 import {Checkbox, CheckboxChangeEvent} from "primeng/checkbox";
 import {CurrencyPipe} from "../../../services/pipes/currency.pipe";
@@ -9,11 +8,11 @@ import {Tooltip} from "primeng/tooltip";
 import {billStatusBadge, billStatusToString} from "../../../services/utils";
 import {Bill, BillStatus} from "../../../services/billkeeper-ws/bill/model";
 import {RouterLink} from '@angular/router';
+import {BillStatusBadgeComponent} from '../bill-status-badge/bill-status-badge.component';
 
 @Component({
   selector: 'app-bills-table',
   imports: [
-    Badge,
     Button,
     Checkbox,
     CurrencyPipe,
@@ -22,7 +21,8 @@ import {RouterLink} from '@angular/router';
     TableModule,
     Tooltip,
     NgClass,
-    RouterLink
+    RouterLink,
+    BillStatusBadgeComponent
   ],
   templateUrl: './bills-table.component.html',
   styleUrl: './bills-table.component.scss'

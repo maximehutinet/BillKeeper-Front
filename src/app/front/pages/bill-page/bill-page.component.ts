@@ -6,8 +6,6 @@ import {Bill, BillStatus} from '../../../services/billkeeper-ws/bill/model';
 import {Button} from 'primeng/button';
 import {CurrencyPipe} from '../../../services/pipes/currency.pipe';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
-import {Badge} from 'primeng/badge';
-import {billStatusBadge, billStatusToString} from '../../../services/utils';
 import {Tooltip} from 'primeng/tooltip';
 import {PdfViewerModule} from 'ng2-pdf-viewer';
 import {BillDocument} from '../../../services/billkeeper-ws/document/model';
@@ -24,6 +22,7 @@ import {Fieldset} from 'primeng/fieldset';
 import {CommentComponent} from '../../components/comment/comment.component';
 import {BillComment} from '../../../services/billkeeper-ws/comment/model';
 import {EditCommentDialogComponent} from '../../components/edit-comment-dialog/edit-comment-dialog.component';
+import {BillStatusBadgeComponent} from '../../components/bill-status-badge/bill-status-badge.component';
 
 @Component({
   selector: 'app-bill-page',
@@ -33,7 +32,6 @@ import {EditCommentDialogComponent} from '../../components/edit-comment-dialog/e
     RouterLink,
     CurrencyPipe,
     DatePipe,
-    Badge,
     NgIf,
     Tooltip,
     PdfViewerModule,
@@ -48,15 +46,14 @@ import {EditCommentDialogComponent} from '../../components/edit-comment-dialog/e
     Fieldset,
     CommentComponent,
     NgForOf,
-    EditCommentDialogComponent
+    EditCommentDialogComponent,
+    BillStatusBadgeComponent
   ],
   templateUrl: './bill-page.component.html',
   styleUrl: './bill-page.component.scss'
 })
 export class BillPageComponent {
 
-  protected readonly billStatusBadge = billStatusBadge;
-  protected readonly billStatusToString = billStatusToString;
   protected readonly BillStatus = BillStatus;
   bill: Bill = {};
   documents: BillDocument[] = [];
