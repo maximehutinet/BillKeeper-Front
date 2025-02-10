@@ -1,16 +1,25 @@
-<p-menu [model]="items">
-  <ng-template #item let-item>
-    <ng-container *ngIf="item.route; else elseBlock">
-      <a [routerLink]="item.route" class="p-menu-item-link">
-        <span [class]="item.icon"></span>
-        <span class="ml-2">{{ item.label }}</span>
-      </a>
-    </ng-container>
-    <ng-template #elseBlock>
-      <a [href]="item.url" class="p-menu-item-link">
-        <span [class]="item.icon"></span>
-        <span class="ml-2">{{ item.label }}</span>
-      </a>
-    </ng-template>
-  </ng-template>
-</p-menu>
+<div id="side-menu">
+  <div id="menu-header"></div>
+  <div id="menu-content">
+    <div class="menu-group" *ngFor="let item of items">
+      <div class="menu-group-title">
+        <span>{{ item.label | uppercase }}</span>
+      </div>
+      <div class="menu-group-items">
+        <div class="menu-item label-with-icon" [class.active]="isCurrentPage(child.link)" *ngFor="let child of item.items" [routerLink]="child.link">
+          <i *ngIf="child.icon" [class]="child.icon"></i>
+          <span>{{ child.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="menu-footer">
+    <div id="log-out-button">
+      <div id="user-detail">
+        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" size="normal" shape="circle" />
+        <span>John</span>
+      </div>
+      <i class="pi pi-sign-out"></i>
+    </div>
+  </div>
+</div>

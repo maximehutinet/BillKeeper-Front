@@ -1,20 +1,27 @@
 import {Component} from '@angular/core';
-import {Menu} from 'primeng/menu';
-import {NgIf} from '@angular/common';
-import {MenuItem} from 'primeng/api';
-import {RouterLink} from '@angular/router';
+import {NgForOf, NgIf, UpperCasePipe} from '@angular/common';
+import {Router, RouterLink} from '@angular/router';
+import {MenuItem} from './model';
+import {Avatar} from 'primeng/avatar';
 
 @Component({
   selector: 'app-side-menu',
   imports: [
-    Menu,
     NgIf,
+    NgForOf,
+    UpperCasePipe,
+    Avatar,
     RouterLink
   ],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.scss'
 })
 export class SideMenuComponent {
+
+  constructor(
+    private router: Router
+  ) {
+  }
 
   items: MenuItem[] = [
     {
@@ -23,17 +30,17 @@ export class SideMenuComponent {
         {
           label: 'Bills',
           icon: 'pi pi-receipt',
-          route: '/'
+          link: '/'
         },
         {
           label: 'Submissions',
           icon: 'pi pi-file-check',
-          route: '/submissions'
+          link: '/submissions'
         },
         {
           label: 'Stats',
           icon: 'pi pi-chart-bar',
-          url: '/'
+          link: '#'
         }
       ]
     },
@@ -43,10 +50,14 @@ export class SideMenuComponent {
         {
           label: 'Settings',
           icon: 'pi pi-cog',
-          route: '/'
+          link: '#'
         }
       ]
     }
   ];
+
+  isCurrentPage(route: string | undefined): boolean {
+    return this.router.url === route;
+  }
 
 }
