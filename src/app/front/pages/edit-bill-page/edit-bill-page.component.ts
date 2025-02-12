@@ -15,6 +15,10 @@ import {InputMask} from 'primeng/inputmask';
 import {BeneficiaryWsService} from '../../../services/billkeeper-ws/beneficiary/beneficiary-ws.service';
 import {EnumDropdownOption} from '../../../services/model/commun';
 import {Beneficiary} from '../../../services/billkeeper-ws/beneficiary/model';
+import {DocumentsViewerComponent} from '../../components/documents-viewer/documents-viewer.component';
+import {BillDocument} from '../../../services/billkeeper-ws/document/model';
+import {LayoutService} from '../../../services/layout.service';
+import {Fieldset} from 'primeng/fieldset';
 
 @Component({
   selector: 'app-edit-bill-page',
@@ -29,6 +33,8 @@ import {Beneficiary} from '../../../services/billkeeper-ws/beneficiary/model';
     InputNumberModule,
     DropdownModule,
     InputMask,
+    DocumentsViewerComponent,
+    Fieldset,
   ],
   templateUrl: './edit-bill-page.component.html',
   styleUrl: './edit-bill-page.component.scss'
@@ -36,6 +42,7 @@ import {Beneficiary} from '../../../services/billkeeper-ws/beneficiary/model';
 export class EditBillPageComponent {
 
   bill: Bill = { }
+  documents: BillDocument[] = [];
   form!: FormGroup;
   statusOptions: {name: string, billStatus: EnumDropdownOption}[] = [
     {name: "To file", billStatus: {value: BillStatus.TO_FILE}},
@@ -55,27 +62,31 @@ export class EditBillPageComponent {
     private beneficiaryWSService: BeneficiaryWsService,
     public location: Location,
     private activatedRoute: ActivatedRoute,
+    private layoutService: LayoutService,
     private toastMessageService: ToastMessageService
   ) {
   }
 
   async ngOnInit() {
     try {
-      const billId = await this.activatedRoute.snapshot.params['billId'];
-      this.bill = await this.billWsService.getBill(billId);
-      if (this.bill.status) {
-        this.billStatus = {
-          value: this.bill.status
-        };
-      }
-      if (this.bill.currency) {
-        this.billCurrency = {
-          value: this.bill.currency
+      await this.layoutService.withPageLoading(async () => {
+        const billId = await this.activatedRoute.snapshot.params['billId'];
+        this.bill = await this.billWsService.getBill(billId);
+        this.documents = await this.billWsService.getBillDocuments(this.bill.id!);
+        if (this.bill.status) {
+          this.billStatus = {
+            value: this.bill.status
+          };
         }
-      }
-      const beneficiaries = await this.beneficiaryWSService.getAllBeneficiaries();
-      this.buildBeneficiaryOptions(beneficiaries);
-      this.buildForm();
+        if (this.bill.currency) {
+          this.billCurrency = {
+            value: this.bill.currency
+          }
+        }
+        const beneficiaries = await this.beneficiaryWSService.getAllBeneficiaries();
+        this.buildBeneficiaryOptions(beneficiaries);
+        this.buildForm();
+      });
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

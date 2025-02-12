@@ -1,0 +1,31 @@
+<p-tabs [value]="documents[0].id" *ngIf="documents.length > 0 && documents[0].id">
+  <p-tablist>
+    @for (document of documents; track document.id; let idx = $index) {
+      @if (document.description) {
+        <p-tab (dblclick)="onEditDocumentDescription.emit(document)" *ngIf="document.id" [value]="document.id">{{ document.description }}</p-tab>
+      } @else {
+        <p-tab (dblclick)="onEditDocumentDescription.emit(document)" *ngIf="document.id" [value]="document.id">Document {{ idx + 1 }}</p-tab>
+      }
+    }
+  </p-tablist>
+  <p-tabpanels>
+    @for (document of documents; track document.id) {
+      <p-tabpanel *ngIf="document.id" [value]="document.id">
+        <div class="buttons-wrapper" *ngIf="editMode">
+          <p-button icon="pi pi-download" (onClick)="onDownloadDocument.emit(document)"></p-button>
+          <p-button severity="info" icon="pi pi-pencil" (onClick)="onEditDocumentDescription.emit(document)"></p-button>
+          <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteDocument.emit(document)"></p-button>
+        </div>
+        <pdf-viewer
+          [src]="document.url"
+          [render-text]="true"
+          [original-size]="false"
+          [show-borders]="true"
+          [fit-to-page]="true"
+          style="width: 50vw; height: 100vh"
+        >
+        </pdf-viewer>
+      </p-tabpanel>
+    }
+  </p-tabpanels>
+</p-tabs>

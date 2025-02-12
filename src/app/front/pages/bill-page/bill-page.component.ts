@@ -9,7 +9,6 @@ import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {Tooltip} from 'primeng/tooltip';
 import {PdfViewerModule} from 'ng2-pdf-viewer';
 import {BillDocument} from '../../../services/billkeeper-ws/document/model';
-import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
 import {DocumentWsService} from '../../../services/billkeeper-ws/document/document-ws.service';
 import {LayoutService} from '../../../services/layout.service';
 import {ValidationService} from '../../../services/validation.service';
@@ -24,6 +23,7 @@ import {BillComment} from '../../../services/billkeeper-ws/comment/model';
 import {EditCommentDialogComponent} from '../../components/edit-comment-dialog/edit-comment-dialog.component';
 import {BillStatusBadgeComponent} from '../../components/bill-status-badge/bill-status-badge.component';
 import {EditNameDialogComponent} from '../../components/edit-name-dialog/edit-name-dialog.component';
+import {DocumentsViewerComponent} from '../../components/documents-viewer/documents-viewer.component';
 
 @Component({
   selector: 'app-bill-page',
@@ -36,11 +36,6 @@ import {EditNameDialogComponent} from '../../components/edit-name-dialog/edit-na
     NgIf,
     Tooltip,
     PdfViewerModule,
-    Tabs,
-    TabList,
-    TabPanels,
-    Tab,
-    TabPanel,
     FloatLabel,
     Textarea,
     FormsModule,
@@ -49,7 +44,8 @@ import {EditNameDialogComponent} from '../../components/edit-name-dialog/edit-na
     NgForOf,
     EditCommentDialogComponent,
     BillStatusBadgeComponent,
-    EditNameDialogComponent
+    EditNameDialogComponent,
+    DocumentsViewerComponent
   ],
   templateUrl: './bill-page.component.html',
   styleUrl: './bill-page.component.scss'
@@ -123,20 +119,20 @@ export class BillPageComponent {
     }
   }
 
-  async downloadBillDocument(documentId: string) {
+  async downloadBillDocument(document: BillDocument) {
     try {
       await this.layoutService.withPageLoading(async () => {
-        await this.documentWsService.downloadBillDocument(documentId);
+        await this.documentWsService.downloadBillDocument(document.id!);
       });
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
   }
 
-  async onDeleteBillDocument(documentId: string) {
+  async onDeleteBillDocument(document: BillDocument) {
     try {
       this.validationService.showConfirmationDialog(async () => {
-        await this.documentWsService.deleteBillDocuments(documentId);
+        await this.documentWsService.deleteBillDocuments(document.id!);
         await this.loadBillDocuments();
       });
     } catch (e) {
