@@ -14,6 +14,7 @@ import {SubmissionWsService} from '../../../services/billkeeper-ws/submission/su
 import {EditNameDialogComponent} from '../../components/edit-name-dialog/edit-name-dialog.component';
 import {CreateUpdateInsuranceSubmissionRequest} from '../../../services/billkeeper-ws/submission/model';
 import {BillsTableComponent} from '../../components/bills-table/bills-table.component';
+import {BillsFilterComponent} from '../../components/bills-filter/bills-filter.component';
 
 @Component({
   selector: 'app-home-page',
@@ -24,7 +25,8 @@ import {BillsTableComponent} from '../../components/bills-table/bills-table.comp
     Button,
     NgIf,
     EditNameDialogComponent,
-    BillsTableComponent
+    BillsTableComponent,
+    BillsFilterComponent
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
@@ -33,6 +35,7 @@ export class HomePageComponent {
 
   bills: Bill[] = [];
   selectedBills: Bill[] = [];
+  filteredBills: Bill[] = [];
   showSubmissionNameDialog = false;
   newSubmissionName = "";
   createNewSubmissionButtonVisible = false;
@@ -50,6 +53,7 @@ export class HomePageComponent {
   async ngOnInit() {
     await this.layoutService.withPageLoading(async () => {
       await this.loadAllBills();
+      this.filteredBills = this.bills;
     });
   }
 
@@ -154,6 +158,10 @@ export class HomePageComponent {
     this.newSubmissionName = name;
     this.showSubmissionNameDialog = false;
     await this.createNewSubmission();
+  }
+
+  onBillFilterChange(bills: Bill[]) {
+    this.filteredBills = bills;
   }
 
 }

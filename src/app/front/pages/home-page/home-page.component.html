@@ -21,15 +21,10 @@
       </div>
     </div>
 
-    <app-edit-name-dialog
-      header="Submission name"
-      [(showDialog)]="showSubmissionNameDialog"
-      (onValidate)="onValidateNewSubmissionName($event)"
-    >
-    </app-edit-name-dialog>
+    <app-bills-filter [bills]="bills" (billsChange)="onBillFilterChange($event)"></app-bills-filter>
 
     <app-bills-table
-      [bills]="bills"
+      [bills]="filteredBills"
       [makeBillSelectable]="true"
       [(selectedBills)]="selectedBills"
       (selectedBillsChange)="onSelectedBillChange()"
@@ -38,6 +33,12 @@
       (onMarkBillAsPaid)="onMarkAsPaid($event)"
       (onMarkBillAsReimbursed)="onMarkAsReimbursed($event)"
     ></app-bills-table>
+
+    <app-edit-name-dialog
+      header="Submission name"
+      [(showDialog)]="showSubmissionNameDialog"
+      (onValidate)="onValidateNewSubmissionName($event)"
+    ></app-edit-name-dialog>
   </ng-container>
 </app-main-layout>
 

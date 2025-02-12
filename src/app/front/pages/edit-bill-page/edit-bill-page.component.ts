@@ -19,6 +19,7 @@ import {DocumentsViewerComponent} from '../../components/documents-viewer/docume
 import {BillDocument} from '../../../services/billkeeper-ws/document/model';
 import {LayoutService} from '../../../services/layout.service';
 import {Fieldset} from 'primeng/fieldset';
+import {BeneficiarySelectOption} from '../../components/bills-filter/model';
 
 @Component({
   selector: 'app-edit-bill-page',
@@ -53,7 +54,7 @@ export class EditBillPageComponent {
     {name: "CHF", currency: {value: Currency.CHF}},
     {name: "EURO", currency: {value: Currency.EURO}}
   ];
-  beneficiaryOptions: {name: string, beneficiary: Beneficiary}[] = [];
+  beneficiaryOptions: BeneficiarySelectOption[] = [];
   billStatus?: EnumDropdownOption;
   billCurrency?: EnumDropdownOption;
 

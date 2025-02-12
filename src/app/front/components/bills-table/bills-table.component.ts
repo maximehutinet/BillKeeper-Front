@@ -2,10 +2,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Button} from "primeng/button";
 import {Checkbox, CheckboxChangeEvent} from "primeng/checkbox";
 import {CurrencyPipe} from "../../../services/pipes/currency.pipe";
-import {DatePipe, NgClass, NgIf} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {TableModule} from "primeng/table";
 import {Tooltip} from "primeng/tooltip";
-import {billStatusBadge, billStatusToString} from "../../../services/utils";
 import {Bill, BillStatus} from "../../../services/billkeeper-ws/bill/model";
 import {RouterLink} from '@angular/router';
 import {BillStatusBadgeComponent} from '../bill-status-badge/bill-status-badge.component';
@@ -20,7 +19,6 @@ import {BillStatusBadgeComponent} from '../bill-status-badge/bill-status-badge.c
     NgIf,
     TableModule,
     Tooltip,
-    NgClass,
     RouterLink,
     BillStatusBadgeComponent
   ],
@@ -29,8 +27,6 @@ import {BillStatusBadgeComponent} from '../bill-status-badge/bill-status-badge.c
 })
 export class BillsTableComponent {
 
-    protected readonly billStatusToString = billStatusToString;
-    protected readonly billStatusBadge = billStatusBadge;
     protected readonly BillStatus = BillStatus;
 
     @Input()

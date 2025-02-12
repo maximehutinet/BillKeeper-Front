@@ -8,6 +8,7 @@ p-table {
   }
 }
 
-.incomplete-bill {
-  background-color: orange;
+:host ::ng-deep .p-sortable-column-icon {
+  height: 0.7rem;
+  width: 0.7rem;
 }

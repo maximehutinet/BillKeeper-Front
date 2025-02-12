@@ -1,0 +1,19 @@
+<div id="bill-filters-wrapper">
+  <p-multiselect
+    [options]="beneficiaryOptions"
+    [(ngModel)]="selectedBeneficiaries"
+    (onChange)="onSelectChange()"
+    placeholder="Select beneficiaries"
+    optionLabel="name"
+    display="chip">
+  </p-multiselect>
+
+  <p-multiselect
+    [options]="statusOptions"
+    [(ngModel)]="selectedStatus"
+    (onChange)="onSelectChange()"
+    placeholder="Select status"
+    optionLabel="name"
+    display="chip">
+  </p-multiselect>
+</div>

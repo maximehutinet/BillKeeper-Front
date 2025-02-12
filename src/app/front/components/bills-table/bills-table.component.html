@@ -2,16 +2,16 @@
   <ng-template #header>
     <tr>
       <th *ngIf="makeBillSelectable"></th>
-      <th>Date</th>
+      <th pSortableColumn="dateTime">Date <p-sortIcon field="dateTime" /></th>
       <th>Name</th>
       <th>Amount</th>
-      <th>Beneficiary</th>
-      <th>Status</th>
+      <th pSortableColumn="beneficiary.firstname">Beneficiary <p-sortIcon field="beneficiary.firstname" /></th>
+      <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
       <th>Actions</th>
     </tr>
   </ng-template>
   <ng-template #body let-bill>
-    <tr [ngClass]="{'incomplete-bill' : !bill.name || !bill.amount || !bill.beneficiary}">
+    <tr>
       <td *ngIf="makeBillSelectable"><p-checkbox (onChange)="onCheckboxChange($event, bill)" [binary]="true" /></td>
       <td>{{ bill.dateTime | date: 'longDate' }}</td>
       <td class="bill-name" [routerLink]="'/bill/' + bill.id">{{ bill.name }}</td>

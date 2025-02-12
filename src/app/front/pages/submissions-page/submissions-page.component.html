@@ -14,8 +14,8 @@
           <td>
             <p-button type="button" pRipple [pRowToggler]="submission" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
           </td>
-          <td>{{ submission.name }}</td>
           <td>{{ submission.dateTime | date: 'longDate' }}</td>
+          <td>{{ submission.name }}</td>
           <td class="bill-action buttons-wrapper">
             <p-button icon="pi pi-dollar"
                       [rounded]="true"
