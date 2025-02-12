@@ -1,37 +1,41 @@
-<p-table [value]="bills" stripedRows>
+<p-table [value]="tableRows" stripedRows>
   <ng-template #header>
     <tr>
-      <th *ngIf="makeBillSelectable"></th>
-      <th pSortableColumn="dateTime">Date <p-sortIcon field="dateTime" /></th>
+      <th *ngIf="makeBillSelectable">
+        <p-checkbox [(ngModel)]="allRowsSelected" (onChange)="onAllRowsSelected()" [binary]="true" />
+      </th>
+      <th pSortableColumn="bill.dateTime">Date <p-sortIcon field="bill.dateTime" /></th>
       <th>Name</th>
       <th>Amount</th>
-      <th pSortableColumn="beneficiary.firstname">Beneficiary <p-sortIcon field="beneficiary.firstname" /></th>
-      <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
+      <th pSortableColumn="bill.beneficiary.firstname">Beneficiary <p-sortIcon field="bill.beneficiary.firstname" /></th>
+      <th pSortableColumn="bill.status">Status <p-sortIcon field="bill.status" /></th>
       <th>Actions</th>
     </tr>
   </ng-template>
-  <ng-template #body let-bill>
+  <ng-template #body let-row>
     <tr>
-      <td *ngIf="makeBillSelectable"><p-checkbox (onChange)="onCheckboxChange($event, bill)" [binary]="true" /></td>
-      <td>{{ bill.dateTime | date: 'longDate' }}</td>
-      <td class="bill-name" [routerLink]="'/bill/' + bill.id">{{ bill.name }}</td>
-      <td>{{ bill.amount ?? 'N/A' }} {{ bill.currency | currency }}</td>
-      <td>{{ bill.beneficiary?.firstname ?? "" }}</td>
-      <td><app-bill-status-badge [bill]="bill"></app-bill-status-badge></td>
+      <td *ngIf="makeBillSelectable">
+        <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true" />
+      </td>
+      <td>{{ row.bill.dateTime | date: 'longDate' }}</td>
+      <td class="bill-name" [routerLink]="'/bill/' + row.bill.id">{{ row.bill.name }}</td>
+      <td>{{ row.bill.amount ?? 'N/A' }} {{ row.bill.currency | currency }}</td>
+      <td>{{ row.bill.beneficiary?.firstname ?? "" }}</td>
+      <td><app-bill-status-badge [bill]="row.bill"></app-bill-status-badge></td>
 
       <td class="bill-action buttons-wrapper">
-        <p-button *ngIf="displayMarkAsPaidButton && !bill.paidDateTime"
+        <p-button *ngIf="displayMarkAsPaidButton && !row.bill.paidDateTime"
                   icon="pi pi-dollar"
-                  (onClick)="onMarkBillAsPaid.emit(bill)"
+                  (onClick)="onMarkBillAsPaid.emit(row.bill)"
                   [rounded]="true"
                   pTooltip="Mark as paid"
                   showDelay="500"
                   hideDelay="300"
                   severity="help"
         />
-        <p-button *ngIf="displayMarkAsReimbursedButton && bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()"
+        <p-button *ngIf="displayMarkAsReimbursedButton && row.bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()"
                   icon="pi pi-check-circle"
-                  (onClick)="onMarkBillAsReimbursed.emit(bill)"
+                  (onClick)="onMarkBillAsReimbursed.emit(row.bill)"
                   [rounded]="true"
                   pTooltip="Mark as reimbursed"
                   showDelay="500"
@@ -40,7 +44,7 @@
         />
         <p-button
           icon="pi pi-pencil"
-          [routerLink]="'/bill/' + bill.id + '/edit'"
+          [routerLink]="'/bill/' + row.bill.id + '/edit'"
           [rounded]="true"
           pTooltip="Edit"
           showDelay="500"
@@ -49,7 +53,7 @@
         />
         <p-button
           icon="pi pi-arrow-right"
-          [routerLink]="'/bill/' + bill.id"
+          [routerLink]="'/bill/' + row.bill.id"
           [rounded]="true"
           pTooltip="See bill"
           showDelay="500"

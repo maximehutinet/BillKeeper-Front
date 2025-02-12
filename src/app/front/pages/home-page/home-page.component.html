@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <app-bills-filter [bills]="bills" (billsChange)="onBillFilterChange($event)"></app-bills-filter>
+    <app-bills-filter *ngIf="bills.length > 0" [bills]="bills" (billsChange)="onBillFilterChange($event)"></app-bills-filter>
 
     <app-bills-table
       [bills]="filteredBills"

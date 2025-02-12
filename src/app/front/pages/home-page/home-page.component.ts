@@ -111,12 +111,9 @@ export class HomePageComponent {
       this.createNewSubmissionButtonVisible = false;
       return;
     }
-    const selectedBillsCanBeInNewSubmission = this.selectedBills
+    this.createNewSubmissionButtonVisible = this.selectedBills
       .filter((bill) => bill.status !== BillStatus.TO_FILE)
       .length === 0;
-    if (selectedBillsCanBeInNewSubmission) {
-      this.createNewSubmissionButtonVisible = true;
-    }
   }
 
   async onMarkAsPaid(bill: Bill) {
