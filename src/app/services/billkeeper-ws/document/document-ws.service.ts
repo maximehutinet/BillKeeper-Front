@@ -21,4 +21,8 @@ export class DocumentWsService {
   async deleteBillDocuments(documentId: string): Promise<void> {
     return this.httpWsService.delete(`/documents/${documentId}`);
   }
+
+  async updateDocumentDescription(documentId: string, description: string): Promise<void> {
+    return this.httpWsService.post(`/documents/${documentId}`, {description: description});
+  }
 }

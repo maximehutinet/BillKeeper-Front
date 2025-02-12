@@ -23,6 +23,7 @@ import {CommentComponent} from '../../components/comment/comment.component';
 import {BillComment} from '../../../services/billkeeper-ws/comment/model';
 import {EditCommentDialogComponent} from '../../components/edit-comment-dialog/edit-comment-dialog.component';
 import {BillStatusBadgeComponent} from '../../components/bill-status-badge/bill-status-badge.component';
+import {EditNameDialogComponent} from '../../components/edit-name-dialog/edit-name-dialog.component';
 
 @Component({
   selector: 'app-bill-page',
@@ -47,7 +48,8 @@ import {BillStatusBadgeComponent} from '../../components/bill-status-badge/bill-
     CommentComponent,
     NgForOf,
     EditCommentDialogComponent,
-    BillStatusBadgeComponent
+    BillStatusBadgeComponent,
+    EditNameDialogComponent
   ],
   templateUrl: './bill-page.component.html',
   styleUrl: './bill-page.component.scss'
@@ -65,6 +67,8 @@ export class BillPageComponent {
     dateTime: new Date()
   };
   editCommentDialogVisible = false;
+  editDocumentDescriptionDialogVisible = false;
+  editedDocument: BillDocument = {};
 
   constructor(
     private billWsService: BillWsService,
@@ -216,6 +220,21 @@ export class BillPageComponent {
   async downloadBillDocumentsMerged() {
     try {
       await this.documentWsService.getMergedBillsDocuments([this.bill.id!]);
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  onEditDocumentDescription(document: BillDocument) {
+    this.editedDocument = document;
+    this.editDocumentDescriptionDialogVisible = true;
+  }
+
+  async onValidateNewDocumentDescription(description: string) {
+    try {
+      await this.documentWsService.updateDocumentDescription(this.editedDocument.id!, description);
+      await this.loadBillDocuments();
+      this.editDocumentDescriptionDialogVisible = false;
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

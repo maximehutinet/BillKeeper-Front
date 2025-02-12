@@ -3,10 +3,9 @@
       <app-side-menu></app-side-menu>
   </div>
   <div id="main-content-wrapper">
-    <ng-content select="[main-content]">
-      <app-toast-message></app-toast-message>
-      <app-validation-dialog></app-validation-dialog>
-      <app-full-screen-loading *ngIf="layoutService.pageLoading"></app-full-screen-loading>
-    </ng-content>
+    <ng-content select="[main-content]"></ng-content>
   </div>
 </div>
+<app-toast-message></app-toast-message>
+<app-validation-dialog></app-validation-dialog>
+<app-full-screen-loading *ngIf="layoutService.pageLoading"></app-full-screen-loading>

@@ -93,17 +93,22 @@
         </div>
       </div>
 
-      <p-tabs [value]="documents[0].id" *ngIf="documents.length > 0">
+      <p-tabs [value]="documents[0].id" *ngIf="documents.length > 0 && documents[0].id">
         <p-tablist>
           @for (document of documents; track document.id; let idx = $index) {
-            <p-tab [value]="document.id">Document {{ idx + 1 }}</p-tab>
+            @if (document.description) {
+              <p-tab (dblclick)="onEditDocumentDescription(document)" *ngIf="document.id" [value]="document.id">{{ document.description }}</p-tab>
+            } @else {
+              <p-tab (dblclick)="onEditDocumentDescription(document)" *ngIf="document.id" [value]="document.id">Document {{ idx + 1 }}</p-tab>
+            }
           }
         </p-tablist>
         <p-tabpanels>
           @for (document of documents; track document.id) {
-            <p-tabpanel [value]="document.id">
+            <p-tabpanel *ngIf="document.id" [value]="document.id">
               <div class="buttons-wrapper">
                 <p-button icon="pi pi-download" (onClick)="downloadBillDocument(document.id)"></p-button>
+                <p-button severity="info" icon="pi pi-pencil" (onClick)="onEditDocumentDescription(document)"></p-button>
                 <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteBillDocument(document.id)"></p-button>
               </div>
               <pdf-viewer
@@ -119,6 +124,14 @@
           }
         </p-tabpanels>
       </p-tabs>
+
+      <app-edit-name-dialog
+        header="Document description"
+        [value]="editedDocument.description ?? ''"
+        [(showDialog)]="editDocumentDescriptionDialogVisible"
+        (onValidate)="onValidateNewDocumentDescription($event)"
+      >
+      </app-edit-name-dialog>
     </p-fieldset>
   </ng-container>
 </app-main-layout>
