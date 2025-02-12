@@ -6,6 +6,7 @@ import {Ripple} from "primeng/ripple";
 import {TableModule} from "primeng/table";
 import {Tooltip} from "primeng/tooltip";
 import {InsuranceSubmissionWithBills} from '../../../../services/billkeeper-ws/submission/model';
+import {getApproximateTotalDollarValue} from '../../../../services/utils';
 
 @Component({
   selector: 'app-submissions-table',
@@ -24,4 +25,6 @@ export class SubmissionsTableComponent {
 
   @Input()
   submissions: InsuranceSubmissionWithBills[] = [];
+
+  protected readonly getApproximateTotalDollarValue = getApproximateTotalDollarValue;
 }

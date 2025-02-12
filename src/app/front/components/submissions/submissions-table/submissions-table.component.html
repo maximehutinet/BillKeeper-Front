@@ -4,6 +4,7 @@
       <th style="width: 5rem"></th>
       <th>Date</th>
       <th>Name</th>
+      <th>Amount</th>
       <th>Actions</th>
     </tr>
   </ng-template>
@@ -14,6 +15,7 @@
       </td>
       <td>{{ submission.dateTime | date: 'longDate' }}</td>
       <td>{{ submission.name }}</td>
+      <td>≈ {{ getApproximateTotalDollarValue(submission.bills) }} | currency</td>
       <td class="bill-action buttons-wrapper">
         <p-button icon="pi pi-dollar"
                   [rounded]="true"
