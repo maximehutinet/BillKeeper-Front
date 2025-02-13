@@ -13,6 +13,7 @@ import {LayoutService} from '../../../../services/layout.service';
 import {MessageType, ToastMessageService} from '../../../../services/toast-message.service';
 import {Router} from '@angular/router';
 import {CreateUpdateInsuranceSubmissionRequest} from '../../../../services/billkeeper-ws/submission/model';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-bills-list-page',
@@ -35,6 +36,7 @@ export class BillsListPageComponent {
   showSubmissionNameDialog = false;
   newSubmissionName = "";
   createNewSubmissionButtonVisible = false;
+  resetFiltersSubject: Subject<void> = new Subject<void>();
 
   constructor(
     private billWsService: BillWsService,
@@ -67,17 +69,16 @@ export class BillsListPageComponent {
         return;
       }
       await this.uploadBills(event.target.files);
+      this.bills = await this.billWsService.getAllBills();
+      this.filteredBills = this.bills;
+      this.resetFiltersSubject.next();
     });
   }
 
   private async uploadBills(files: FileList) {
     for (const file of Array.from(files)) {
-      const newBill: Bill = await this.createNewBill();
-      if (newBill.id) {
-        await this.billWsService.uploadBillDocument(newBill.id, file as File, true);
-        this.bills = await this.billWsService.getAllBills();
-        this.filteredBills = this.bills;
-      }
+      const bill: Bill = await this.createNewBill();
+      await this.uploadBill(bill, file);
     }
   }
 
@@ -87,6 +88,17 @@ export class BillsListPageComponent {
     } catch (e) {
       this.toastMessageService.displayError(e);
       return {}
+    }
+  }
+
+  private async uploadBill(bill: Bill, file: File) {
+    try {
+      if (!bill.id) {
+        return;
+      }
+      await this.billWsService.uploadBillDocument(bill.id, file as File, true);
+    } catch (e) {
+      this.toastMessageService.displayError(e);
     }
   }
 

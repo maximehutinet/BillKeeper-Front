@@ -6,13 +6,16 @@ import {MultiSelect} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {billStatusToString} from '../../../../services/utils';
 import {NgIf} from '@angular/common';
+import {Observable, Subscription} from 'rxjs';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-bills-filter',
   imports: [
     MultiSelect,
     FormsModule,
-    NgIf
+    NgIf,
+    Button
   ],
   templateUrl: './bills-filter.component.html',
   styleUrl: './bills-filter.component.scss'
@@ -26,6 +29,7 @@ export class BillsFilterComponent {
   selectedStatus: StatusSelectOption[] = [];
 
   private _bills: Bill[] = [];
+  private resetFiltersSubscription!: Subscription;
 
   @Input()
   set bills(value: Bill[]) {
@@ -35,6 +39,17 @@ export class BillsFilterComponent {
 
   @Output()
   billsChange: EventEmitter<Bill[]> = new EventEmitter();
+
+  @Input()
+  resetFiltersObservable: Observable<void> = new Observable();
+
+  ngOnInit() {
+    this.resetFiltersSubscription = this.resetFiltersObservable.subscribe(() => this.resetFilters());
+  }
+
+  ngOnDestroy() {
+    this.resetFiltersSubscription.unsubscribe();
+  }
 
   private updateSelectOptions() {
     this._bills.forEach(bill => {
@@ -90,6 +105,12 @@ export class BillsFilterComponent {
       .filter(bill => this.billHasSelectedBeneficiary(bill))
       .filter(bill => this.billHasSelectedStatus(bill));
     this.billsChange.emit(filteredBills);
+  }
+
+  resetFilters() {
+    this.selectedStatus = [];
+    this.selectedBeneficiaries = [];
+    this.billsChange.emit(this._bills);
   }
 
 }

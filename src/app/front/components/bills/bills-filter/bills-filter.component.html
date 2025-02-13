@@ -18,4 +18,6 @@
     optionLabel="name"
     display="chip">
   </p-multiselect>
+
+  <p-button icon="pi pi-times" *ngIf="selectedBeneficiaries.length > 0 || selectedStatus.length > 0" (onClick)="resetFilters()"></p-button>
 </div>
