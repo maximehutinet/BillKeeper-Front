@@ -5,12 +5,14 @@ import {BeneficiarySelectOption, StatusSelectOption} from './model';
 import {MultiSelect} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {billStatusToString} from '../../../../services/utils';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-bills-filter',
   imports: [
     MultiSelect,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './bills-filter.component.html',
   styleUrl: './bills-filter.component.scss'
@@ -67,14 +69,20 @@ export class BillsFilterComponent {
     if (this.selectedBeneficiaries.length === 0) {
       return true;
     }
-    return (bill.beneficiary !== undefined && this.beneficiaryOptionsContainsBeneficiary(this.selectedBeneficiaries, bill.beneficiary));
+    if (bill.beneficiary) {
+      return this.beneficiaryOptionsContainsBeneficiary(this.selectedBeneficiaries, bill.beneficiary);
+    }
+    return false;
   }
 
   private billHasSelectedStatus(bill: Bill): boolean {
     if (this.selectedStatus.length === 0) {
       return true;
     }
-    return (bill.status !== undefined && this.statusOptionsContainsStatus(this.selectedStatus, bill.status));
+    if (bill.status) {
+      return this.statusOptionsContainsStatus(this.selectedStatus, bill.status);
+    }
+    return false;
   }
 
   onSelectChange() {

@@ -24,15 +24,15 @@
       <div class="card-body">
         <div class="card-entry">
           <label>Name: </label>
-          <span>{{ bill.name }}</span>
+          <span>{{ bill.name ?? 'N/S' }}</span>
         </div>
         <div class="card-entry">
           <label>Amount: </label>
-          <span>{{ bill.amount ?? 'N/A' }} {{ bill.currency | currency }}</span>
+          <span>{{ bill.amount ? (bill.amount | currency:bill.currency) : 'N/S' }}</span>
         </div>
         <div class="card-entry">
           <label>Provider: </label>
-          <span>{{ bill.provider }}</span>
+          <span>{{ bill.provider ?? 'N/S' }}</span>
         </div>
         <div class="card-entry">
           <label>Status: </label>
@@ -48,7 +48,7 @@
         </div>
         <div class="card-entry">
           <label>Beneficiary: </label>
-          <span>{{ bill.beneficiary?.firstname }}</span>
+          <span>{{ bill.beneficiary?.firstname ?? 'N/S' }}</span>
         </div>
       </div>
     </p-fieldset>

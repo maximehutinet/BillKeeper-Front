@@ -1,5 +1,6 @@
 <div id="bill-filters-wrapper">
   <p-multiselect
+    *ngIf="beneficiaryOptions.length > 1"
     [options]="beneficiaryOptions"
     [(ngModel)]="selectedBeneficiaries"
     (onChange)="onSelectChange()"
@@ -9,6 +10,7 @@
   </p-multiselect>
 
   <p-multiselect
+    *ngIf="statusOptions.length > 1"
     [options]="statusOptions"
     [(ngModel)]="selectedStatus"
     (onChange)="onSelectChange()"

@@ -76,6 +76,7 @@ export class BillsListPageComponent {
       if (newBill.id) {
         await this.billWsService.uploadBillDocument(newBill.id, file as File, true);
         this.bills = await this.billWsService.getAllBills();
+        this.filteredBills = this.bills;
       }
     }
   }

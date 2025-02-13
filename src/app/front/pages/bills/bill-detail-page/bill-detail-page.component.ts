@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {BillStatusBadgeComponent} from "../../../components/bills/bill-status-badge/bill-status-badge.component";
 import {Button} from "primeng/button";
 import {CommentComponent} from "../../../components/comments/comment/comment.component";
-import {CurrencyPipe} from "../../../../services/pipes/currency.pipe";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {CurrencyPipe, DatePipe, NgForOf, NgIf} from "@angular/common";
 import {DocumentsViewerComponent} from "../../../components/documents/documents-viewer/documents-viewer.component";
-import {EditCommentDialogComponent} from "../../../components/comments/edit-comment-dialog/edit-comment-dialog.component";
+import {
+  EditCommentDialogComponent
+} from "../../../components/comments/edit-comment-dialog/edit-comment-dialog.component";
 import {EditNameDialogComponent} from "../../../components/commun/edit-name-dialog/edit-name-dialog.component";
 import {Fieldset} from "primeng/fieldset";
 import {FloatLabel} from "primeng/floatlabel";
@@ -43,7 +44,8 @@ import {ToastMessageService} from '../../../../services/toast-message.service';
         NgIf,
         RouterLink,
         Textarea,
-        Tooltip
+        Tooltip,
+        CurrencyPipe
     ],
   templateUrl: './bill-detail-page.component.html',
   styleUrl: './bill-detail-page.component.scss'

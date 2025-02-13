@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Button} from "primeng/button";
 import {Checkbox} from "primeng/checkbox";
-import {CurrencyPipe} from "../../../../services/pipes/currency.pipe";
-import {DatePipe, NgIf} from "@angular/common";
+import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 import {TableModule} from "primeng/table";
 import {Tooltip} from "primeng/tooltip";
 import {Bill, BillStatus} from "../../../../services/billkeeper-ws/bill/model";
@@ -16,14 +15,14 @@ import {BillTableRow} from './model';
   imports: [
     Button,
     Checkbox,
-    CurrencyPipe,
     DatePipe,
     NgIf,
     TableModule,
     Tooltip,
     RouterLink,
     BillStatusBadgeComponent,
-    FormsModule
+    FormsModule,
+    CurrencyPipe
   ],
   templateUrl: './bills-table.component.html',
   styleUrl: './bills-table.component.scss'
