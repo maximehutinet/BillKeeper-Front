@@ -51,13 +51,13 @@ export class BillsListPageComponent {
   async ngOnInit() {
     await this.layoutService.withPageLoading(async () => {
       await this.loadAllBills();
-      this.filteredBills = this.bills;
     });
   }
 
   async loadAllBills() {
     try {
       this.bills = await this.billWsService.getAllBills();
+      this.filteredBills = this.bills;
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
@@ -136,7 +136,7 @@ export class BillsListPageComponent {
 
   async onMarkAsReimbursed(bill: Bill) {
     try {
-      await this.billWsService.markBillAsReimbursed(bill.id!);
+      await this.billWsService.markBillAsReimbursed(bill);
       await this.loadAllBills();
     } catch (e) {
       this.toastMessageService.displayError(e);

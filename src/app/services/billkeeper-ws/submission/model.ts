@@ -11,6 +11,6 @@ export interface InsuranceSubmissionWithBills extends InsuranceSubmission {
 }
 
 export interface CreateUpdateInsuranceSubmissionRequest {
-  name: string;
-  billIds: string[];
+  name?: string;
+  billIds?: string[];
 }

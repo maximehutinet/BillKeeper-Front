@@ -10,11 +10,17 @@
           <label>Created on: </label>
           <span>{{ submission.dateTime | date: 'longDate' }}</span>
         </div>
+        <div class="card-entry">
+          <label>Amount: </label>
+          <span>≈ {{ getApproximateTotalDollarValue(submission.bills) | currency }}</span>
+        </div>
       </div>
     </p-fieldset>
 
     <app-bills-table
       [bills]="submission.bills"
+      [displayDeleteButton]="true"
+      (onDelete)="onRemoveBillFromSubmission($event)"
     ></app-bills-table>
   </ng-container>
 </app-main-layout>

@@ -11,33 +11,58 @@
   <ng-template #body let-submission let-expanded="expanded">
     <tr class="submission-row-header" [pRowToggler]="submission">
       <td>
-        <p-button type="button" pRipple [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+        <p-button type="button" pRipple [text]="true" [rounded]="true" [plain]="true"
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"/>
       </td>
       <td>{{ submission.dateTime | date: 'longDate' }}</td>
       <td>{{ submission.name }}</td>
       <td>≈ {{ getApproximateTotalDollarValue(submission.bills) | currency }}</td>
       <td class="bill-action buttons-wrapper">
-        <p-button icon="pi pi-dollar"
-                  [rounded]="true"
-                  pTooltip="Mark as paid"
-                  showDelay="500"
-                  hideDelay="300"
-                  severity="help"
+        <p-button
+          *ngIf="markAsPaidButtonVisible(submission)"
+          icon="pi pi-dollar"
+          [rounded]="true"
+          (onClick)="onMarkAsPaid.emit(submission)"
+          pTooltip="Mark as paid"
+          showDelay="500"
+          hideDelay="300"
+          severity="help"
         />
-        <p-button icon="pi pi-check-circle"
-                  [rounded]="true"
-                  pTooltip="Mark as reimbursed"
-                  showDelay="500"
-                  hideDelay="300"
-                  severity="success"
+        <p-button
+          *ngIf="markAsReimbursedButtonVisible(submission)"
+          icon="pi pi-check-circle"
+          [rounded]="true"
+          (onClick)="onMarkAsReimbursed.emit(submission)"
+          pTooltip="Mark as reimbursed"
+          showDelay="500"
+          hideDelay="300"
+          severity="success"
         />
         <p-button
           icon="pi pi-pencil"
           [rounded]="true"
+          (onClick)="onEditSubmission.emit(submission)"
           pTooltip="Edit"
           showDelay="500"
           hideDelay="300"
           severity="info"
+        />
+        <p-button
+          icon="pi pi-trash"
+          [rounded]="true"
+          (onClick)="onDeleteSubmission.emit(submission)"
+          pTooltip="Delete"
+          showDelay="500"
+          hideDelay="300"
+          severity="danger"
+        />
+        <p-button
+          icon="pi pi-arrow-right"
+          [routerLink]="'/submissions/' + submission.id"
+          [rounded]="true"
+          pTooltip="See bill"
+          showDelay="500"
+          hideDelay="300"
         />
       </td>
     </tr>

@@ -143,7 +143,7 @@ export class BillDetailPageComponent {
   async onMarkAsReimbursed() {
     try {
       await this.layoutService.withPageLoading(async () => {
-        await this.billWsService.markBillAsReimbursed(this.bill.id!);
+        await this.billWsService.markBillAsReimbursed(this.bill);
         this.bill = await this.billWsService.getBill(this.bill.id!);
       });
     } catch (e) {
@@ -206,8 +206,10 @@ export class BillDetailPageComponent {
 
   async onDeleteComment(commentId: string) {
     try {
-      await this.commentWsService.deleteComment(commentId);
-      await this.loadBillComments()
+      this.validationService.showConfirmationDialog(async () => {
+        await this.commentWsService.deleteComment(commentId);
+        await this.loadBillComments()
+      });
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

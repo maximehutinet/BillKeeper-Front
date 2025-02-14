@@ -11,10 +11,10 @@ export class ValidationService {
   ) {
   }
 
-  public showConfirmationDialog(accept: () => Promise<void>) {
+  public showConfirmationDialog(accept: () => Promise<void>, message: string = "Are you sure you want to proceed?") {
     this.confirmationService.confirm(
       {
-        message: 'Are you sure that you want to proceed?',
+        message: message,
         header: 'Confirmation',
         closable: true,
         closeOnEscape: true,

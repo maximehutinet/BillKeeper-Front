@@ -60,6 +60,12 @@ export class BillsTableComponent {
   @Output()
   onMarkBillAsReimbursed: EventEmitter<Bill> = new EventEmitter();
 
+  @Input()
+  displayDeleteButton = false;
+
+  @Output()
+  onDelete: EventEmitter<Bill> = new EventEmitter();
+
   private buildTableRows(bills: Bill[]) {
     this.tableRows = bills.map(bill => {
       return {

@@ -2,45 +2,55 @@
   <ng-template #header>
     <tr>
       <th *ngIf="makeBillSelectable">
-        <p-checkbox [(ngModel)]="allRowsSelected" (onChange)="onAllRowsSelected()" [binary]="true" />
+        <p-checkbox [(ngModel)]="allRowsSelected" (onChange)="onAllRowsSelected()" [binary]="true"/>
       </th>
-      <th pSortableColumn="bill.dateTime">Date <p-sortIcon field="bill.dateTime" /></th>
+      <th pSortableColumn="bill.dateTime">Date
+        <p-sortIcon field="bill.dateTime"/>
+      </th>
       <th>Name</th>
       <th>Amount</th>
-      <th pSortableColumn="bill.beneficiary.firstname">Beneficiary <p-sortIcon field="bill.beneficiary.firstname" /></th>
-      <th pSortableColumn="bill.status">Status <p-sortIcon field="bill.status" /></th>
+      <th pSortableColumn="bill.beneficiary.firstname">Beneficiary
+        <p-sortIcon field="bill.beneficiary.firstname"/>
+      </th>
+      <th pSortableColumn="bill.status">Status
+        <p-sortIcon field="bill.status"/>
+      </th>
       <th>Actions</th>
     </tr>
   </ng-template>
   <ng-template #body let-row>
     <tr>
       <td *ngIf="makeBillSelectable">
-        <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true" />
+        <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true"/>
       </td>
       <td>{{ row.bill.dateTime | date: 'longDate' }}</td>
       <td class="bill-name" [routerLink]="'/bill/' + row.bill.id">{{ row.bill.name ?? 'N/S' }}</td>
       <td>{{ row.bill.amount ? (row.bill.amount | currency:row.bill.currency) : 'N/S' }}</td>
       <td>{{ row.bill.beneficiary?.firstname ?? 'N/S' }}</td>
-      <td><app-bill-status-badge [bill]="row.bill"></app-bill-status-badge></td>
+      <td>
+        <app-bill-status-badge [bill]="row.bill"></app-bill-status-badge>
+      </td>
 
       <td class="bill-action buttons-wrapper">
-        <p-button *ngIf="displayMarkAsPaidButton && !row.bill.paidDateTime"
-                  icon="pi pi-dollar"
-                  (onClick)="onMarkBillAsPaid.emit(row.bill)"
-                  [rounded]="true"
-                  pTooltip="Mark as paid"
-                  showDelay="500"
-                  hideDelay="300"
-                  severity="help"
+        <p-button
+          *ngIf="displayMarkAsPaidButton && !row.bill.paidDateTime"
+          icon="pi pi-dollar"
+          (onClick)="onMarkBillAsPaid.emit(row.bill)"
+          [rounded]="true"
+          pTooltip="Mark as paid"
+          showDelay="500"
+          hideDelay="300"
+          severity="help"
         />
-        <p-button *ngIf="displayMarkAsReimbursedButton && row.bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()"
-                  icon="pi pi-check-circle"
-                  (onClick)="onMarkBillAsReimbursed.emit(row.bill)"
-                  [rounded]="true"
-                  pTooltip="Mark as reimbursed"
-                  showDelay="500"
-                  hideDelay="300"
-                  severity="success"
+        <p-button
+          *ngIf="displayMarkAsReimbursedButton && row.bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()"
+          icon="pi pi-check-circle"
+          (onClick)="onMarkBillAsReimbursed.emit(row.bill)"
+          [rounded]="true"
+          pTooltip="Mark as reimbursed"
+          showDelay="500"
+          hideDelay="300"
+          severity="success"
         />
         <p-button
           icon="pi pi-pencil"
@@ -50,6 +60,16 @@
           showDelay="500"
           hideDelay="300"
           severity="info"
+        />
+        <p-button
+          *ngIf="displayDeleteButton"
+          icon="pi pi-trash"
+          [rounded]="true"
+          (onClick)="onDelete.emit(row.bill)"
+          pTooltip="Delete"
+          showDelay="500"
+          hideDelay="300"
+          severity="danger"
         />
         <p-button
           icon="pi pi-arrow-right"

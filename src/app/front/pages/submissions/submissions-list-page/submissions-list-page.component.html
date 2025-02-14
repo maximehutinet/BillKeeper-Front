@@ -1,5 +1,18 @@
 <app-main-layout>
   <ng-container main-content>
-    <app-submissions-table [submissions]="submissions"></app-submissions-table>
+    <app-submissions-table
+      [submissions]="submissions"
+      (onMarkAsPaid)="onMarkSubmissionAsPaid($event)"
+      (onMarkAsReimbursed)="onMarkSubmissionAsReimbursed($event)"
+      (onEditSubmission)="onEditSubmissionName($event)"
+      (onDeleteSubmission)="onDeleteSubmission($event)"
+    ></app-submissions-table>
+
+    <app-edit-name-dialog
+      header="Document description"
+      [value]="editedSubmission.name ?? ''"
+      [(showDialog)]="editSubmissionNameDialogVisible"
+      (onValidate)="onValidateSubmissionNameEdit($event)"
+    ></app-edit-name-dialog>
   </ng-container>
 </app-main-layout>

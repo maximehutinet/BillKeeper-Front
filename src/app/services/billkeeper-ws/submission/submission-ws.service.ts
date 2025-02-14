@@ -23,7 +23,7 @@ export class SubmissionWsService {
     return this.httpWsService.post(`/submissions`, submission);
   }
 
-  async updateSubmission(submissionId: string, submission: InsuranceSubmissionWithBills): Promise<void> {
+  async updateSubmission(submissionId: string, submission: CreateUpdateInsuranceSubmissionRequest): Promise<void> {
     return this.httpWsService.post(`/submissions/${submissionId}`, submission);
   }
 
