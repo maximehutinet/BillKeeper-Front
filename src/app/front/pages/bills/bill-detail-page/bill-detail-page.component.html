@@ -1,8 +1,7 @@
 <app-main-layout>
   <ng-container main-content>
-    <div id="top-bar">
-      <p-button routerLink="" icon="pi pi-arrow-left" [rounded]="true"/>
-      <div class="buttons-wrapper">
+    <app-top-bar-with-back-button>
+      <div right class="buttons-wrapper">
         <p-button *ngIf="!bill.paidDateTime" severity="help"
                   icon="pi pi-dollar"
                   (onClick)="onMarkAsPaid()"
@@ -18,7 +17,7 @@
         <p-button severity="info" icon="pi pi-pencil" [routerLink]="'/bill/' + bill.id + '/edit'"></p-button>
         <p-button (onClick)="onDeleteBill()" severity="danger" icon="pi pi-trash"></p-button>
       </div>
-    </div>
+    </app-top-bar-with-back-button>
 
     <p-fieldset legend="Bill detail" [toggleable]="true">
       <div class="card-body">

@@ -9,7 +9,7 @@
     ></app-submissions-table>
 
     <app-edit-name-dialog
-      header="Document description"
+      header="Submission name"
       [value]="editedSubmission.name ?? ''"
       [(showDialog)]="editSubmissionNameDialogVisible"
       (onValidate)="onValidateSubmissionNameEdit($event)"

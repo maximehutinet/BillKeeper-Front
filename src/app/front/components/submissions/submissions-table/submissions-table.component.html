@@ -19,7 +19,7 @@
       <td>≈ {{ getApproximateTotalDollarValue(submission.bills) | currency }}</td>
       <td class="bill-action buttons-wrapper">
         <p-button
-          *ngIf="markAsPaidButtonVisible(submission)"
+          *ngIf="markAsPaidSubmissionButtonVisible(submission)"
           icon="pi pi-dollar"
           [rounded]="true"
           (onClick)="onMarkAsPaid.emit(submission)"
@@ -29,7 +29,7 @@
           severity="help"
         />
         <p-button
-          *ngIf="markAsReimbursedButtonVisible(submission)"
+          *ngIf="markAsReimbursedSubmissionButtonVisible(submission)"
           icon="pi pi-check-circle"
           [rounded]="true"
           (onClick)="onMarkAsReimbursed.emit(submission)"

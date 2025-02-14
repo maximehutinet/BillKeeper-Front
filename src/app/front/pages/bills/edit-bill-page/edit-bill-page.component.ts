@@ -20,6 +20,9 @@ import {BillDocument} from '../../../../services/billkeeper-ws/document/model';
 import {LayoutService} from '../../../../services/layout.service';
 import {Fieldset} from 'primeng/fieldset';
 import {BeneficiarySelectOption} from '../../../components/bills/bills-filter/model';
+import {
+  TopBarWithBackButtonComponent
+} from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
 
 @Component({
   selector: 'app-edit-bill-page',
@@ -36,6 +39,7 @@ import {BeneficiarySelectOption} from '../../../components/bills/bills-filter/mo
     InputMask,
     DocumentsViewerComponent,
     Fieldset,
+    TopBarWithBackButtonComponent,
   ],
   templateUrl: './edit-bill-page.component.html',
   styleUrl: './edit-bill-page.component.scss'

@@ -24,29 +24,33 @@ import {CommentWsService} from '../../../../services/billkeeper-ws/comment/comme
 import {LayoutService} from '../../../../services/layout.service';
 import {ValidationService} from '../../../../services/validation.service';
 import {ToastMessageService} from '../../../../services/toast-message.service';
+import {
+  TopBarWithBackButtonComponent
+} from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
 
 @Component({
   selector: 'app-bill-detail-page',
-    imports: [
-        BillStatusBadgeComponent,
-        Button,
-        CommentComponent,
-        CurrencyPipe,
-        DatePipe,
-        DocumentsViewerComponent,
-        EditCommentDialogComponent,
-        EditNameDialogComponent,
-        Fieldset,
-        FloatLabel,
-        FormsModule,
-        MainLayoutComponent,
-        NgForOf,
-        NgIf,
-        RouterLink,
-        Textarea,
-        Tooltip,
-        CurrencyPipe
-    ],
+  imports: [
+    BillStatusBadgeComponent,
+    Button,
+    CommentComponent,
+    CurrencyPipe,
+    DatePipe,
+    DocumentsViewerComponent,
+    EditCommentDialogComponent,
+    EditNameDialogComponent,
+    Fieldset,
+    FloatLabel,
+    FormsModule,
+    MainLayoutComponent,
+    NgForOf,
+    NgIf,
+    RouterLink,
+    Textarea,
+    Tooltip,
+    CurrencyPipe,
+    TopBarWithBackButtonComponent
+  ],
   templateUrl: './bill-detail-page.component.html',
   styleUrl: './bill-detail-page.component.scss'
 })

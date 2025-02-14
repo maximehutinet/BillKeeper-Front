@@ -1,9 +1,8 @@
 <app-main-layout>
   <ng-container main-content>
-    <div id="top-bar">
-      <p-button (click)="location.back()" icon="pi pi-arrow-left" [rounded]="true"/>
-      <p-button icon="pi pi-save" (onClick)="onSaveBill()" severity="success" label="Save"/>
-    </div>
+    <app-top-bar-with-back-button>
+      <p-button right icon="pi pi-save" (onClick)="onSaveBill()" severity="success" label="Save"/>
+    </app-top-bar-with-back-button>
 
     <div id="edit-bill-wrapper">
       <form *ngIf="form" [formGroup]="form">

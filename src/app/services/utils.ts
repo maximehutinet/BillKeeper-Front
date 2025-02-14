@@ -1,5 +1,6 @@
 import {Bill, BillStatus, Currency} from './billkeeper-ws/bill/model';
 import {ExchangeRate} from './model/commun';
+import {InsuranceSubmissionWithBills} from './billkeeper-ws/submission/model';
 
 export function billStatusToString(status: BillStatus | undefined): string {
   switch (status) {
@@ -58,4 +59,12 @@ export function getApproximateTotalDollarValue(bills: Bill[]) {
       return (p ?? 0) + (c ?? 0)
     }, 0);
   return value?.toFixed(2);
+}
+
+export function markAsPaidSubmissionButtonVisible(submission: InsuranceSubmissionWithBills): boolean {
+  return submission.bills.filter(bill => !bill.paidDateTime).length === submission.bills.length;
+}
+
+export function markAsReimbursedSubmissionButtonVisible(submission: InsuranceSubmissionWithBills): boolean {
+  return submission.bills.filter(bill => bill.status !== BillStatus.REIMBURSED).length === submission.bills.length;
 }

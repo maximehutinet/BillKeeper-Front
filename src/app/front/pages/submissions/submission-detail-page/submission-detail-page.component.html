@@ -1,5 +1,28 @@
 <app-main-layout>
   <ng-container main-content>
+    <app-top-bar-with-back-button>
+      <div right class="buttons-wrapper">
+        <p-button
+          *ngIf="markAsPaidSubmissionButtonVisible(submission)"
+          severity="help"
+          icon="pi pi-dollar"
+          (onClick)="onMarkSubmissionAsPaid()"
+          pTooltip="Mark as paid"
+          showDelay="500"
+          hideDelay="300"></p-button>
+        <p-button
+          *ngIf="markAsReimbursedSubmissionButtonVisible(submission)"
+          severity="success"
+          icon="pi pi-check-circle"
+          (onClick)="onMarkSubmissionAsReimbursed()"
+          pTooltip="Mark as reimbursed"
+          showDelay="500"
+          hideDelay="300"></p-button>
+        <p-button severity="info" icon="pi pi-pencil" (onClick)="onEditSubmissionName()"></p-button>
+        <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteSubmission()"></p-button>
+      </div>
+    </app-top-bar-with-back-button>
+
     <p-fieldset legend="Submission detail" [toggleable]="true">
       <div class="card-body">
         <div class="card-entry">
@@ -22,5 +45,12 @@
       [displayDeleteButton]="true"
       (onDelete)="onRemoveBillFromSubmission($event)"
     ></app-bills-table>
+
+    <app-edit-name-dialog
+      header="Submission name"
+      [value]="newSubmissionName ?? ''"
+      [(showDialog)]="editSubmissionNameDialogVisible"
+      (onValidate)="onValidateSubmissionNameEdit($event)"
+    ></app-edit-name-dialog>
   </ng-container>
 </app-main-layout>

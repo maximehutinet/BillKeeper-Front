@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {BillsTableComponent} from "../../../components/bills/bills-table/bills-table.component";
-import {CurrencyPipe, DatePipe} from "@angular/common";
+import {CurrencyPipe, DatePipe, Location, NgIf} from "@angular/common";
 import {Fieldset} from "primeng/fieldset";
 import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.component";
 import {
@@ -11,45 +11,75 @@ import {SubmissionWsService} from '../../../../services/billkeeper-ws/submission
 import {ActivatedRoute} from '@angular/router';
 import {LayoutService} from '../../../../services/layout.service';
 import {ToastMessageService} from '../../../../services/toast-message.service';
-import {getApproximateTotalDollarValue} from "../../../../services/utils";
+import {
+  getApproximateTotalDollarValue,
+  markAsPaidSubmissionButtonVisible,
+  markAsReimbursedSubmissionButtonVisible
+} from "../../../../services/utils";
 import {Bill} from '../../../../services/billkeeper-ws/bill/model';
 import {ValidationService} from '../../../../services/validation.service';
+import {Button} from 'primeng/button';
+import {Tooltip} from 'primeng/tooltip';
+import {
+  TopBarWithBackButtonComponent
+} from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
+import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
+import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
 
 @Component({
   selector: 'app-submission-detail-page',
-    imports: [
-        BillsTableComponent,
-        DatePipe,
-        Fieldset,
-        MainLayoutComponent,
-        CurrencyPipe
-    ],
+  imports: [
+    BillsTableComponent,
+    DatePipe,
+    Fieldset,
+    MainLayoutComponent,
+    CurrencyPipe,
+    Button,
+    Tooltip,
+    TopBarWithBackButtonComponent,
+    NgIf,
+    EditNameDialogComponent
+  ],
   templateUrl: './submission-detail-page.component.html',
   styleUrl: './submission-detail-page.component.scss'
 })
 export class SubmissionDetailPageComponent {
 
   protected readonly getApproximateTotalDollarValue = getApproximateTotalDollarValue;
+  protected readonly markAsPaidSubmissionButtonVisible = markAsPaidSubmissionButtonVisible;
+  protected readonly markAsReimbursedSubmissionButtonVisible = markAsReimbursedSubmissionButtonVisible;
 
   submission: InsuranceSubmissionWithBills = {
     bills: []
   };
+  editSubmissionNameDialogVisible = false;
+  newSubmissionName: string | undefined;
 
   constructor(
     private submissionWsService: SubmissionWsService,
+    private billWsService: BillWsService,
     private activatedRoute: ActivatedRoute,
     private layoutService: LayoutService,
     private validationService: ValidationService,
-    private toastMessageService: ToastMessageService
+    private toastMessageService: ToastMessageService,
+    private location: Location
 
   ) {
   }
 
   async ngOnInit() {
     try {
+      this.submission.id = await this.activatedRoute.snapshot.params['submissionId'];
+      await this.loadSubmission();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async loadSubmission() {
+    try {
       await this.layoutService.withPageLoading(async () => {
-        const submissionId = await this.activatedRoute.snapshot.params['submissionId'];
-        this.submission = await this.submissionWsService.getSubmission(submissionId);
+        this.submission = await this.submissionWsService.getSubmission(this.submission.id!);
       });
     } catch (e) {
       this.toastMessageService.displayError(e);
@@ -65,11 +95,61 @@ export class SubmissionDetailPageComponent {
             .map(b => b.id!)
         }
         await this.submissionWsService.updateSubmission(this.submission.id!, request);
-        this.submission = await this.submissionWsService.getSubmission(this.submission.id!);
+        await this.loadSubmission();
       }, "Are you sure you want to remove bill from submission?");
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
+  }
 
+  async onMarkSubmissionAsPaid() {
+    try {
+      for (const bill of this.submission.bills) {
+        await this.billWsService.markBillAsPaid(bill.id!);
+      }
+      await this.loadSubmission();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onMarkSubmissionAsReimbursed() {
+    try {
+      for (const bill of this.submission.bills) {
+        await this.billWsService.markBillAsReimbursed(bill)
+      }
+      await this.loadSubmission();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  onEditSubmissionName() {
+    this.newSubmissionName = this.submission.name;
+    this.editSubmissionNameDialogVisible = true;
+  }
+
+  async onValidateSubmissionNameEdit(name: string) {
+    try {
+      this.editSubmissionNameDialogVisible = false;
+      const request: CreateUpdateInsuranceSubmissionRequest = {
+        name: name
+      }
+      await this.submissionWsService.updateSubmission(this.submission.id!, request);
+      await this.loadSubmission();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onDeleteSubmission() {
+    try {
+      this.validationService.showConfirmationDialog(async () => {
+        await this.submissionWsService.deleteSubmission(this.submission.id!);
+        this.location.back()
+      });
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
   }
 }
