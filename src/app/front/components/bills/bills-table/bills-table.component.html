@@ -15,6 +15,7 @@
       <th pSortableColumn="bill.status">Status
         <p-sortIcon field="bill.status"/>
       </th>
+      <th>Paid</th>
       <th>Actions</th>
     </tr>
   </ng-template>
@@ -30,7 +31,7 @@
       <td>
         <app-bill-status-badge [bill]="row.bill"></app-bill-status-badge>
       </td>
-
+      <td><i *ngIf="row.bill.paidDateTime" class="pi pi-check"></i></td>
       <td class="bill-action buttons-wrapper">
         <p-button
           *ngIf="displayMarkAsPaidButton && !row.bill.paidDateTime"

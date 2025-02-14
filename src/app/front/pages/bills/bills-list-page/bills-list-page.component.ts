@@ -69,9 +69,8 @@ export class BillsListPageComponent {
         return;
       }
       await this.uploadBills(event.target.files);
-      this.bills = await this.billWsService.getAllBills();
-      this.filteredBills = this.bills;
       this.resetFiltersSubject.next();
+      await this.loadAllBills();
     });
   }
 
