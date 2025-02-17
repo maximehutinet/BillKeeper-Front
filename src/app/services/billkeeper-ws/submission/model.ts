@@ -7,7 +7,8 @@ export interface InsuranceSubmission {
 }
 
 export interface InsuranceSubmissionWithBills extends InsuranceSubmission {
-  bills: Bill[]
+  bills: Bill[];
+  totalUsdAmount?: number;
 }
 
 export interface CreateUpdateInsuranceSubmissionRequest {
