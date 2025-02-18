@@ -28,39 +28,6 @@ export function billStatusBadge(status: BillStatus | undefined): "info" | "succe
   }
 }
 
-export function convertCurrency(source: Currency, destination: Currency, amount: number): number | undefined {
-  const exchangeRates: ExchangeRate[] = [
-    {
-      source: Currency.EURO,
-      destination: Currency.USD,
-      rate: 1.04
-    },
-    {
-      source: Currency.CHF,
-      destination: Currency.USD,
-      rate: 1.09
-    }
-  ];
-  const rate = exchangeRates
-    .filter(value => value.source === source && value.destination === destination)
-    .map(value => value.rate)
-    .pop();
-  if (rate) {
-    return amount * rate;
-  }
-  return undefined;
-}
-
-export function getApproximateTotalDollarValue(bills: Bill[]) {
-  const value = bills
-    .filter(bill => bill.currency && bill.amount)
-    .map(bill => convertCurrency(bill.currency!, Currency.USD, bill.amount!))
-    .reduce((p, c) => {
-      return (p ?? 0) + (c ?? 0)
-    }, 0);
-  return value?.toFixed(2);
-}
-
 export function markAsPaidSubmissionButtonVisible(submission: InsuranceSubmissionWithBills): boolean {
   return submission.bills.filter(bill => !bill.paidDateTime).length === submission.bills.length;
 }

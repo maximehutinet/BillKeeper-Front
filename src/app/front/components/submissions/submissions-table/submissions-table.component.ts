@@ -6,11 +6,7 @@ import {Ripple} from "primeng/ripple";
 import {TableModule} from "primeng/table";
 import {Tooltip} from "primeng/tooltip";
 import {InsuranceSubmissionWithBills} from '../../../../services/billkeeper-ws/submission/model';
-import {
-  getApproximateTotalDollarValue,
-  markAsPaidSubmissionButtonVisible,
-  markAsReimbursedSubmissionButtonVisible
-} from '../../../../services/utils';
+import {markAsPaidSubmissionButtonVisible, markAsReimbursedSubmissionButtonVisible} from '../../../../services/utils';
 import {RouterLink} from '@angular/router';
 
 @Component({
@@ -31,7 +27,6 @@ import {RouterLink} from '@angular/router';
 })
 export class SubmissionsTableComponent {
 
-  protected readonly getApproximateTotalDollarValue = getApproximateTotalDollarValue;
   protected readonly markAsPaidSubmissionButtonVisible = markAsPaidSubmissionButtonVisible;
   protected readonly markAsReimbursedSubmissionButtonVisible = markAsReimbursedSubmissionButtonVisible;
 

@@ -11,11 +11,7 @@ import {SubmissionWsService} from '../../../../services/billkeeper-ws/submission
 import {ActivatedRoute} from '@angular/router';
 import {LayoutService} from '../../../../services/layout.service';
 import {ToastMessageService} from '../../../../services/toast-message.service';
-import {
-  getApproximateTotalDollarValue,
-  markAsPaidSubmissionButtonVisible,
-  markAsReimbursedSubmissionButtonVisible
-} from "../../../../services/utils";
+import {markAsPaidSubmissionButtonVisible, markAsReimbursedSubmissionButtonVisible} from "../../../../services/utils";
 import {Bill} from '../../../../services/billkeeper-ws/bill/model';
 import {ValidationService} from '../../../../services/validation.service';
 import {Button} from 'primeng/button';
@@ -45,7 +41,6 @@ import {EditNameDialogComponent} from '../../../components/commun/edit-name-dial
 })
 export class SubmissionDetailPageComponent {
 
-  protected readonly getApproximateTotalDollarValue = getApproximateTotalDollarValue;
   protected readonly markAsPaidSubmissionButtonVisible = markAsPaidSubmissionButtonVisible;
   protected readonly markAsReimbursedSubmissionButtonVisible = markAsReimbursedSubmissionButtonVisible;
 

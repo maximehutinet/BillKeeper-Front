@@ -16,7 +16,7 @@
       </td>
       <td>{{ submission.dateTime | date: 'longDate' }}</td>
       <td>{{ submission.name }}</td>
-      <td>≈ {{ getApproximateTotalDollarValue(submission.bills) | currency }}</td>
+      <td>{{ submission.totalUsdAmount | currency }}</td>
       <td class="bill-action buttons-wrapper">
         <p-button
           *ngIf="markAsPaidSubmissionButtonVisible(submission)"

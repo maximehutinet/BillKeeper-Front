@@ -33,9 +33,9 @@
           <label>Created on: </label>
           <span>{{ submission.dateTime | date: 'longDate' }}</span>
         </div>
-        <div class="card-entry">
+        <div *ngIf="submission.totalUsdAmount" class="card-entry">
           <label>Amount: </label>
-          <span>≈ {{ getApproximateTotalDollarValue(submission.bills) | currency }}</span>
+          <span>{{ submission.totalUsdAmount | currency }}</span>
         </div>
       </div>
     </p-fieldset>
