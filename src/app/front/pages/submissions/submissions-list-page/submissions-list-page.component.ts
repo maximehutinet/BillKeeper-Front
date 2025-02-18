@@ -13,6 +13,7 @@ import {ToastMessageService} from '../../../../services/toast-message.service';
 import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
 import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
 import {ValidationService} from '../../../../services/validation.service';
+import {TopBarComponent} from "../../../components/layout/top-bar/top-bar.component";
 
 @Component({
   selector: 'app-submissions-list-page',
@@ -20,7 +21,8 @@ import {ValidationService} from '../../../../services/validation.service';
     MainLayoutComponent,
     TableModule,
     SubmissionsTableComponent,
-    EditNameDialogComponent
+    EditNameDialogComponent,
+    TopBarComponent
   ],
   templateUrl: './submissions-list-page.component.html',
   styleUrl: './submissions-list-page.component.scss'

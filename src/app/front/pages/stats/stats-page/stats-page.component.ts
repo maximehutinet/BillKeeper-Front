@@ -3,11 +3,13 @@ import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.comp
 import {StatsWsService} from '../../../../services/billkeeper-ws/stats/stats-ws.service';
 import {Stats} from '../../../../services/billkeeper-ws/stats/model';
 import {ToastMessageService} from '../../../../services/toast-message.service';
+import {TopBarComponent} from "../../../components/layout/top-bar/top-bar.component";
 
 @Component({
   selector: 'app-stats-page',
   imports: [
-    MainLayoutComponent
+    MainLayoutComponent,
+    TopBarComponent
   ],
   templateUrl: './stats-page.component.html',
   styleUrl: './stats-page.component.scss'

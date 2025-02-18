@@ -1,11 +1,11 @@
 <app-main-layout>
   <ng-container main-content>
-    <div id="top-bar">
-      <div id="upload-file-btn" (click)="uploadInput.click()">
+    <app-top-bar>
+      <div left id="upload-file-btn" (click)="uploadInput.click()">
         <p-button label="Upload bills" icon="pi pi-file-arrow-up"></p-button>
         <input #uploadInput type="file" accept=".pdf" [multiple]="true" (change)="onUpload($event)">
       </div>
-      <div class="buttons-wrapper">
+      <div right class="buttons-wrapper">
         <p-button *ngIf="createNewSubmissionButtonVisible"
                   (click)="showSubmissionNameDialog = true"
                   label="Create new submission"
@@ -19,7 +19,7 @@
                   severity="success"
         />
       </div>
-    </div>
+    </app-top-bar>
 
     <app-bills-filter
       *ngIf="bills.length > 0"

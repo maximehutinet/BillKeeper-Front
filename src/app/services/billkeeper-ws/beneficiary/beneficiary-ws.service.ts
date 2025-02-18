@@ -14,4 +14,16 @@ export class BeneficiaryWsService {
   async getAllBeneficiaries(): Promise<Beneficiary[]> {
     return this.httpWsService.get<Beneficiary[]>("/beneficiaries")
   }
+
+  async createBeneficiary(firstname: string): Promise<void> {
+    return this.httpWsService.post<void>("/beneficiaries", {firstname: firstname});
+  }
+
+  async updateBeneficiary(beneficiary: Beneficiary): Promise<void> {
+    return this.httpWsService.post<void>(`/beneficiaries/${beneficiary.id}`, {firstname: beneficiary.firstname});
+  }
+
+  async deleteBeneficiary(beneficiary: Beneficiary): Promise<void> {
+    return this.httpWsService.delete<void>(`/beneficiaries/${beneficiary.id}`);
+  }
 }

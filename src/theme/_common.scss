@@ -4,6 +4,11 @@
   --app-content-padding-y: 2rem;
 }
 
+h1 {
+  margin: 0;
+  font-weight: var(--app-font-medium);
+}
+
 .buttons-wrapper {
   display: flex;
   gap: 0.5rem;

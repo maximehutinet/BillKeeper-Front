@@ -14,17 +14,19 @@ import {MessageType, ToastMessageService} from '../../../../services/toast-messa
 import {Router} from '@angular/router';
 import {CreateUpdateInsuranceSubmissionRequest} from '../../../../services/billkeeper-ws/submission/model';
 import {Subject} from 'rxjs';
+import {TopBarComponent} from '../../../components/layout/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-bills-list-page',
-    imports: [
-        BillsFilterComponent,
-        BillsTableComponent,
-        Button,
-        EditNameDialogComponent,
-        MainLayoutComponent,
-        NgIf
-    ],
+  imports: [
+    BillsFilterComponent,
+    BillsTableComponent,
+    Button,
+    EditNameDialogComponent,
+    MainLayoutComponent,
+    NgIf,
+    TopBarComponent
+  ],
   templateUrl: './bills-list-page.component.html',
   styleUrl: './bills-list-page.component.scss'
 })

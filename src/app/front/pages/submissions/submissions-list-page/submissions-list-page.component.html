@@ -1,5 +1,9 @@
 <app-main-layout>
   <ng-container main-content>
+    <app-top-bar>
+      <h1 left>Submissions</h1>
+    </app-top-bar>
+
     <app-submissions-table
       [submissions]="submissions"
       (onMarkAsPaid)="onMarkSubmissionAsPaid($event)"
