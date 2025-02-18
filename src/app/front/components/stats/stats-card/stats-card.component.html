@@ -1,0 +1,4 @@
+<div class="stats-card-wrapper">
+  <span *ngIf="text" class="stats-text">{{ text }}</span>
+  <span *ngIf="value !== undefined" class="stats-value">{{ isCurrency ? (value | currency) : value }}</span>
+</div>

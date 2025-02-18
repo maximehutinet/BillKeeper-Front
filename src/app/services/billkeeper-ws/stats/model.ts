@@ -1,3 +1,6 @@
 export interface Stats {
-  totalActiveBills: number;
+  totalUsdAmountToBeReimbursed: number;
+  totalUsdAmountToPay: number;
+  billToFileCount: number;
+  billInProgressCount: number;
 }
