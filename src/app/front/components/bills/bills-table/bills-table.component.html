@@ -44,7 +44,7 @@
           severity="help"
         />
         <p-button
-          *ngIf="displayMarkAsReimbursedButton && row.bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()"
+          *ngIf="displayMarkAsReimbursedButton && row.bill.status?.valueOf() === BillStatus.FILED.valueOf()"
           icon="pi pi-check-circle"
           (onClick)="onMarkBillAsReimbursed.emit(row.bill)"
           [rounded]="true"

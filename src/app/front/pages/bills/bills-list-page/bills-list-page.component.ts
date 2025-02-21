@@ -78,28 +78,16 @@ export class BillsListPageComponent {
 
   private async uploadBills(files: FileList) {
     for (const file of Array.from(files)) {
-      const bill: Bill = await this.createNewBill();
-      await this.uploadBill(bill, file);
+      await this.createNewBill(file);
     }
   }
 
-  private async createNewBill(): Promise<Bill> {
+  private async createNewBill(file: File): Promise<Bill> {
     try {
-      return await this.billWsService.createBill({});
+      return await this.billWsService.createBill(file);
     } catch (e) {
       this.toastMessageService.displayError(e);
       return {}
-    }
-  }
-
-  private async uploadBill(bill: Bill, file: File) {
-    try {
-      if (!bill.id) {
-        return;
-      }
-      await this.billWsService.uploadBillDocument(bill.id, file as File, true);
-    } catch (e) {
-      this.toastMessageService.displayError(e);
     }
   }
 

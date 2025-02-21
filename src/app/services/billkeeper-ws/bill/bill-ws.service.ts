@@ -20,16 +20,15 @@ export class BillWsService {
     return this.httpWsService.get<Bill>(`/bills/${billId}`);
   }
 
-  async createBill(bill: Bill): Promise<Bill> {
-    return this.httpWsService.post<Bill>("/bills", bill);
+  async createBill(file: File): Promise<Bill> {
+    const formData = new FormData();
+    formData.append("file", file);
+    return this.httpWsService.post("/bills", formData);
   }
 
-  async uploadBillDocument(billId: string, document: File, parseAndUpdateBill: boolean = false): Promise<void> {
+  async uploadBillDocument(billId: string, document: File): Promise<void> {
     const formData = new FormData();
     formData.append("file", document);
-    if (parseAndUpdateBill) {
-      return this.httpWsService.post(`/bills/${billId}/documents?parse=true`, formData);
-    }
     return this.httpWsService.post(`/bills/${billId}/documents`, formData);
   }
 
