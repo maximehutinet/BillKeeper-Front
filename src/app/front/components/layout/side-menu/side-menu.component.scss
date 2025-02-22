@@ -38,6 +38,8 @@
           cursor: pointer;
           border-radius: 4px;
           font-weight: var(--app-font-regular);
+          display: flex;
+          align-items: center;
 
           &:hover {
             background-color: var(--app-black-color);

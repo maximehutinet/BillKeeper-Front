@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpWsService} from '../http-ws.service';
+import {BillDocument, UpdateDocumentRequest} from './model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,11 @@ export class DocumentWsService {
     return this.httpWsService.delete(`/documents/${documentId}`);
   }
 
-  async updateDocumentDescription(documentId: string, description: string): Promise<void> {
-    return this.httpWsService.post(`/documents/${documentId}`, {description: description});
+  async updateDocument(documentId: string, request: UpdateDocumentRequest): Promise<void> {
+    return this.httpWsService.post(`/documents/${documentId}`, request);
+  }
+
+  async getAllOrphansDocuments() {
+    return this.httpWsService.get<BillDocument[]>("/documents/orphans");
   }
 }

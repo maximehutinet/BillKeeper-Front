@@ -1,0 +1,8 @@
+<p-dialog [visible]="visible" (visibleChange)="visibleChange.emit($event)" [modal]="true">
+  <pdf-viewer
+    [src]="document.url"
+    [original-size]="false"
+    [show-borders]="true"
+    style="width: 50vw; height: 100vh"
+  ></pdf-viewer>
+</p-dialog>

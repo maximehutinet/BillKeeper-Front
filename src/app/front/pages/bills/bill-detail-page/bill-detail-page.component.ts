@@ -234,7 +234,7 @@ export class BillDetailPageComponent {
 
   async onValidateNewDocumentDescription(description: string) {
     try {
-      await this.documentWsService.updateDocumentDescription(this.editedDocument.id!, description);
+      await this.documentWsService.updateDocument(this.editedDocument.id!, {description: description});
       await this.loadBillDocuments();
       this.editDocumentDescriptionDialogVisible = false;
     } catch (e) {

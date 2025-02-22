@@ -10,6 +10,7 @@ import {BillsListPageComponent} from './front/pages/bills/bills-list-page/bills-
 import {BillDetailPageComponent} from './front/pages/bills/bill-detail-page/bill-detail-page.component';
 import {SettingsPageComponent} from './front/pages/settings/settings-page/settings-page.component';
 import {StatsPageComponent} from './front/pages/stats/stats-page/stats-page.component';
+import {DocumentListPageComponent} from './front/pages/documents/document-list-page/document-list-page.component';
 
 export const routes: Routes = [
   {path: '', component: BillsListPageComponent},
@@ -19,4 +20,5 @@ export const routes: Routes = [
   {path: 'submissions/:submissionId', component: SubmissionDetailPageComponent},
   {path: 'settings', component: SettingsPageComponent},
   {path: 'stats', component: StatsPageComponent},
+  {path: 'documents', component: DocumentListPageComponent},
 ];
