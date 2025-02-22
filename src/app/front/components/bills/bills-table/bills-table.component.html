@@ -25,9 +25,36 @@
         <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true"/>
       </td>
       <td>{{ row.bill.dateTime | date: 'longDate' }}</td>
-      <td class="bill-name" [routerLink]="'/bill/' + row.bill.id">{{ row.bill.name ?? 'N/S' }}</td>
-      <td>{{ row.bill.amount ? (row.bill.amount | currency:row.bill.currency) : 'N/S' }}</td>
-      <td>{{ row.bill.beneficiary?.firstname ?? 'N/S' }}</td>
+      <td class="bill-name" [routerLink]="'/bill/' + row.bill.id">
+        @if (row.bill.name) {
+          {{ row.bill.name }}
+        } @else {
+          <span class="not-specified-warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            N/S
+          </span>
+        }
+      </td>
+      <td>
+        @if (row.bill.amount) {
+          {{ row.bill.amount | currency:row.bill.currency }}
+        } @else {
+          <span class="not-specified-warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            N/S
+          </span>
+        }
+      </td>
+      <td>
+        @if (row.bill.beneficiary?.firstname) {
+          {{ row.bill.beneficiary?.firstname }}
+        } @else {
+          <span class="not-specified-warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            N/S
+          </span>
+        }
+      </td>
       <td>
         <app-bill-status-badge [bill]="row.bill"></app-bill-status-badge>
       </td>

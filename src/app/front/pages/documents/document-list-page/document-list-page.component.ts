@@ -15,6 +15,7 @@ import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.ser
 import {
   LinkDocumentToBillDialogComponent
 } from '../../../components/documents/link-document-to-bill-dialog/link-document-to-bill-dialog.component';
+import {TopBarComponent} from '../../../components/layout/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-document-list-page',
@@ -23,7 +24,8 @@ import {
     DocumentCardComponent,
     NgForOf,
     DocumentViewerDialogComponent,
-    LinkDocumentToBillDialogComponent
+    LinkDocumentToBillDialogComponent,
+    TopBarComponent
   ],
   templateUrl: './document-list-page.component.html',
   styleUrl: './document-list-page.component.scss'

@@ -1,5 +1,9 @@
 <app-main-layout>
   <ng-container main-content>
+    <app-top-bar>
+      <h1 left>Documents</h1>
+    </app-top-bar>
+
     <div id="documents-wrapper">
       <app-document-card
         *ngFor="let document of documents"

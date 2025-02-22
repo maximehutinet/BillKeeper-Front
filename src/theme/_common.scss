@@ -32,9 +32,35 @@ p-fieldset {
     gap: 0.5rem;
 
     .card-entry {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+
       label {
         font-weight: bold;
       }
     }
+  }
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+
+  .inline-fields-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.not-specified-warning {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+
+  i {
+    color: red;
   }
 }

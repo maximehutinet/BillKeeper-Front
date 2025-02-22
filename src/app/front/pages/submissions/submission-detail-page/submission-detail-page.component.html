@@ -30,6 +30,10 @@
           <span>{{ submission.name }}</span>
         </div>
         <div class="card-entry">
+          <label>eClaimId: </label>
+          <span>{{ submission.eclaimId ?? 'N/S' }}</span>
+        </div>
+        <div class="card-entry">
           <label>Created on: </label>
           <span>{{ submission.dateTime | date: 'longDate' }}</span>
         </div>

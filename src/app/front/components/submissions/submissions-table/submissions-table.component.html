@@ -3,6 +3,7 @@
     <tr>
       <th style="width: 5rem"></th>
       <th>Date</th>
+      <th>eClaimId</th>
       <th>Name</th>
       <th>Amount</th>
       <th>Actions</th>
@@ -15,6 +16,16 @@
                   [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"/>
       </td>
       <td>{{ submission.dateTime | date: 'longDate' }}</td>
+      <td>
+        @if (submission.eclaimId) {
+          {{ submission.eclaimId }}
+        } @else {
+          <span class="not-specified-warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            N/S
+          </span>
+        }
+      </td>
       <td>{{ submission.name }}</td>
       <td>{{ submission.totalUsdAmount | currency }}</td>
       <td class="bill-action buttons-wrapper">
@@ -41,7 +52,7 @@
         <p-button
           icon="pi pi-pencil"
           [rounded]="true"
-          (onClick)="onEditSubmission.emit(submission)"
+          [routerLink]="'/submissions/' + submission.id + '/edit'"
           pTooltip="Edit"
           showDelay="500"
           hideDelay="300"

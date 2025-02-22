@@ -5,7 +5,7 @@
     </app-top-bar-with-back-button>
 
     <div id="edit-bill-wrapper">
-      <form *ngIf="form" [formGroup]="form">
+      <form *ngIf="form" [formGroup]="form" class="edit-form">
         <p-floatlabel>
           <input id="bill-name-input" pInputText formControlName="name" />
           <label for="bill-name-input">Name</label>

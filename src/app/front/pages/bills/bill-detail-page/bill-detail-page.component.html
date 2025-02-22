@@ -23,15 +23,42 @@
       <div class="card-body">
         <div class="card-entry">
           <label>Name: </label>
-          <span>{{ bill.name ?? 'N/S' }}</span>
+          <span>
+            @if (bill.name) {
+              {{ bill.name }}
+            } @else {
+              <span class="not-specified-warning">
+                <i class="pi pi-exclamation-triangle"></i>
+                N/S
+              </span>
+            }
+          </span>
         </div>
         <div class="card-entry">
           <label>Amount: </label>
-          <span>{{ bill.amount ? (bill.amount | currency:bill.currency) : 'N/S' }}</span>
+          <span>
+            @if (bill.amount) {
+              {{ bill.amount | currency:bill.currency }}
+            } @else {
+              <span class="not-specified-warning">
+                <i class="pi pi-exclamation-triangle"></i>
+                N/S
+              </span>
+            }
+          </span>
         </div>
         <div class="card-entry">
           <label>Provider: </label>
-          <span>{{ bill.provider ?? 'N/S' }}</span>
+          <span>
+            @if (bill.provider) {
+              {{ bill.provider }}
+            } @else {
+              <span class="not-specified-warning">
+                <i class="pi pi-exclamation-triangle"></i>
+                N/S
+              </span>
+            }
+          </span>
         </div>
         <div class="card-entry">
           <label>Status: </label>
@@ -47,7 +74,16 @@
         </div>
         <div class="card-entry">
           <label>Beneficiary: </label>
-          <span>{{ bill.beneficiary?.firstname ?? 'N/S' }}</span>
+          <span>
+            @if (bill.beneficiary?.firstname) {
+              {{ bill.beneficiary?.firstname }}
+            } @else {
+              <span class="not-specified-warning">
+                <i class="pi pi-exclamation-triangle"></i>
+                N/S
+              </span>
+            }
+          </span>
         </div>
       </div>
     </p-fieldset>

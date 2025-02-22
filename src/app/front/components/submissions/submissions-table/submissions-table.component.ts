@@ -40,9 +40,6 @@ export class SubmissionsTableComponent {
   onMarkAsReimbursed: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
 
   @Output()
-  onEditSubmission: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
-
-  @Output()
   onDeleteSubmission: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
 
 

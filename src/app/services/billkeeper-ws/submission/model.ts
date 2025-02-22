@@ -4,6 +4,7 @@ export interface InsuranceSubmission {
   id?: string;
   dateTime?: Date;
   name?: string;
+  eclaimId?: string;
 }
 
 export interface InsuranceSubmissionWithBills extends InsuranceSubmission {
@@ -13,5 +14,6 @@ export interface InsuranceSubmissionWithBills extends InsuranceSubmission {
 
 export interface CreateUpdateInsuranceSubmissionRequest {
   name?: string;
+  eClaimId?: string;
   billIds?: string[];
 }
