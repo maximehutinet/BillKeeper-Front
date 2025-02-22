@@ -11,6 +11,11 @@
           <label for="bill-name-input">Name</label>
         </p-floatlabel>
 
+        <p-floatlabel>
+          <p-inputmask id="bill-servicedatetime-input" mask="9999/99/99" slotChar="yyyy/mm/dd" formControlName="serviceDateTime" />
+          <label for="bill-servicedatetime-input">Date of service</label>
+        </p-floatlabel>
+
         <div class="inline-fields-wrapper">
           <p-floatlabel>
             <p-inputnumber inputId="bill-amount-input" mode="currency" [currency]="billCurrency?.value ?? 'CHF'" locale="en-US" formControlName="amount" />

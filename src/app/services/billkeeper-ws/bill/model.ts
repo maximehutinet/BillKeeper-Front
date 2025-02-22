@@ -7,6 +7,7 @@ export interface Bill {
   name?: string;
   amount?: number;
   currency?: Currency;
+  serviceDateTime?: Date;
   paidDateTime?: Date;
   provider?: string;
   status?: BillStatus;
@@ -16,8 +17,7 @@ export interface Bill {
 
 export enum Currency {
   CHF = "CHF",
-  EURO = "EUR",
-  USD = "USD"
+  EURO = "EUR"
 }
 
 export enum BillStatus {

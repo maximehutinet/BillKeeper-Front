@@ -18,7 +18,7 @@
           pTooltip="Mark as reimbursed"
           showDelay="500"
           hideDelay="300"></p-button>
-        <p-button severity="info" icon="pi pi-pencil" (onClick)="onEditSubmissionName()"></p-button>
+        <p-button severity="info" icon="pi pi-pencil" [routerLink]="'/submissions/' + submission.id + '/edit'"></p-button>
         <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteSubmission()"></p-button>
       </div>
     </app-top-bar-with-back-button>
@@ -49,12 +49,5 @@
       [displayDeleteButton]="true"
       (onDelete)="onRemoveBillFromSubmission($event)"
     ></app-bills-table>
-
-    <app-edit-name-dialog
-      header="Submission name"
-      [value]="newSubmissionName ?? ''"
-      [(showDialog)]="editSubmissionNameDialogVisible"
-      (onValidate)="onValidateSubmissionNameEdit($event)"
-    ></app-edit-name-dialog>
   </ng-container>
 </app-main-layout>

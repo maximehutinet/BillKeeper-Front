@@ -109,6 +109,7 @@ export class EditBillPageComponent {
   private buildForm() {
     this.form = new FormGroup({
       name: new FormControl(this.bill.name),
+      serviceDateTime: new FormControl(this.bill.serviceDateTime),
       amount: new FormControl(this.bill.amount),
       provider: new FormControl(this.bill.provider),
       beneficiary: new FormControl(this.bill.beneficiary)
@@ -122,6 +123,7 @@ export class EditBillPageComponent {
     try {
       const updatedBill: Bill = {
         name: this.form.value.name,
+        serviceDateTime: this.form.value.serviceDateTime ? new Date(this.form.value.serviceDateTime) : undefined,
         amount: this.form.value.amount,
         currency: <Currency> this.billCurrency?.value,
         paidDateTime: this.form.value.paidDateTime ? new Date(this.form.value.paidDateTime) : undefined,

@@ -8,7 +8,7 @@ import {
   InsuranceSubmissionWithBills
 } from '../../../../services/billkeeper-ws/submission/model';
 import {SubmissionWsService} from '../../../../services/billkeeper-ws/submission/submission-ws.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {LayoutService} from '../../../../services/layout.service';
 import {ToastMessageService} from '../../../../services/toast-message.service';
 import {markAsPaidSubmissionButtonVisible, markAsReimbursedSubmissionButtonVisible} from "../../../../services/utils";
@@ -20,7 +20,6 @@ import {
   TopBarWithBackButtonComponent
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
 import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
-import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
 
 @Component({
   selector: 'app-submission-detail-page',
@@ -34,7 +33,7 @@ import {EditNameDialogComponent} from '../../../components/commun/edit-name-dial
     Tooltip,
     TopBarWithBackButtonComponent,
     NgIf,
-    EditNameDialogComponent
+    RouterLink
   ],
   templateUrl: './submission-detail-page.component.html',
   styleUrl: './submission-detail-page.component.scss'
@@ -47,8 +46,6 @@ export class SubmissionDetailPageComponent {
   submission: InsuranceSubmissionWithBills = {
     bills: []
   };
-  editSubmissionNameDialogVisible = false;
-  newSubmissionName: string | undefined;
 
   constructor(
     private submissionWsService: SubmissionWsService,
@@ -113,24 +110,6 @@ export class SubmissionDetailPageComponent {
       for (const bill of this.submission.bills) {
         await this.billWsService.markBillAsReimbursed(bill)
       }
-      await this.loadSubmission();
-    } catch (e) {
-      this.toastMessageService.displayError(e);
-    }
-  }
-
-  onEditSubmissionName() {
-    this.newSubmissionName = this.submission.name;
-    this.editSubmissionNameDialogVisible = true;
-  }
-
-  async onValidateSubmissionNameEdit(name: string) {
-    try {
-      this.editSubmissionNameDialogVisible = false;
-      const request: CreateUpdateInsuranceSubmissionRequest = {
-        name: name
-      }
-      await this.submissionWsService.updateSubmission(this.submission.id!, request);
       await this.loadSubmission();
     } catch (e) {
       this.toastMessageService.displayError(e);

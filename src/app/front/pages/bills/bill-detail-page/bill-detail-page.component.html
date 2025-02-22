@@ -35,6 +35,19 @@
           </span>
         </div>
         <div class="card-entry">
+          <label>Date of service: </label>
+          <span>
+            @if (bill.serviceDateTime) {
+              {{ bill.serviceDateTime | date: 'longDate' }}
+            } @else {
+              <span class="not-specified-warning">
+                <i class="pi pi-exclamation-triangle"></i>
+                N/S
+              </span>
+            }
+          </span>
+        </div>
+        <div class="card-entry">
           <label>Amount: </label>
           <span>
             @if (bill.amount) {
