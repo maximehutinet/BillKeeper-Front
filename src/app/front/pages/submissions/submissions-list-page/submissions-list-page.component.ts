@@ -14,6 +14,7 @@ import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-submissions-list-page',
@@ -26,7 +27,8 @@ import {FormsModule} from '@angular/forms';
     IconField,
     InputIcon,
     InputText,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './submissions-list-page.component.html',
   styleUrl: './submissions-list-page.component.scss'
@@ -74,7 +76,7 @@ export class SubmissionsListPageComponent {
   async onMarkSubmissionAsPaid(submission: InsuranceSubmissionWithBills) {
     try {
       for (const bill of submission.bills) {
-        await this.billWsService.markBillAsPaid(bill.id!)
+        await this.billWsService.markBillAsPaid(bill)
       }
       await this.loadSubmissions();
     } catch (e) {

@@ -158,7 +158,7 @@ export class BillDetailPageComponent {
   async onMarkAsPaid() {
     try {
       await this.layoutService.withPageLoading(async () => {
-        await this.billWsService.markBillAsPaid(this.bill.id!);
+        await this.billWsService.markBillAsPaid(this.bill);
         this.bill = await this.billWsService.getBill(this.bill.id!);
       });
     } catch (e) {

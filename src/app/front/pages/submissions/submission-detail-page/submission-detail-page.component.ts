@@ -97,7 +97,7 @@ export class SubmissionDetailPageComponent {
   async onMarkSubmissionAsPaid() {
     try {
       for (const bill of this.submission.bills) {
-        await this.billWsService.markBillAsPaid(bill.id!);
+        await this.billWsService.markBillAsPaid(bill);
       }
       await this.loadSubmission();
     } catch (e) {

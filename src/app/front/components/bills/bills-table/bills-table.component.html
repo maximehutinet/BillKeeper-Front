@@ -4,8 +4,8 @@
       <th *ngIf="makeBillSelectable">
         <p-checkbox [(ngModel)]="allRowsSelected" (onChange)="onAllRowsSelected()" [binary]="true"/>
       </th>
-      <th pSortableColumn="bill.dateTime">Date
-        <p-sortIcon field="bill.dateTime"/>
+      <th pSortableColumn="bill.serviceDateTime">Date of Service
+        <p-sortIcon field="bill.serviceDateTime"/>
       </th>
       <th>Name</th>
       <th>Amount</th>
@@ -24,7 +24,16 @@
       <td *ngIf="makeBillSelectable">
         <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true"/>
       </td>
-      <td>{{ row.bill.dateTime | date: 'longDate' }}</td>
+      <td>
+        @if (row.bill.serviceDateTime) {
+          {{ row.bill.serviceDateTime | date: 'longDate' }}
+        } @else {
+          <span class="not-specified-warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            N/S
+          </span>
+        }
+      </td>
       <td class="bill-name" [routerLink]="'/bill/' + row.bill.id">
         @if (row.bill.name) {
           {{ row.bill.name }}

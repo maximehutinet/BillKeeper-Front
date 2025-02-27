@@ -116,7 +116,7 @@ export class BillsListPageComponent {
 
   async onMarkAsPaid(bill: Bill) {
     try {
-      await this.billWsService.markBillAsPaid(bill.id!);
+      await this.billWsService.markBillAsPaid(bill);
       await this.loadAllBills();
     } catch (e) {
       this.toastMessageService.displayError(e);

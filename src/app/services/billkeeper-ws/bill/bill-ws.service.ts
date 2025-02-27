@@ -41,17 +41,19 @@ export class BillWsService {
 
   async markBillAsReimbursed(bill: Bill): Promise<void> {
     const requestBody: Bill = {
+      serviceDateTime: bill.serviceDateTime,
       paidDateTime: bill.paidDateTime,
       status: BillStatus.REIMBURSED
     }
     return this.httpWsService.post(`/bills/${bill.id}`, requestBody);
   }
 
-  async markBillAsPaid(billId: string): Promise<void> {
+  async markBillAsPaid(bill: Bill): Promise<void> {
     const requestBody: Bill = {
+      serviceDateTime: bill.serviceDateTime,
       paidDateTime: new Date()
     }
-    return this.httpWsService.post(`/bills/${billId}`, requestBody);
+    return this.httpWsService.post(`/bills/${bill.id}`, requestBody);
   }
 
   async deleteBill(billId: string): Promise<void> {
