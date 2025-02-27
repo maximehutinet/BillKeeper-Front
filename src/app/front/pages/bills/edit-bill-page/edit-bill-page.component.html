@@ -38,7 +38,7 @@
         </div>
 
         <p-floatlabel>
-          <input id="bill-provider-input" pInputText formControlName="provider" />
+          <p-autocomplete formControlName="provider" [suggestions]="providersOptions" (completeMethod)="onProviderAutocompleteChange($event)" inputId="bill-provider-input" />
           <label for="bill-provider-input">Provider</label>
         </p-floatlabel>
 

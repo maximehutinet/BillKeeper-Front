@@ -57,4 +57,8 @@ export class BillWsService {
   async deleteBill(billId: string): Promise<void> {
     return this.httpWsService.delete(`/bills/${billId}`);
   }
+
+  async getProvidersStartingWith(value: string) {
+    return this.httpWsService.get<string[]>(`/bills/providers?value=${value}`)
+  }
 }

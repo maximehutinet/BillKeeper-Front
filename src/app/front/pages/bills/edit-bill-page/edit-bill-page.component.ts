@@ -23,6 +23,7 @@ import {BeneficiarySelectOption} from '../../../components/bills/bills-filter/mo
 import {
   TopBarWithBackButtonComponent
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
+import {AutoComplete, AutoCompleteCompleteEvent} from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-edit-bill-page',
@@ -40,6 +41,7 @@ import {
     DocumentsViewerComponent,
     Fieldset,
     TopBarWithBackButtonComponent,
+    AutoComplete,
   ],
   templateUrl: './edit-bill-page.component.html',
   styleUrl: './edit-bill-page.component.scss'
@@ -61,6 +63,7 @@ export class EditBillPageComponent {
   beneficiaryOptions: BeneficiarySelectOption[] = [];
   billStatus?: EnumDropdownOption;
   billCurrency?: EnumDropdownOption;
+  providersOptions: string[] = [];
 
   constructor(
     private billWsService: BillWsService,
@@ -140,6 +143,10 @@ export class EditBillPageComponent {
 
   onDeletePaidOn() {
     this.form.value.paidDateTime = undefined;
+  }
+
+  async onProviderAutocompleteChange(event: AutoCompleteCompleteEvent) {
+    this.providersOptions = await this.billWsService.getProvidersStartingWith(event.query);
   }
 
 }
