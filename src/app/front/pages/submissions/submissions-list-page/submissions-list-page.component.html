@@ -2,10 +2,17 @@
   <ng-container main-content>
     <app-top-bar>
       <h1 left>Submissions</h1>
+      <p-floatlabel right>
+        <p-iconfield>
+          <p-inputicon class="pi pi-search" />
+          <input pInputText id="input-search" [(ngModel)]="searchKeyword" (keyup)="applySearchFilter()" autocomplete="off" />
+        </p-iconfield>
+        <label for="input-search">Search</label>
+      </p-floatlabel>
     </app-top-bar>
 
     <app-submissions-table
-      [submissions]="submissions"
+      [submissions]="filteredSubmissions"
       (onMarkAsPaid)="onMarkSubmissionAsPaid($event)"
       (onMarkAsReimbursed)="onMarkSubmissionAsReimbursed($event)"
       (onDeleteSubmission)="onDeleteSubmission($event)"

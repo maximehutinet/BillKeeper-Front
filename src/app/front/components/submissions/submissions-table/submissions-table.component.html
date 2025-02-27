@@ -10,10 +10,10 @@
     </tr>
   </ng-template>
   <ng-template #body let-submission let-expanded="expanded">
-    <tr class="submission-row-header" [pRowToggler]="submission">
+    <tr class="submission-row-header">
       <td>
         <p-button type="button" pRipple [text]="true" [rounded]="true" [plain]="true"
-                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"/>
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" [pRowToggler]="submission"/>
       </td>
       <td>{{ submission.dateTime | date: 'longDate' }}</td>
       <td>
