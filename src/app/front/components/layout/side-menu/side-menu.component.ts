@@ -7,6 +7,7 @@ import {DocumentWsService} from '../../../../services/billkeeper-ws/document/doc
 import {ToastMessageService} from '../../../../services/toast-message.service';
 import {Badge} from 'primeng/badge';
 import {SideMenuService} from '../../../../services/side-menu.service';
+import {AuthService} from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -61,9 +62,12 @@ export class SideMenuComponent {
     }
   ];
 
+  userFirstname: string | undefined;
+
   constructor(
     private documentWsService: DocumentWsService,
     private sideMenuService: SideMenuService,
+    private authService: AuthService,
     private toastMessageService: ToastMessageService,
     private router: Router
   ) {
@@ -73,6 +77,8 @@ export class SideMenuComponent {
     try {
       this.sideMenuService.updateSideMenu.subscribe(async () => await this.updateSideMenu());
       await this.updateSideMenu();
+      const userProfile = await this.authService.getUserProfile();
+      this.userFirstname = userProfile.firstName;
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
@@ -101,6 +107,10 @@ export class SideMenuComponent {
 
   isCurrentPage(route: string | undefined): boolean {
     return this.router.url === route;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

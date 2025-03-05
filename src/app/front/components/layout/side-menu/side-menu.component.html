@@ -17,10 +17,10 @@
     </div>
   </div>
   <div id="menu-footer">
-    <div id="log-out-button">
+    <div id="log-out-button" (click)="logout()">
       <div id="user-detail">
         <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" size="normal" shape="circle" />
-        <span>John</span>
+        <span>{{ userFirstname }}</span>
       </div>
       <i class="pi pi-sign-out"></i>
     </div>

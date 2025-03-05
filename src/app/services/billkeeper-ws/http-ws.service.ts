@@ -24,7 +24,8 @@ export class HttpWsService {
 
   async getBlob(path: string, params?: HttpParams | { [param: string]: string | string[] }): Promise<Blob> {
     try {
-      return await lastValueFrom<Blob>(this.httpClient.get(this.url(path), {params, responseType: 'blob'}));
+      const headers = await this.builderHeaders();
+      return await lastValueFrom<Blob>(this.httpClient.get(this.url(path), {headers: headers, params, responseType: 'blob'}));
     } catch (error) {
       await this.handleError(error);
       return Promise.reject();

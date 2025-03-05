@@ -1,29 +1,35 @@
-import {ApplicationConfig, inject, provideAppInitializer, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {providePrimeNG} from 'primeng/config';
 import PrimeNgPreset from '../theme/primeng-preset'
-import {ConfigurationService} from './services/configuration.service';
-import {HttpBackend, HttpClient, provideHttpClient} from '@angular/common/http';
-import {lastValueFrom} from 'rxjs';
-import {Configuration} from './services/model/configuration';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {provideInitializer} from './app-initializer';
+import {provideKeycloakAngular} from './keycloak-initializer';
+import {INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG, includeBearerTokenInterceptor} from 'keycloak-angular';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({eventCoalescing: true}), provideRouter(routes),
+    provideZoneChangeDetection({eventCoalescing: true}),
+    provideRouter(routes),
     provideAnimationsAsync(),
-    provideHttpClient(),
-    provideAppInitializer(async () => {
-        const configurationService = inject(ConfigurationService);
-        const httpBackend = inject(HttpBackend);
-        const httpClient: HttpClient = new HttpClient(httpBackend);
-        const response = await lastValueFrom(httpClient.get('/assets/configuration.json?time=' + Date.now()));
-        configurationService.configuration = response as Configuration;
-      }
-    ),
+    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
+    {
+      provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+      useValue: [
+        {
+          //TODO: Updating regex
+          urlPattern: /^http:\/\/10\.0\.0\.23:8080\/.*$/,
+        }
+      ]
+    },
+    provideKeycloakAngular(),
+    provideInitializer(),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {

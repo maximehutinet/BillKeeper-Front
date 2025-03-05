@@ -14,15 +14,16 @@ import {DocumentListPageComponent} from './front/pages/documents/document-list-p
 import {
   EditSubmissionPageComponent
 } from './front/pages/submissions/edit-submission-page/edit-submission-page.component';
+import {canActivate} from './services/guards/auth.guard';
 
 export const routes: Routes = [
-  {path: '', component: BillsListPageComponent},
-  {path: 'bill/:billId', component: BillDetailPageComponent},
-  {path: 'bill/:billId/edit', component: EditBillPageComponent},
-  {path: 'submissions', component: SubmissionsListPageComponent},
-  {path: 'submissions/:submissionId', component: SubmissionDetailPageComponent},
-  {path: 'submissions/:submissionId/edit', component: EditSubmissionPageComponent},
-  {path: 'settings', component: SettingsPageComponent},
-  {path: 'stats', component: StatsPageComponent},
-  {path: 'documents', component: DocumentListPageComponent},
+  {path: '', component: BillsListPageComponent, canActivate: [canActivate]},
+  {path: 'bill/:billId', component: BillDetailPageComponent, canActivate: [canActivate]},
+  {path: 'bill/:billId/edit', component: EditBillPageComponent, canActivate: [canActivate]},
+  {path: 'submissions', component: SubmissionsListPageComponent, canActivate: [canActivate]},
+  {path: 'submissions/:submissionId', component: SubmissionDetailPageComponent, canActivate: [canActivate]},
+  {path: 'submissions/:submissionId/edit', component: EditSubmissionPageComponent, canActivate: [canActivate]},
+  {path: 'settings', component: SettingsPageComponent, canActivate: [canActivate]},
+  {path: 'stats', component: StatsPageComponent, canActivate: [canActivate]},
+  {path: 'documents', component: DocumentListPageComponent, canActivate: [canActivate]},
 ];

@@ -2,8 +2,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BillDocument} from '../../../../services/billkeeper-ws/document/model';
 import {Button} from 'primeng/button';
 import {NgIf} from '@angular/common';
-import {PdfViewerModule} from 'ng2-pdf-viewer';
+import {PDFSource, PdfViewerModule} from 'ng2-pdf-viewer';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {DocumentPdfViewerComponent} from '../document-pdf-viewer/document-pdf-viewer.component';
 
 @Component({
   selector: 'app-documents-viewer',
@@ -15,15 +17,36 @@ import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
     TabList,
     TabPanel,
     TabPanels,
-    Tabs
+    Tabs,
+    DocumentPdfViewerComponent
   ],
   templateUrl: './documents-viewer.component.html',
   styleUrl: './documents-viewer.component.scss'
 })
 export class DocumentsViewerComponent {
 
+  _documents: BillDocument[] = [];
+
   @Input()
-  documents: BillDocument[] = [];
+  set documents(documents: BillDocument[]) {
+    this._documents = documents;
+    if (this._documents.length > 0) {
+      this.setSource();
+    }
+  };
+
+  get documents() {
+    return this._documents;
+  }
+
+  async setSource() {
+    const token = await this.authService.getToken();
+    this.src = {
+      url: this._documents[0].url,
+      httpHeaders: {Authorization : `Bearer ${token}`},
+      withCredentials: true
+    }
+  }
 
   @Input()
   editMode = false;
@@ -36,4 +59,10 @@ export class DocumentsViewerComponent {
 
   @Output()
   onDeleteDocument: EventEmitter<BillDocument> = new EventEmitter();
+
+  src: PDFSource = {};
+
+  constructor(private authService: AuthService) { }
+
+
 }
