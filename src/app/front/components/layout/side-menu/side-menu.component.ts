@@ -2,12 +2,16 @@ import {Component} from '@angular/core';
 import {NgForOf, NgIf, UpperCasePipe} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {MenuItem} from './model';
+import {MenuItem as PrimeMenuItem} from 'primeng/api';
 import {Avatar} from 'primeng/avatar';
 import {DocumentWsService} from '../../../../services/billkeeper-ws/document/document-ws.service';
 import {ToastMessageService} from '../../../../services/toast-message.service';
 import {Badge} from 'primeng/badge';
 import {SideMenuService} from '../../../../services/side-menu.service';
 import {AuthService} from '../../../../services/auth/auth.service';
+import {Toast} from 'primeng/toast';
+import {Menu} from 'primeng/menu';
+import {UserWsService} from '../../../../services/billkeeper-ws/user/user-ws.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -17,7 +21,9 @@ import {AuthService} from '../../../../services/auth/auth.service';
     UpperCasePipe,
     Avatar,
     RouterLink,
-    Badge
+    Badge,
+    Toast,
+    Menu
   ],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.scss'
@@ -62,11 +68,29 @@ export class SideMenuComponent {
     }
   ];
 
+  profileItems: PrimeMenuItem[] = [{
+    label: 'Action',
+    items: [
+      {
+        label: 'Profile',
+        icon: 'pi pi-user',
+        routerLink: ['/profile']
+      },
+      {
+        label: 'Log out',
+        icon: 'pi pi-sign-out',
+        command: () => this.logout()
+      }
+    ]
+  }];
+
   userFirstname: string | undefined;
+  userProfilePicture: string = "/assets/images/profile_placeholder.png";
 
   constructor(
     private documentWsService: DocumentWsService,
     private sideMenuService: SideMenuService,
+    private userWsService: UserWsService,
     private authService: AuthService,
     private toastMessageService: ToastMessageService,
     private router: Router
@@ -79,6 +103,7 @@ export class SideMenuComponent {
       await this.updateSideMenu();
       const userProfile = await this.authService.getUserProfile();
       this.userFirstname = userProfile.firstName;
+      this.userProfilePicture = await this.userWsService.getCurrentUserProfilePicture();
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

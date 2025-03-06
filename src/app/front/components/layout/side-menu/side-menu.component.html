@@ -17,12 +17,13 @@
     </div>
   </div>
   <div id="menu-footer">
-    <div id="log-out-button" (click)="logout()">
+    <p-toast />
+    <p-menu #menu [model]="profileItems" [popup]="true" />
+    <div id="log-out-button" (click)="menu.toggle($event)">
       <div id="user-detail">
-        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" size="normal" shape="circle" />
+        <p-avatar [image]="userProfilePicture" size="normal" shape="circle" />
         <span>{{ userFirstname }}</span>
       </div>
-      <i class="pi pi-sign-out"></i>
     </div>
   </div>
 </div>

@@ -1,0 +1,16 @@
+#profile-picture-wrapper {
+  margin-top: 1rem;
+  position: relative;
+  max-width: max-content;
+
+  img {
+    clip-path: circle(40%);
+    max-width: 8rem;
+  }
+
+  #upload-file-btn {
+    position: absolute;
+    top: -0.5rem;
+    right: -1rem;
+  }
+}

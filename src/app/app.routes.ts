@@ -15,6 +15,7 @@ import {
   EditSubmissionPageComponent
 } from './front/pages/submissions/edit-submission-page/edit-submission-page.component';
 import {canActivate} from './services/guards/auth.guard';
+import {UserProfilePageComponent} from './front/pages/users/user-profile-page/user-profile-page.component';
 
 export const routes: Routes = [
   {path: '', component: BillsListPageComponent, canActivate: [canActivate]},
@@ -26,4 +27,5 @@ export const routes: Routes = [
   {path: 'settings', component: SettingsPageComponent, canActivate: [canActivate]},
   {path: 'stats', component: StatsPageComponent, canActivate: [canActivate]},
   {path: 'documents', component: DocumentListPageComponent, canActivate: [canActivate]},
+  {path: 'profile', component: UserProfilePageComponent, canActivate: [canActivate]},
 ];

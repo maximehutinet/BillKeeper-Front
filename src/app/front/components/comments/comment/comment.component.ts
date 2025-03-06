@@ -1,13 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BillComment} from '../../../../services/billkeeper-ws/comment/model';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgIf} from '@angular/common';
 import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-comment',
   imports: [
     DatePipe,
-    Button
+    Button,
+    NgIf
   ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss'

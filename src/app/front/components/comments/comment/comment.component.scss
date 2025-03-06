@@ -3,14 +3,21 @@
 
   .comment-header, .comment-footer {
     display: flex;
-    justify-content: end;
+  }
+
+  .comment-header {
+    justify-content: space-between;
+    align-items: center;
+    font-weight: var(--app-font-medium);
   }
 
   .comment-content {
+    padding-left: 1rem;
     font-size: var(--app-comment-text-font-size);
   }
 
   .comment-footer {
+    justify-content: end;
     font-size: var(--app-comment-datetime-font-size);
     font-weight: var(--app-font-regular);
   }

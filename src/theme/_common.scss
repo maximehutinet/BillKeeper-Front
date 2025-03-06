@@ -14,6 +14,10 @@ h1 {
   gap: 0.5rem;
 }
 
+input[type="file"] {
+  display: none;
+}
+
 .textarea-wrapper {
   display: flex;
   flex-direction: column;

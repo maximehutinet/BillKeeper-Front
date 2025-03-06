@@ -84,7 +84,7 @@
         <div class="card-entry">
           <label>Created on: </label>
           <span>{{ bill.dateTime | date: 'longDate' }}</span>
-          <span *ngIf="bill.user">by {{ bill.user?.firstname }}</span>
+          <span *ngIf="bill.user">by {{ bill.user.firstname }}</span>
         </div>
         <div class="card-entry">
           <label>Beneficiary: </label>

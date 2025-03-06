@@ -1,5 +1,8 @@
 <div class="comment">
   <div class="comment-header">
+    <div class="user-wrapper" *ngIf="comment.user">
+      <span>{{ comment.user.firstname }}</span>
+    </div>
     <div class="comment-actions">
       <p-button
         icon="pi pi-pencil"

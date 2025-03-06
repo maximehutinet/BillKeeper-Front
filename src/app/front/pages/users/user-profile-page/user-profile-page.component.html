@@ -1,0 +1,27 @@
+<app-main-layout>
+  <ng-container main-content>
+    <app-top-bar>
+      <h1 left>Profile</h1>
+    </app-top-bar>
+
+    <p-fieldset legend="Detail" *ngIf="currentUser" [toggleable]="true">
+      <div id="profile-picture-wrapper">
+        <p-avatar [image]="profilePicture" size="xlarge" shape="circle" />
+        <div id="upload-file-btn" (click)="uploadInput.click()">
+          <p-button icon="pi pi-pencil" size="small" [text]="true" severity="info" [rounded]="true"></p-button>
+          <input #uploadInput type="file" accept="image/*" (change)="onUploadProfilePicture($event)">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-entry">
+          <label>Firstname: </label>
+          <span>{{ currentUser?.firstname }}</span>
+        </div>
+        <div class="card-entry">
+          <label>Email: </label>
+          <span>{{ currentUser?.email }}</span>
+        </div>
+      </div>
+    </p-fieldset>
+  </ng-container>
+</app-main-layout>
