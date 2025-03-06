@@ -1,6 +1,4 @@
 .comment {
-  padding-bottom: 1rem;
-
   .comment-header, .comment-footer {
     display: flex;
   }
@@ -8,17 +6,21 @@
   .comment-header {
     justify-content: space-between;
     align-items: center;
-    font-weight: var(--app-font-medium);
+
+    .user-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: var(--app-comment-datetime-font-size);
+      font-weight: var(--app-font-medium);
+    }
   }
 
   .comment-content {
-    padding-left: 1rem;
-    font-size: var(--app-comment-text-font-size);
+    padding-left: calc(var(--p-avatar-width) + 0.5rem);
   }
 
-  .comment-footer {
-    justify-content: end;
-    font-size: var(--app-comment-datetime-font-size);
+  .comment-datetime {
     font-weight: var(--app-font-regular);
   }
 }

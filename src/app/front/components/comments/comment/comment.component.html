@@ -1,7 +1,9 @@
 <div class="comment">
   <div class="comment-header">
     <div class="user-wrapper" *ngIf="comment.user">
+      <p-avatar [image]="userProfilePicture" size="normal" shape="circle" />
       <span>{{ comment.user.firstname }}</span>
+      <span class="comment-datetime">• {{ comment.dateTime | date: 'longDate' }}</span>
     </div>
     <div class="comment-actions">
       <p-button
@@ -25,8 +27,5 @@
   </div>
   <div class="comment-content">
     {{ comment.content }}
-  </div>
-  <div class="comment-footer">
-    <span class="comment-dateTime">{{ comment.dateTime | date: 'longDate' }}</span>
   </div>
 </div>

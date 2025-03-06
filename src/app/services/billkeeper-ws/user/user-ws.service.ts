@@ -22,7 +22,7 @@ export class UserWsService {
   }
 
   async getProfilePicture(user: User): Promise<string> {
-    const blob = await this.httpWsService.getBlob(user.profilePictureUrl!);
+    const blob = await this.httpWsService.getBlob(`/users/${user.id}/picture`);
     return URL.createObjectURL(blob);
   }
 

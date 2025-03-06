@@ -29,7 +29,7 @@ import {Avatar} from 'primeng/avatar';
 export class UserProfilePageComponent {
 
   currentUser: User | undefined;
-  profilePicture: string = "/assets/images/profile_placeholder.png";
+  profilePicture: string = "assets/images/profile_placeholder.png";
 
   constructor(
     private userWsService: UserWsService,
