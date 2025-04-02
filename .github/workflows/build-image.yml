@@ -5,7 +5,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  COMMIT_SHA: $(git rev-parse --short "$GITHUB_SHA")
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -30,18 +29,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        id: push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: docker/Dockerfile
-          push: true
-          tags: ${{ env.IMAGE_NAME }}-${{ env.COMMIT_SHA }}
+      - name: Set short commit SHA
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+        run: echo "COMMIT_SHA=$(git rev-parse --short $COMMIT_SHA)" >> $GITHUB_ENV
 
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v2
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ env.COMMIT_SHA }}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
+      - name: Use short commit SHA
+        env:
+          COMMIT_SHA: ${{ env.COMMIT_SHA }}
+        run: echo "The short commit SHA is $COMMIT_SHA"
+
+#      - name: Build and push Docker image
+#        id: push
+#        uses: docker/build-push-action@v6
+#        with:
+#          context: .
+#          file: docker/Dockerfile
+#          push: true
+#          tags: ${{ env.IMAGE_NAME }}
