@@ -34,16 +34,11 @@ jobs:
           COMMIT_SHA: ${{ github.sha }}
         run: echo "COMMIT_SHA=$(git rev-parse --short $COMMIT_SHA)" >> $GITHUB_ENV
 
-      - name: Use short commit SHA
-        env:
-          COMMIT_SHA: ${{ env.COMMIT_SHA }}
-        run: echo "The short commit SHA is $COMMIT_SHA"
-
-#      - name: Build and push Docker image
-#        id: push
-#        uses: docker/build-push-action@v6
-#        with:
-#          context: .
-#          file: docker/Dockerfile
-#          push: true
-#          tags: ${{ env.IMAGE_NAME }}
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_NAME }}-${{ env.COMMIT_SHA }}
