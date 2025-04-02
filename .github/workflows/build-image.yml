@@ -29,6 +29,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
       - name: Set short commit SHA
         env:
           COMMIT_SHA: ${{ github.sha }}
@@ -41,4 +47,5 @@ jobs:
           context: .
           file: docker/Dockerfile
           push: true
-          tags: ${{ env.IMAGE_NAME }}-${{ env.COMMIT_SHA }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ env.COMMIT_SHA }}
+          labels: ${{ steps.meta.outputs.labels }}
