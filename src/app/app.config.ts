@@ -24,7 +24,9 @@ export const appConfig: ApplicationConfig = {
       useValue: [
         {
           //TODO: Updating regex
-          urlPattern: /^http:\/\/10\.0\.0\.23:8080\/.*$/,
+          // urlPattern: /^http:\/\/10\.0\.0\.23:8080\/.*$/,
+          //urlPattern: /^http:\/\/10\.0\.0\.23:10497\/.*$/,
+          urlPattern: /^https:\/\/server\.billkeeper\.hutinet\.fr\/.*$/,
         }
       ]
     },
