@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {lastValueFrom} from "rxjs";
 import {ConfigurationService} from '../configuration.service';
+import {AuthService} from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class HttpWsService {
 
   constructor(
     private configurationService: ConfigurationService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private authService: AuthService
   ) { }
 
   async get<T>(path: string, params?: HttpParams | { [param: string]: string | string[] }): Promise<any> {
@@ -77,6 +79,11 @@ export class HttpWsService {
 
   private async handleError(error: any) {
     let errorHandled = false;
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 401) {
+        this.authService.logout();
+      }
+    }
     if (!errorHandled) {
       throw error;
     }

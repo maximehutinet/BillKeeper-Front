@@ -10,7 +10,8 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {provideInitializer} from './app-initializer';
 import {provideKeycloakAngular} from './keycloak-initializer';
-import {INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG, includeBearerTokenInterceptor} from 'keycloak-angular';
+import {includeBearerTokenInterceptor} from 'keycloak-angular';
+import {provideBearerTokenInterceptor} from './bearer-token-interceptor-initializer';
 
 
 export const appConfig: ApplicationConfig = {
@@ -19,17 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
-    {
-      provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
-      useValue: [
-        {
-          //TODO: Updating regex
-          // urlPattern: /^http:\/\/10\.0\.0\.23:8080\/.*$/,
-          //urlPattern: /^http:\/\/10\.0\.0\.23:10497\/.*$/,
-          urlPattern: /^https:\/\/server\.billkeeper\.hutinet\.fr\/.*$/,
-        }
-      ]
-    },
+    provideBearerTokenInterceptor(),
     provideKeycloakAngular(),
     provideInitializer(),
     provideAnimationsAsync(),

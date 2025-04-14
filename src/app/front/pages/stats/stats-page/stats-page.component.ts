@@ -34,7 +34,6 @@ export class StatsPageComponent {
   async ngOnInit() {
     try {
       this.stats = await this.statsWsService.getBillsStats();
-      console.log(this.stats)
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

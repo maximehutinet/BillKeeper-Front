@@ -1,5 +1,4 @@
-import {Bill, BillStatus, Currency} from './billkeeper-ws/bill/model';
-import {ExchangeRate} from './model/commun';
+import {BillStatus} from './billkeeper-ws/bill/model';
 import {InsuranceSubmissionWithBills} from './billkeeper-ws/submission/model';
 
 export function billStatusToString(status: BillStatus | undefined): string {
@@ -34,4 +33,26 @@ export function markAsPaidSubmissionButtonVisible(submission: InsuranceSubmissio
 
 export function markAsReimbursedSubmissionButtonVisible(submission: InsuranceSubmissionWithBills): boolean {
   return submission.bills.filter(bill => bill.status !== BillStatus.REIMBURSED).length === submission.bills.length;
+}
+
+export function loadEnvironment() {
+  let keycloakUrl = '';
+  let keycloakRealm = '';
+  let keycloakClientId = '';
+  let serverUrl = '';
+
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/assets/configuration.json?time=' + Date.now(), false);
+    xhr.send(null);
+
+    if (xhr.status === 200) {
+      const envProperties = JSON.parse(xhr.responseText);
+      keycloakUrl = envProperties.keycloakConfiguration.url;
+      keycloakRealm = envProperties.keycloakConfiguration.realm;
+      keycloakClientId = envProperties.keycloakConfiguration.clientId;
+      serverUrl = envProperties.serverUrl;
+    }
+  } catch (error) { }
+  return { keycloakUrl, keycloakRealm, keycloakClientId, serverUrl };
 }
