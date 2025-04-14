@@ -28,4 +28,5 @@ export const routes: Routes = [
   {path: 'stats', component: StatsPageComponent, canActivate: [canActivate]},
   {path: 'documents', component: DocumentListPageComponent, canActivate: [canActivate]},
   {path: 'profile', component: UserProfilePageComponent, canActivate: [canActivate]},
+  {path: "**", redirectTo: ''}
 ];
