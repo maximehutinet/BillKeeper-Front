@@ -26,6 +26,7 @@
           <span>
             @if (bill.name) {
               {{ bill.name }}
+              <app-copy-to-clipboard-icon [value]="bill.name"></app-copy-to-clipboard-icon>
             } @else {
               <span class="not-specified-warning">
                 <i class="pi pi-exclamation-triangle"></i>
@@ -52,6 +53,7 @@
           <span>
             @if (bill.amount) {
               {{ bill.amount | currency:bill.currency }}
+              <app-copy-to-clipboard-icon [value]="bill.amount.toString()"></app-copy-to-clipboard-icon>
             } @else {
               <span class="not-specified-warning">
                 <i class="pi pi-exclamation-triangle"></i>
@@ -65,6 +67,7 @@
           <span>
             @if (bill.provider) {
               {{ bill.provider }}
+              <app-copy-to-clipboard-icon [value]="bill.provider"></app-copy-to-clipboard-icon>
             } @else {
               <span class="not-specified-warning">
                 <i class="pi pi-exclamation-triangle"></i>

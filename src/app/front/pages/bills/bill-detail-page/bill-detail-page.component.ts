@@ -27,6 +27,9 @@ import {ToastMessageService} from '../../../../services/toast-message.service';
 import {
   TopBarWithBackButtonComponent
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
+import {
+  CopyToClipboardIconComponent
+} from '../../../components/commun/copy-to-clipboard-icon/copy-to-clipboard-icon.component';
 
 @Component({
   selector: 'app-bill-detail-page',
@@ -49,7 +52,8 @@ import {
     Textarea,
     Tooltip,
     CurrencyPipe,
-    TopBarWithBackButtonComponent
+    TopBarWithBackButtonComponent,
+    CopyToClipboardIconComponent
   ],
   templateUrl: './bill-detail-page.component.html',
   styleUrl: './bill-detail-page.component.scss'

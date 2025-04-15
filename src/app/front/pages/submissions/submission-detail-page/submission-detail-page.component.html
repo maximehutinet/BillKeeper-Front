@@ -28,10 +28,12 @@
         <div class="card-entry">
           <label>Name: </label>
           <span>{{ submission.name }}</span>
+          <app-copy-to-clipboard-icon *ngIf="submission.name" [value]="submission.name"></app-copy-to-clipboard-icon>
         </div>
         <div class="card-entry">
           <label>eClaimId: </label>
           <span>{{ submission.eclaimId ?? 'N/S' }}</span>
+          <app-copy-to-clipboard-icon *ngIf="submission.eclaimId" [value]="submission.eclaimId"></app-copy-to-clipboard-icon>
         </div>
         <div class="card-entry">
           <label>Created on: </label>

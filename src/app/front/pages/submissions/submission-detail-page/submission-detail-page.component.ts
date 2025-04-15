@@ -20,21 +20,25 @@ import {
   TopBarWithBackButtonComponent
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
 import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
+import {
+    CopyToClipboardIconComponent
+} from "../../../components/commun/copy-to-clipboard-icon/copy-to-clipboard-icon.component";
 
 @Component({
   selector: 'app-submission-detail-page',
-  imports: [
-    BillsTableComponent,
-    DatePipe,
-    Fieldset,
-    MainLayoutComponent,
-    CurrencyPipe,
-    Button,
-    Tooltip,
-    TopBarWithBackButtonComponent,
-    NgIf,
-    RouterLink
-  ],
+    imports: [
+        BillsTableComponent,
+        DatePipe,
+        Fieldset,
+        MainLayoutComponent,
+        CurrencyPipe,
+        Button,
+        Tooltip,
+        TopBarWithBackButtonComponent,
+        NgIf,
+        RouterLink,
+        CopyToClipboardIconComponent
+    ],
   templateUrl: './submission-detail-page.component.html',
   styleUrl: './submission-detail-page.component.scss'
 })
