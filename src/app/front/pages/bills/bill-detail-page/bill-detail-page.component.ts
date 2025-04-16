@@ -23,7 +23,7 @@ import {DocumentWsService} from '../../../../services/billkeeper-ws/document/doc
 import {CommentWsService} from '../../../../services/billkeeper-ws/comment/comment-ws.service';
 import {LayoutService} from '../../../../services/layout.service';
 import {ValidationService} from '../../../../services/validation.service';
-import {ToastMessageService} from '../../../../services/toast-message.service';
+import {MessageType, ToastMessageService} from '../../../../services/toast-message.service';
 import {
   TopBarWithBackButtonComponent
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
@@ -244,5 +244,33 @@ export class BillDetailPageComponent {
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
+  }
+
+  async onDrop(event: any) {
+    this.layoutService.pageFocusing = false;
+    await this.layoutService.withPageLoading(async () => {
+      if (event.dataTransfer.items) {
+        for (const item of [...event.dataTransfer.items]) {
+          if (item.kind === "file") {
+            const file = item.getAsFile();
+            const fileExtension = file.name.split(".").pop();
+            if (fileExtension != "pdf") {
+              this.toastMessageService.displayMessage(`${file.name} couldn't be uploaded because it's not a PDF`, MessageType.Error, "File error");
+              return;
+            }
+            await this.billWsService.uploadBillDocument(this.bill.id!, file);
+            await this.loadBillDocuments();
+          }
+        }
+      }
+    });
+  }
+
+  onDragOver() {
+    this.layoutService.pageFocusing = true;
+  }
+
+  onDragLeave() {
+    this.layoutService.pageFocusing = false;
   }
 }

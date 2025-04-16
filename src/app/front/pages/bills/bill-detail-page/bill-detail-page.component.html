@@ -1,4 +1,4 @@
-<app-main-layout>
+<app-main-layout (drop)="onDrop($event)" (dragover)="onDragOver()" (dragleave)="onDragLeave()">
   <ng-container main-content>
     <app-top-bar-with-back-button>
       <div right class="buttons-wrapper">

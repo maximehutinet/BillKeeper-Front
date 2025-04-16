@@ -1,4 +1,4 @@
-<p-tabs [value]="documents[0].id" *ngIf="documents.length > 0 && documents[0].id">
+<p-tabs [(value)]="activeDocumentId" *ngIf="activeDocumentId">
   <p-tablist>
     @for (document of documents; track document.id; let idx = $index) {
       @if (document.description) {

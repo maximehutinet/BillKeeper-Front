@@ -31,6 +31,7 @@ export class DocumentsViewerComponent {
   set documents(documents: BillDocument[]) {
     this._documents = documents;
     if (this._documents.length > 0) {
+      this.activeDocumentId = this._documents[0].id;
       this.setSource();
     }
   };
@@ -62,7 +63,8 @@ export class DocumentsViewerComponent {
 
   src: PDFSource = {};
 
-  constructor(private authService: AuthService) { }
+  activeDocumentId: string | undefined;
 
+  constructor(private authService: AuthService) { }
 
 }
