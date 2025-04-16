@@ -9,6 +9,8 @@ export function billStatusToString(status: BillStatus | undefined): string {
       return "Filed"
     case BillStatus.REIMBURSED:
       return "Reimbursed"
+    case BillStatus.REJECTED:
+      return "Rejected"
     default:
       return "Status missing";
   }
@@ -22,6 +24,8 @@ export function billStatusBadge(status: BillStatus | undefined): "info" | "succe
       return "info"
     case BillStatus.REIMBURSED:
       return "success"
+    case BillStatus.REJECTED:
+      return "danger"
     default:
       return "danger";
   }
