@@ -9,4 +9,13 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'billkeeper-front';
+
+  ngOnInit(): void {
+    window.addEventListener("dragover", e => {
+      e && e.preventDefault();
+    }, false);
+    window.addEventListener("drop", e => {
+      e && e.preventDefault();
+    }, false);
+  }
 }

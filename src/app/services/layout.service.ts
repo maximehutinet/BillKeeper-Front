@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class LayoutService {
 
   public pageLoading = false;
+  public pageFocusing = false;
 
   constructor() { }
 

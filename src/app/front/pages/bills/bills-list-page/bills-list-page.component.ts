@@ -70,24 +70,19 @@ export class BillsListPageComponent {
       if (!event.target.files && !event.target.files[0]) {
         return;
       }
-      await this.uploadBills(event.target.files);
-      this.resetFiltersSubject.next();
-      await this.loadAllBills();
+      for (const file of Array.from(event.target.files)) {
+        await this.createNewBill(<File>file);
+      }
     });
   }
 
-  private async uploadBills(files: FileList) {
-    for (const file of Array.from(files)) {
-      await this.createNewBill(file);
-    }
-  }
-
-  private async createNewBill(file: File): Promise<Bill> {
+  private async createNewBill(file: File): Promise<void> {
     try {
-      return await this.billWsService.createBill(file);
+      await this.billWsService.createBill(file);
+      this.resetFiltersSubject.next();
+      await this.loadAllBills();
     } catch (e) {
       this.toastMessageService.displayError(e);
-      return {}
     }
   }
 
@@ -157,5 +152,32 @@ export class BillsListPageComponent {
 
   onBillFilterChange(bills: Bill[]) {
     this.filteredBills = bills;
+  }
+
+  async onDrop(event: any) {
+    this.layoutService.pageFocusing = false;
+    await this.layoutService.withPageLoading(async () => {
+      if (event.dataTransfer.items) {
+        for (const item of [...event.dataTransfer.items]) {
+          if (item.kind === "file") {
+            const file = item.getAsFile();
+            const fileExtension = file.name.split(".").pop();
+            if (fileExtension != "pdf") {
+              this.toastMessageService.displayMessage(`${file.name} couldn't be uploaded because it's not a PDF`, MessageType.Error, "File error");
+              return;
+            }
+            await this.createNewBill(<File>file);
+          }
+        }
+      }
+    });
+  }
+
+  onDragOver() {
+    this.layoutService.pageFocusing = true;
+  }
+
+  onDragLeave() {
+    this.layoutService.pageFocusing = false;
   }
 }
