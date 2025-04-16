@@ -25,44 +25,24 @@
         <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true"/>
       </td>
       <td>
-        @if (row.bill.serviceDateTime) {
+        <app-value-loading-or-ns [value]="row.bill.serviceDateTime" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.serviceDateTime | date: 'longDate' }}
-        } @else {
-          <span class="not-specified-warning">
-            <i class="pi pi-exclamation-triangle"></i>
-            N/S
-          </span>
-        }
+        </app-value-loading-or-ns>
       </td>
       <td class="bill-name" [routerLink]="'/bill/' + row.bill.id">
-        @if (row.bill.name) {
+        <app-value-loading-or-ns [value]="row.bill.name" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.name }}
-        } @else {
-          <span class="not-specified-warning">
-            <i class="pi pi-exclamation-triangle"></i>
-            N/S
-          </span>
-        }
+        </app-value-loading-or-ns>
       </td>
       <td>
-        @if (row.bill.amount) {
+        <app-value-loading-or-ns [value]="row.bill.amount" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.amount | currency:row.bill.currency }}
-        } @else {
-          <span class="not-specified-warning">
-            <i class="pi pi-exclamation-triangle"></i>
-            N/S
-          </span>
-        }
+        </app-value-loading-or-ns>
       </td>
       <td>
-        @if (row.bill.beneficiary?.firstname) {
+        <app-value-loading-or-ns [value]="row.bill.beneficiary?.firstname" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.beneficiary?.firstname }}
-        } @else {
-          <span class="not-specified-warning">
-            <i class="pi pi-exclamation-triangle"></i>
-            N/S
-          </span>
-        }
+        </app-value-loading-or-ns>
       </td>
       <td>
         <app-bill-status-badge [bill]="row.bill"></app-bill-status-badge>

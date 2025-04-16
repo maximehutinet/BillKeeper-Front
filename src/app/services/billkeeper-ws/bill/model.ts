@@ -15,6 +15,7 @@ export interface Bill {
   status?: BillStatus;
   beneficiary?: Beneficiary;
   submission?: InsuranceSubmission;
+  parsingJobStatus?: ParsingJobStatus;
 }
 
 export enum Currency {
@@ -27,6 +28,12 @@ export enum BillStatus {
   FILED = "FILED",
   REIMBURSED = "REIMBURSED",
   REJECTED = "REJECTED"
+}
+
+export enum ParsingJobStatus {
+  IN_PROGRESS = "IN_PROGRESS",
+  SUCCESS = "SUCCESS",
+  FAILED = "FAILED"
 }
 
 

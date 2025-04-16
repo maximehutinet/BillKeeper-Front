@@ -4,11 +4,12 @@ import {Checkbox} from "primeng/checkbox";
 import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 import {TableModule} from "primeng/table";
 import {Tooltip} from "primeng/tooltip";
-import {Bill, BillStatus} from "../../../../services/billkeeper-ws/bill/model";
+import {Bill, BillStatus, ParsingJobStatus} from "../../../../services/billkeeper-ws/bill/model";
 import {RouterLink} from '@angular/router';
 import {BillStatusBadgeComponent} from '../bill-status-badge/bill-status-badge.component';
 import {FormsModule} from '@angular/forms';
 import {BillTableRow} from './model';
+import {ValueLoadingOrNsComponent} from '../../commun/value-loading-or-ns/value-loading-or-ns.component';
 
 @Component({
   selector: 'app-bills-table',
@@ -22,7 +23,8 @@ import {BillTableRow} from './model';
     RouterLink,
     BillStatusBadgeComponent,
     FormsModule,
-    CurrencyPipe
+    CurrencyPipe,
+    ValueLoadingOrNsComponent
   ],
   templateUrl: './bills-table.component.html',
   styleUrl: './bills-table.component.scss'
@@ -30,6 +32,7 @@ import {BillTableRow} from './model';
 export class BillsTableComponent {
 
   protected readonly BillStatus = BillStatus;
+  protected readonly ParsingJobStatus = ParsingJobStatus;
 
   tableRows: BillTableRow[] = [];
   allRowsSelected = false;
