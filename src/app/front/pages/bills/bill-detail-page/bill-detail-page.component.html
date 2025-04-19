@@ -1,4 +1,4 @@
-<app-main-layout (drop)="onDrop($event)" (dragover)="onDragOver()" (dragleave)="onDragLeave()">
+<app-main-layout (drop)="onDrop($event)" (dragenter)="onDragEnter()" (dragleave)="onDragLeave()">
   <ng-container main-content>
     <app-top-bar-with-back-button>
       <div right class="buttons-wrapper">
@@ -24,56 +24,36 @@
         <div class="card-entry">
           <label>Name: </label>
           <span>
-            @if (bill.name) {
+            <app-value-loading-or-ns [value]="bill.name" [loading]="bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
               {{ bill.name }}
-              <app-copy-to-clipboard-icon [value]="bill.name"></app-copy-to-clipboard-icon>
-            } @else {
-              <span class="not-specified-warning">
-                <i class="pi pi-exclamation-triangle"></i>
-                N/S
-              </span>
-            }
+              <app-copy-to-clipboard-icon [value]="bill.name!"></app-copy-to-clipboard-icon>
+            </app-value-loading-or-ns>
           </span>
         </div>
         <div class="card-entry">
           <label>Date of service: </label>
           <span>
-            @if (bill.serviceDateTime) {
-              {{ bill.serviceDateTime | date: 'longDate' }}
-            } @else {
-              <span class="not-specified-warning">
-                <i class="pi pi-exclamation-triangle"></i>
-                N/S
-              </span>
-            }
+            <app-value-loading-or-ns [value]="bill.serviceDateTime" [loading]="bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
+              {{ bill.serviceDateTime | date: 'longDate'}}
+            </app-value-loading-or-ns>
           </span>
         </div>
         <div class="card-entry">
           <label>Amount: </label>
           <span>
-            @if (bill.amount) {
+            <app-value-loading-or-ns [value]="bill.amount" [loading]="bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
               {{ bill.amount | currency:bill.currency }}
-              <app-copy-to-clipboard-icon [value]="bill.amount.toString()"></app-copy-to-clipboard-icon>
-            } @else {
-              <span class="not-specified-warning">
-                <i class="pi pi-exclamation-triangle"></i>
-                N/S
-              </span>
-            }
+              <app-copy-to-clipboard-icon *ngIf="bill.amount" [value]="bill.amount.toString()"></app-copy-to-clipboard-icon>
+            </app-value-loading-or-ns>
           </span>
         </div>
         <div class="card-entry">
           <label>Provider: </label>
           <span>
-            @if (bill.provider) {
+            <app-value-loading-or-ns [value]="bill.provider" [loading]="bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
               {{ bill.provider }}
-              <app-copy-to-clipboard-icon [value]="bill.provider"></app-copy-to-clipboard-icon>
-            } @else {
-              <span class="not-specified-warning">
-                <i class="pi pi-exclamation-triangle"></i>
-                N/S
-              </span>
-            }
+              <app-copy-to-clipboard-icon [value]="bill.provider!"></app-copy-to-clipboard-icon>
+            </app-value-loading-or-ns>
           </span>
         </div>
         <div class="card-entry">
@@ -92,14 +72,9 @@
         <div class="card-entry">
           <label>Beneficiary: </label>
           <span>
-            @if (bill.beneficiary?.firstname) {
+            <app-value-loading-or-ns [value]="bill.beneficiary?.firstname" [loading]="bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
               {{ bill.beneficiary?.firstname }}
-            } @else {
-              <span class="not-specified-warning">
-                <i class="pi pi-exclamation-triangle"></i>
-                N/S
-              </span>
-            }
+            </app-value-loading-or-ns>
           </span>
         </div>
       </div>

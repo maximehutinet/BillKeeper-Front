@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +8,11 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'billkeeper-front';
-
   ngOnInit(): void {
+    this.preventDefaultBrowserDragAndDropBehavior();
+  }
+
+  private preventDefaultBrowserDragAndDropBehavior() {
     window.addEventListener("dragover", e => {
       e && e.preventDefault();
     }, false);

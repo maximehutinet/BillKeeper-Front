@@ -4,7 +4,6 @@ import {HttpBackend, HttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
 import {Configuration} from './services/model/configuration';
 
-
 export const provideInitializer = () => {
   return provideAppInitializer(async () => {
       const configurationService = inject(ConfigurationService);

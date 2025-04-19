@@ -39,6 +39,7 @@ export class BillsListPageComponent {
   newSubmissionName = "";
   createNewSubmissionButtonVisible = false;
   resetFiltersSubject: Subject<void> = new Subject<void>();
+  private dragCounter = 0;
 
   constructor(
     private billWsService: BillWsService,
@@ -173,11 +174,15 @@ export class BillsListPageComponent {
     });
   }
 
-  onDragOver() {
-    this.layoutService.pageFocusing = true;
+  onDragLeave() {
+    this.dragCounter -= 1;
+    if (this.dragCounter === 0) {
+      this.layoutService.pageFocusing = false;
+    }
   }
 
-  onDragLeave() {
-    this.layoutService.pageFocusing = false;
+  onDragEnter() {
+    this.dragCounter += 1;
+    this.layoutService.pageFocusing = true;
   }
 }

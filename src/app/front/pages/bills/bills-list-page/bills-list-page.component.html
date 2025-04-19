@@ -1,4 +1,4 @@
-<app-main-layout (drop)="onDrop($event)" (dragover)="onDragOver()" (dragleave)="onDragLeave()">
+<app-main-layout (dragenter)="onDragEnter()" (dragleave)="onDragLeave()" (drop)="onDrop($event)">
   <ng-container main-content>
     <app-top-bar>
       <div left id="upload-file-btn" (click)="uploadInput.click()">

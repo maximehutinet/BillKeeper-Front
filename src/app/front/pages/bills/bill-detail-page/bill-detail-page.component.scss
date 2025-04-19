@@ -22,3 +22,12 @@
     width: 100%;
   }
 }
+
+app-value-loading-or-ns {
+  display: block;
+
+  ::ng-deep p-skeleton {
+    display: block;
+    width: 10rem;
+  }
+}

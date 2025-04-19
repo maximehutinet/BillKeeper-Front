@@ -15,7 +15,7 @@ import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.comp
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Textarea} from "primeng/textarea";
 import {Tooltip} from "primeng/tooltip";
-import {Bill, BillStatus} from '../../../../services/billkeeper-ws/bill/model';
+import {Bill, BillStatus, ParsingJobStatus} from '../../../../services/billkeeper-ws/bill/model';
 import {BillDocument} from '../../../../services/billkeeper-ws/document/model';
 import {BillComment} from '../../../../services/billkeeper-ws/comment/model';
 import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
@@ -30,6 +30,7 @@ import {
 import {
   CopyToClipboardIconComponent
 } from '../../../components/commun/copy-to-clipboard-icon/copy-to-clipboard-icon.component';
+import {ValueLoadingOrNsComponent} from '../../../components/commun/value-loading-or-ns/value-loading-or-ns.component';
 
 @Component({
   selector: 'app-bill-detail-page',
@@ -53,7 +54,8 @@ import {
     Tooltip,
     CurrencyPipe,
     TopBarWithBackButtonComponent,
-    CopyToClipboardIconComponent
+    CopyToClipboardIconComponent,
+    ValueLoadingOrNsComponent
   ],
   templateUrl: './bill-detail-page.component.html',
   styleUrl: './bill-detail-page.component.scss'
@@ -73,6 +75,7 @@ export class BillDetailPageComponent {
   editCommentDialogVisible = false;
   editDocumentDescriptionDialogVisible = false;
   editedDocument: BillDocument = {};
+  private dragCounter = 0;
 
   constructor(
     private billWsService: BillWsService,
@@ -266,11 +269,17 @@ export class BillDetailPageComponent {
     });
   }
 
-  onDragOver() {
+  onDragLeave() {
+    this.dragCounter -= 1;
+    if (this.dragCounter === 0) {
+      this.layoutService.pageFocusing = false;
+    }
+  }
+
+  onDragEnter() {
+    this.dragCounter += 1;
     this.layoutService.pageFocusing = true;
   }
 
-  onDragLeave() {
-    this.layoutService.pageFocusing = false;
-  }
+  protected readonly ParsingJobStatus = ParsingJobStatus;
 }

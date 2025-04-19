@@ -11,7 +11,7 @@ export const provideKeycloakAngular = () => {
     },
     initOptions: {
       onLoad: 'login-required',
-      enableLogging: true
+      enableLogging: false
     }
   });
 }
