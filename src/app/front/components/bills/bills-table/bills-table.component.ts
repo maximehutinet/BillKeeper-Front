@@ -109,7 +109,8 @@ export class BillsTableComponent {
       items.push({
         label: 'Delete',
         icon: 'pi pi-trash',
-        command: () => this.onDelete.emit(bill)
+        command: () => this.onDelete.emit(bill),
+        styleClass: 'menu-warning'
       });
     }
     return items;

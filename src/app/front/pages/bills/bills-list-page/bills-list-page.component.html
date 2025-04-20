@@ -35,8 +35,10 @@
       (selectedBillsChange)="onSelectedBillChange()"
       [displayMarkAsPaidButton]="true"
       [displayMarkAsReimbursedButton]="true"
+      [displayDeleteButton]="true"
       (onMarkBillAsPaid)="onMarkAsPaid($event)"
       (onMarkBillAsReimbursed)="onMarkAsReimbursed($event)"
+      (onDelete)="onDeleteBill($event)"
     ></app-bills-table>
 
     <app-edit-name-dialog

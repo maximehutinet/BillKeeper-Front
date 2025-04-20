@@ -68,3 +68,9 @@ p-fieldset {
     color: red;
   }
 }
+
+.menu-warning {
+  a > * {
+    color: red !important;
+  }
+}

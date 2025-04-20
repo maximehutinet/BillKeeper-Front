@@ -15,6 +15,7 @@ import {Router} from '@angular/router';
 import {CreateUpdateInsuranceSubmissionRequest} from '../../../../services/billkeeper-ws/submission/model';
 import {Subject} from 'rxjs';
 import {TopBarComponent} from '../../../components/layout/top-bar/top-bar.component';
+import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
   selector: 'app-bills-list-page',
@@ -47,7 +48,8 @@ export class BillsListPageComponent {
     private submissionWsService: SubmissionWsService,
     private layoutService: LayoutService,
     private toastMessageService: ToastMessageService,
-    private router: Router
+    private router: Router,
+    private validationService: ValidationService
   ) {
   }
 
@@ -122,6 +124,23 @@ export class BillsListPageComponent {
   async onMarkAsReimbursed(bill: Bill) {
     try {
       await this.billWsService.markBillAsReimbursed(bill);
+      await this.loadAllBills();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onDeleteBill(bill: Bill) {
+    this.validationService.showConfirmationDialog(async () => {
+      await this.deleteBill(bill);
+    });
+  }
+
+  private async deleteBill(bill: Bill) {
+    try {
+      await this.layoutService.withPageLoading(async () => {
+        await this.billWsService.deleteBill(bill.id!);
+      });
       await this.loadAllBills();
     } catch (e) {
       this.toastMessageService.displayError(e);
