@@ -1,14 +1,38 @@
 p-table {
-  .bill-name {
-    cursor: pointer;
-  }
-
   .bill-action {
     align-items: center;
+
+    i {
+      cursor: pointer;
+    }
+  }
+
+  td:not(.td-checkbox, .bill-action) {
+    cursor: pointer;
   }
 }
 
-:host ::ng-deep .p-sortable-column-icon {
-  height: 0.7rem;
-  width: 0.7rem;
+:host ::ng-deep {
+  .p-sortable-column-icon {
+    height: 0.7rem;
+    width: 0.7rem;
+  }
+
+  p-menu {
+    font-size: 0.8rem;
+
+    p-menu-submenu-label {
+      font-size: 0.9rem;
+    }
+
+    & > div {
+      top: unset !important;
+      left: unset !important;
+      min-width: unset;
+
+      .p-menu-item-icon {
+        font-size: 0.8rem;
+      }
+    }
+  }
 }

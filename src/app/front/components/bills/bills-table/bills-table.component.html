@@ -16,86 +16,41 @@
         <p-sortIcon field="bill.status"/>
       </th>
       <th>Paid</th>
-      <th>Actions</th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template #body let-row>
     <tr>
-      <td *ngIf="makeBillSelectable">
+      <td class="td-checkbox" *ngIf="makeBillSelectable">
         <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true"/>
       </td>
-      <td>
+      <td [routerLink]="'/bill/' + row.bill.id">
         <app-value-loading-or-ns [value]="row.bill.serviceDateTime" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.serviceDateTime | date: 'longDate' }}
         </app-value-loading-or-ns>
       </td>
-      <td class="bill-name" [routerLink]="'/bill/' + row.bill.id">
+      <td [routerLink]="'/bill/' + row.bill.id">
         <app-value-loading-or-ns [value]="row.bill.name" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.name }}
         </app-value-loading-or-ns>
       </td>
-      <td>
+      <td [routerLink]="'/bill/' + row.bill.id">
         <app-value-loading-or-ns [value]="row.bill.amount" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.amount | currency:row.bill.currency }}
         </app-value-loading-or-ns>
       </td>
-      <td>
+      <td [routerLink]="'/bill/' + row.bill.id">
         <app-value-loading-or-ns [value]="row.bill.beneficiary?.firstname" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.beneficiary?.firstname }}
         </app-value-loading-or-ns>
       </td>
-      <td>
+      <td [routerLink]="'/bill/' + row.bill.id">
         <app-bill-status-badge [bill]="row.bill"></app-bill-status-badge>
       </td>
       <td><i *ngIf="row.bill.paidDateTime" class="pi pi-check"></i></td>
-      <td class="bill-action buttons-wrapper">
-        <p-button
-          *ngIf="displayMarkAsPaidButton && !row.bill.paidDateTime"
-          icon="pi pi-dollar"
-          (onClick)="onMarkBillAsPaid.emit(row.bill)"
-          [rounded]="true"
-          pTooltip="Mark as paid"
-          showDelay="500"
-          hideDelay="300"
-          severity="help"
-        />
-        <p-button
-          *ngIf="displayMarkAsReimbursedButton && row.bill.status?.valueOf() === BillStatus.FILED.valueOf()"
-          icon="pi pi-check-circle"
-          (onClick)="onMarkBillAsReimbursed.emit(row.bill)"
-          [rounded]="true"
-          pTooltip="Mark as reimbursed"
-          showDelay="500"
-          hideDelay="300"
-          severity="success"
-        />
-        <p-button
-          icon="pi pi-pencil"
-          [routerLink]="'/bill/' + row.bill.id + '/edit'"
-          [rounded]="true"
-          pTooltip="Edit"
-          showDelay="500"
-          hideDelay="300"
-          severity="info"
-        />
-        <p-button
-          *ngIf="displayDeleteButton"
-          icon="pi pi-trash"
-          [rounded]="true"
-          (onClick)="onDelete.emit(row.bill)"
-          pTooltip="Delete"
-          showDelay="500"
-          hideDelay="300"
-          severity="danger"
-        />
-        <p-button
-          icon="pi pi-arrow-right"
-          [routerLink]="'/bill/' + row.bill.id"
-          [rounded]="true"
-          pTooltip="See bill"
-          showDelay="500"
-          hideDelay="300"
-        />
+      <td class="bill-action">
+        <p-menu #menu [model]="row.menuItems" [popup]="true" />
+        <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" severity="secondary" />
       </td>
     </tr>
   </ng-template>

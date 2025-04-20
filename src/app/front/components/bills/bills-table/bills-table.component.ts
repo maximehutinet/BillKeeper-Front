@@ -3,13 +3,14 @@ import {Button} from "primeng/button";
 import {Checkbox} from "primeng/checkbox";
 import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 import {TableModule} from "primeng/table";
-import {Tooltip} from "primeng/tooltip";
 import {Bill, BillStatus, ParsingJobStatus} from "../../../../services/billkeeper-ws/bill/model";
 import {RouterLink} from '@angular/router';
 import {BillStatusBadgeComponent} from '../bill-status-badge/bill-status-badge.component';
 import {FormsModule} from '@angular/forms';
 import {BillTableRow} from './model';
 import {ValueLoadingOrNsComponent} from '../../commun/value-loading-or-ns/value-loading-or-ns.component';
+import {MenuItem} from 'primeng/api';
+import {Menu} from 'primeng/menu';
 
 @Component({
   selector: 'app-bills-table',
@@ -19,12 +20,12 @@ import {ValueLoadingOrNsComponent} from '../../commun/value-loading-or-ns/value-
     DatePipe,
     NgIf,
     TableModule,
-    Tooltip,
     RouterLink,
     BillStatusBadgeComponent,
     FormsModule,
     CurrencyPipe,
-    ValueLoadingOrNsComponent
+    ValueLoadingOrNsComponent,
+    Menu
   ],
   templateUrl: './bills-table.component.html',
   styleUrl: './bills-table.component.scss'
@@ -73,9 +74,45 @@ export class BillsTableComponent {
     this.tableRows = bills.map(bill => {
       return {
         checked: this.isBillSelected(bill),
-        bill: bill
+        bill: bill,
+        menuItems: [{
+          label: 'Actions',
+          items: this.getMenuItems(bill)
+        }]
       }
     });
+  }
+
+  private getMenuItems(bill: Bill): MenuItem[] {
+    let items: MenuItem[] = [
+      {
+        label: 'Edit',
+        icon: 'pi pi-pencil',
+        routerLink: '/bill/' + bill.id + '/edit'
+      }
+    ];
+    if (this.displayMarkAsPaidButton && !bill.paidDateTime) {
+      items.push({
+        label: 'Mark as paid',
+        icon: 'pi pi-dollar',
+        command: () => this.onMarkBillAsPaid.emit(bill)
+      });
+    }
+    if (this.displayMarkAsReimbursedButton && bill.status?.valueOf() === BillStatus.FILED.valueOf()) {
+      items.push({
+        label: 'Mark as reimbursed',
+        icon: 'pi pi-check-circle',
+        command: () => this.onMarkBillAsReimbursed.emit(bill)
+      });
+    }
+    if (this.displayDeleteButton) {
+      items.push({
+        label: 'Delete',
+        icon: 'pi pi-trash',
+        command: () => this.onDelete.emit(bill)
+      });
+    }
+    return items;
   }
 
   private isBillSelected(bill: Bill): boolean {
@@ -99,7 +136,8 @@ export class BillsTableComponent {
     this.tableRows = this.tableRows.map(row => {
       return {
         checked: checkedStatus,
-        bill: row.bill
+        bill: row.bill,
+        menuItems: this.getMenuItems(row.bill)
       }
     });
   }
