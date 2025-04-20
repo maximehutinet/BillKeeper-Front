@@ -63,6 +63,8 @@ import {ValueLoadingOrNsComponent} from '../../../components/commun/value-loadin
 export class BillDetailPageComponent {
 
   protected readonly BillStatus = BillStatus;
+  protected readonly ParsingJobStatus = ParsingJobStatus;
+
   bill: Bill = {};
   documents: BillDocument[] = [];
   comments: BillComment[] = [];
@@ -190,6 +192,15 @@ export class BillDetailPageComponent {
     }
   }
 
+  async onRejectBill() {
+    try {
+      await this.billWsService.markBillAsRejected(this.bill);
+      this.bill = await this.billWsService.getBill(this.bill.id!);
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
   async onAddComment() {
     try {
       await this.commentWsService.createComment(this.bill.id!, this.newCommentContent);
@@ -280,6 +291,4 @@ export class BillDetailPageComponent {
     this.dragCounter += 1;
     this.layoutService.pageFocusing = true;
   }
-
-  protected readonly ParsingJobStatus = ParsingJobStatus;
 }

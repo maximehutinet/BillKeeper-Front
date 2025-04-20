@@ -36,7 +36,7 @@ export function markAsPaidSubmissionButtonVisible(submission: InsuranceSubmissio
 }
 
 export function markAsReimbursedSubmissionButtonVisible(submission: InsuranceSubmissionWithBills): boolean {
-  return submission.bills.filter(bill => bill.status !== BillStatus.REIMBURSED).length === submission.bills.length;
+  return submission.bills.filter(bill => bill.status !== BillStatus.REIMBURSED && bill.status !== BillStatus.REJECTED).length === submission.bills.length;
 }
 
 export function loadEnvironment() {

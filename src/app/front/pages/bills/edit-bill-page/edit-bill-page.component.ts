@@ -55,6 +55,7 @@ export class EditBillPageComponent {
     {name: "To file", billStatus: {value: BillStatus.TO_FILE}},
     {name: "Filed", billStatus: {value: BillStatus.FILED}},
     {name: "Reimbursed", billStatus: {value: BillStatus.REIMBURSED}},
+    {name: "Rejected", billStatus: {value: BillStatus.REJECTED}}
   ];
   currencyOptions: {name: string, currency: EnumDropdownOption}[] = [
     {name: "CHF", currency: {value: Currency.CHF}},

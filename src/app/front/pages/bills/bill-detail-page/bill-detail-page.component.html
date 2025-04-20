@@ -8,12 +8,21 @@
                   pTooltip="Mark as paid"
                   showDelay="500"
                   hideDelay="300"></p-button>
-        <p-button *ngIf="bill.status?.valueOf() !== BillStatus.REIMBURSED.valueOf()" severity="success"
+        <p-button *ngIf="bill.status?.valueOf() === BillStatus.FILED.valueOf()"
+                  (onClick)="onRejectBill()"
+                  severity="danger"
+                  icon="pi pi-ban"
+                  pTooltip="Mark as rejected"
+                  showDelay="500"
+                  hideDelay="300"
+        ></p-button>
+        <p-button *ngIf="bill.status?.valueOf() === BillStatus.FILED.valueOf()" severity="success"
                   icon="pi pi-check-circle"
                   (onClick)="onMarkAsReimbursed()"
                   pTooltip="Mark as reimbursed"
                   showDelay="500"
-                  hideDelay="300"></p-button>
+                  hideDelay="300"
+        ></p-button>
         <p-button severity="info" icon="pi pi-pencil" [routerLink]="'/bill/' + bill.id + '/edit'"></p-button>
         <p-button (onClick)="onDeleteBill()" severity="danger" icon="pi pi-trash"></p-button>
       </div>

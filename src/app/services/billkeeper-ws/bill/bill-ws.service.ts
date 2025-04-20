@@ -56,6 +56,15 @@ export class BillWsService {
     return this.httpWsService.post(`/bills/${bill.id}`, requestBody);
   }
 
+  async markBillAsRejected(bill: Bill): Promise<void> {
+    const requestBody: Bill = {
+      serviceDateTime: bill.serviceDateTime,
+      paidDateTime: bill.paidDateTime,
+      status: BillStatus.REJECTED
+    }
+    return this.httpWsService.post(`/bills/${bill.id}`, requestBody);
+  }
+
   async deleteBill(billId: string): Promise<void> {
     return this.httpWsService.delete(`/bills/${billId}`);
   }
