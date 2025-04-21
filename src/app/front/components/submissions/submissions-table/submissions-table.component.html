@@ -1,4 +1,4 @@
-<p-table [value]="submissions" dataKey="id">
+<p-table [value]="tableRows" dataKey="id">
   <ng-template #header>
     <tr>
       <th style="width: 5rem"></th>
@@ -6,83 +6,38 @@
       <th>eClaimId</th>
       <th>Name</th>
       <th>Amount</th>
-      <th>Actions</th>
+      <th></th>
     </tr>
   </ng-template>
-  <ng-template #body let-submission let-expanded="expanded">
+  <ng-template #body let-row let-expanded="expanded">
     <tr class="submission-row-header">
-      <td>
+      <td class="expand-row-td">
         <p-button type="button" pRipple [text]="true" [rounded]="true" [plain]="true"
-                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" [pRowToggler]="submission"/>
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" [pRowToggler]="row"/>
       </td>
-      <td>{{ submission.dateTime | date: 'longDate' }}</td>
+      <td [routerLink]="'/submissions/' + row.submission.id">{{ row.submission.dateTime | date: 'longDate' }}</td>
+      <td [routerLink]="'/submissions/' + row.submission.id">
+        <app-value-loading-or-ns [value]="row.submission.eclaimId" [loading]="false">
+          {{ row.submission.eclaimId }}
+        </app-value-loading-or-ns>
+      </td>
+      <td [routerLink]="'/submissions/' + row.submission.id">{{ row.submission.name }}</td>
+      <td [routerLink]="'/submissions/' + row.submission.id">
+        <app-value-loading-or-ns [value]="row.submission.totalUsdAmount" [loading]="false">
+          {{ row.submission.totalUsdAmount | currency }}
+        </app-value-loading-or-ns>
+      </td>
       <td>
-        @if (submission.eclaimId) {
-          {{ submission.eclaimId }}
-        } @else {
-          <span class="not-specified-warning">
-            <i class="pi pi-exclamation-triangle"></i>
-            N/S
-          </span>
-        }
-      </td>
-      <td>{{ submission.name }}</td>
-      <td>{{ submission.totalUsdAmount | currency }}</td>
-      <td class="bill-action buttons-wrapper">
-        <p-button
-          *ngIf="markAsPaidSubmissionButtonVisible(submission)"
-          icon="pi pi-dollar"
-          [rounded]="true"
-          (onClick)="onMarkAsPaid.emit(submission)"
-          pTooltip="Mark as paid"
-          showDelay="500"
-          hideDelay="300"
-          severity="help"
-        />
-        <p-button
-          *ngIf="markAsReimbursedSubmissionButtonVisible(submission)"
-          icon="pi pi-check-circle"
-          [rounded]="true"
-          (onClick)="onMarkAsReimbursed.emit(submission)"
-          pTooltip="Mark as reimbursed"
-          showDelay="500"
-          hideDelay="300"
-          severity="success"
-        />
-        <p-button
-          icon="pi pi-pencil"
-          [rounded]="true"
-          [routerLink]="'/submissions/' + submission.id + '/edit'"
-          pTooltip="Edit"
-          showDelay="500"
-          hideDelay="300"
-          severity="info"
-        />
-        <p-button
-          icon="pi pi-trash"
-          [rounded]="true"
-          (onClick)="onDeleteSubmission.emit(submission)"
-          pTooltip="Delete"
-          showDelay="500"
-          hideDelay="300"
-          severity="danger"
-        />
-        <p-button
-          icon="pi pi-arrow-right"
-          [routerLink]="'/submissions/' + submission.id"
-          [rounded]="true"
-          pTooltip="See bill"
-          showDelay="500"
-          hideDelay="300"
-        />
+        <p-menu #menu class="action-row-menu" [model]="row.menuItems" [popup]="true" />
+        <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" severity="secondary" />
       </td>
     </tr>
   </ng-template>
-  <ng-template #expandedrow let-submission>
+  <ng-template #expandedrow let-row>
     <tr>
       <td colspan="7" style="padding-left: 5rem">
         <app-bills-table
-          [bills]="submission.bills"
+          [bills]="row.submission.bills"
         ></app-bills-table>
       </td>
     </tr>
