@@ -9,6 +9,14 @@
                   showDelay="500"
                   hideDelay="300"></p-button>
         <p-button *ngIf="bill.status?.valueOf() === BillStatus.FILED.valueOf()"
+                  (onClick)="onMarkAsReimbursementInProgress()"
+                  severity="help"
+                  icon="pi pi-spinner-dotted"
+                  pTooltip="Mark as reimbursement in progress"
+                  showDelay="500"
+                  hideDelay="300"
+        ></p-button>
+        <p-button *ngIf="bill.status?.valueOf() === BillStatus.FILED.valueOf()"
                   (onClick)="onRejectBill()"
                   severity="danger"
                   icon="pi pi-ban"
@@ -16,7 +24,7 @@
                   showDelay="500"
                   hideDelay="300"
         ></p-button>
-        <p-button *ngIf="bill.status?.valueOf() === BillStatus.FILED.valueOf()" severity="success"
+        <p-button *ngIf="bill.status?.valueOf() === BillStatus.REIMBURSEMENT_IN_PROGRESS.valueOf()" severity="success"
                   icon="pi pi-check-circle"
                   (onClick)="onMarkAsReimbursed()"
                   pTooltip="Mark as reimbursed"

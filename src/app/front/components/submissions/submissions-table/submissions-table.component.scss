@@ -20,4 +20,8 @@ td:not(.expand-row-td) {
       }
     }
   }
+
+  .p-datatable-table-container {
+    overflow: unset !important;
+  }
 }

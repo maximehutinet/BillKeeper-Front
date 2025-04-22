@@ -84,6 +84,17 @@ export class SubmissionsListPageComponent {
     }
   }
 
+  async onMarkSubmissionAsReimbursementInProgress(submission: InsuranceSubmissionWithBills) {
+    try {
+      for (const bill of submission.bills) {
+        await this.billWsService.markBillAsReimbursementInProgress(bill)
+      }
+      await this.loadSubmissions();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
   async onMarkSubmissionAsReimbursed(submission: InsuranceSubmissionWithBills) {
     try {
       for (const bill of submission.bills) {

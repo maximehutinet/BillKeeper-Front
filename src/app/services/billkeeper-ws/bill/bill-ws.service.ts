@@ -48,6 +48,15 @@ export class BillWsService {
     return this.httpWsService.post(`/bills/${bill.id}`, requestBody);
   }
 
+  async markBillAsReimbursementInProgress(bill: Bill): Promise<void> {
+    const requestBody: Bill = {
+      serviceDateTime: bill.serviceDateTime,
+      paidDateTime: bill.paidDateTime,
+      status: BillStatus.REIMBURSEMENT_IN_PROGRESS
+    }
+    return this.httpWsService.post(`/bills/${bill.id}`, requestBody);
+  }
+
   async markBillAsPaid(bill: Bill): Promise<void> {
     const requestBody: Bill = {
       serviceDateTime: bill.serviceDateTime,

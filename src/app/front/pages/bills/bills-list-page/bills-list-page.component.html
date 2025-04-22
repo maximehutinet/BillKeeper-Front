@@ -35,9 +35,11 @@
       (selectedBillsChange)="onSelectedBillChange()"
       [displayMarkAsPaidButton]="true"
       [displayMarkAsReimbursedButton]="true"
+      [displayMarkAsReimbursementInProgressButton]="true"
       [displayDeleteButton]="true"
       (onMarkBillAsPaid)="onMarkAsPaid($event)"
       (onMarkBillAsReimbursed)="onMarkAsReimbursed($event)"
+      (onMarkBillAsReimbursementInProgress)="onMarkAsReimbursementInProgress($event)"
       (onDelete)="onDeleteBill($event)"
     ></app-bills-table>
 

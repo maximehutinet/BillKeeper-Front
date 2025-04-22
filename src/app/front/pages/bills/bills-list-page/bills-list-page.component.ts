@@ -130,6 +130,15 @@ export class BillsListPageComponent {
     }
   }
 
+  async onMarkAsReimbursementInProgress(bill: Bill) {
+    try {
+      await this.billWsService.markBillAsReimbursementInProgress(bill);
+      await this.loadAllBills();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
   async onDeleteBill(bill: Bill) {
     this.validationService.showConfirmationDialog(async () => {
       await this.deleteBill(bill);

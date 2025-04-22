@@ -15,6 +15,7 @@
       *ngIf="submissions.length > 0"
       [submissions]="filteredSubmissions"
       (onMarkAsPaid)="onMarkSubmissionAsPaid($event)"
+      (onMarkAsReimbursementInProgress)="onMarkSubmissionAsReimbursementInProgress($event)"
       (onMarkAsReimbursed)="onMarkSubmissionAsReimbursed($event)"
       (onDeleteSubmission)="onDeleteSubmission($event)"
     ></app-submissions-table>

@@ -1,16 +1,18 @@
 import {BillStatus} from './billkeeper-ws/bill/model';
-import {InsuranceSubmissionWithBills} from './billkeeper-ws/submission/model';
+import {InsuranceSubmissionWithBills, SubmissionStatus} from './billkeeper-ws/submission/model';
 
 export function billStatusToString(status: BillStatus | undefined): string {
   switch (status) {
     case BillStatus.TO_FILE:
       return "To file";
     case BillStatus.FILED:
-      return "Filed"
+      return "Filed";
+    case BillStatus.REIMBURSEMENT_IN_PROGRESS:
+      return "Reimbursement in progress";
     case BillStatus.REIMBURSED:
-      return "Reimbursed"
+      return "Reimbursed";
     case BillStatus.REJECTED:
-      return "Rejected"
+      return "Rejected";
     default:
       return "Status missing";
   }
@@ -21,11 +23,35 @@ export function billStatusBadge(status: BillStatus | undefined): "info" | "succe
     case BillStatus.TO_FILE:
       return "warn";
     case BillStatus.FILED:
-      return "info"
+      return "info";
+    case BillStatus.REIMBURSEMENT_IN_PROGRESS:
+      return "secondary";
     case BillStatus.REIMBURSED:
-      return "success"
+      return "success";
     case BillStatus.REJECTED:
-      return "danger"
+      return "danger";
+    default:
+      return "danger";
+  }
+}
+
+export function submissionStatusToString(status: SubmissionStatus): string {
+  switch (status) {
+    case SubmissionStatus.OPEN:
+      return "Open";
+    case SubmissionStatus.CLOSED:
+      return "Closed";
+    default:
+      return "Status missing";
+  }
+}
+
+export function submissionStatusBadge(status: SubmissionStatus): "info" | "success" | "warn" | "danger" | "secondary" | "contrast" | "help" | "primary" {
+  switch (status) {
+    case SubmissionStatus.OPEN:
+      return "info";
+    case SubmissionStatus.CLOSED:
+      return "success";
     default:
       return "danger";
   }
@@ -35,8 +61,12 @@ export function markAsPaidSubmissionButtonVisible(submission: InsuranceSubmissio
   return submission.bills.filter(bill => !bill.paidDateTime).length === submission.bills.length;
 }
 
+export function markAsReimbursementInProgressSubmissionButtonVisible(submission: InsuranceSubmissionWithBills): boolean {
+  return submission.bills.filter(bill => bill.status === BillStatus.FILED).length === submission.bills.length;
+}
+
 export function markAsReimbursedSubmissionButtonVisible(submission: InsuranceSubmissionWithBills): boolean {
-  return submission.bills.filter(bill => bill.status !== BillStatus.REIMBURSED && bill.status !== BillStatus.REJECTED).length === submission.bills.length;
+  return submission.bills.filter(bill => bill.status === BillStatus.REIMBURSEMENT_IN_PROGRESS).length === submission.bills.length;
 }
 
 export function loadEnvironment() {

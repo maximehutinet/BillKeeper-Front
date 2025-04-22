@@ -153,6 +153,17 @@ export class BillDetailPageComponent {
     }
   }
 
+  async onMarkAsReimbursementInProgress() {
+    try {
+      await this.layoutService.withPageLoading(async () => {
+        await this.billWsService.markBillAsReimbursementInProgress(this.bill);
+        this.bill = await this.billWsService.getBill(this.bill.id!);
+      });
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
   async onMarkAsReimbursed() {
     try {
       await this.layoutService.withPageLoading(async () => {

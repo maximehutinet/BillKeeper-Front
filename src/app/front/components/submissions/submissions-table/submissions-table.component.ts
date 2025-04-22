@@ -1,16 +1,23 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BillsTableComponent} from "../../bills/bills-table/bills-table.component";
 import {Button} from "primeng/button";
-import {CurrencyPipe, DatePipe} from "@angular/common";
+import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 import {Ripple} from "primeng/ripple";
 import {TableModule} from "primeng/table";
 import {InsuranceSubmissionWithBills} from '../../../../services/billkeeper-ws/submission/model';
-import {markAsPaidSubmissionButtonVisible, markAsReimbursedSubmissionButtonVisible} from '../../../../services/utils';
+import {
+  markAsPaidSubmissionButtonVisible,
+  markAsReimbursedSubmissionButtonVisible,
+  markAsReimbursementInProgressSubmissionButtonVisible,
+  submissionStatusBadge,
+  submissionStatusToString
+} from '../../../../services/utils';
 import {RouterLink} from '@angular/router';
 import {ValueLoadingOrNsComponent} from '../../commun/value-loading-or-ns/value-loading-or-ns.component';
 import {SubmissionTableRow} from './model';
 import {MenuItem} from 'primeng/api';
 import {Menu} from 'primeng/menu';
+import {Badge} from 'primeng/badge';
 
 @Component({
   selector: 'app-submissions-table',
@@ -23,15 +30,17 @@ import {Menu} from 'primeng/menu';
     CurrencyPipe,
     RouterLink,
     ValueLoadingOrNsComponent,
-    Menu
+    Menu,
+    Badge,
+    NgIf
   ],
   templateUrl: './submissions-table.component.html',
   styleUrl: './submissions-table.component.scss'
 })
 export class SubmissionsTableComponent {
 
-  protected readonly markAsPaidSubmissionButtonVisible = markAsPaidSubmissionButtonVisible;
-  protected readonly markAsReimbursedSubmissionButtonVisible = markAsReimbursedSubmissionButtonVisible;
+  protected readonly submissionStatusToString = submissionStatusToString;
+  protected readonly submissionStatusBadge = submissionStatusBadge;
 
   tableRows: SubmissionTableRow[] = [];
 
@@ -45,6 +54,9 @@ export class SubmissionsTableComponent {
 
   @Output()
   onMarkAsReimbursed: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
+
+  @Output()
+  onMarkAsReimbursementInProgress: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
 
   @Output()
   onDeleteSubmission: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
@@ -70,16 +82,23 @@ export class SubmissionsTableComponent {
         routerLink: '/submissions/' + submission.id + '/edit'
       }
     ];
-    if (this.markAsPaidSubmissionButtonVisible(submission)) {
+    if (markAsPaidSubmissionButtonVisible(submission)) {
       items.push({
         label: 'Mark as paid',
         icon: 'pi pi-dollar',
         command: () => this.onMarkAsPaid.emit(submission)
       });
     }
-    if (this.markAsReimbursedSubmissionButtonVisible(submission)) {
+    if (markAsReimbursementInProgressSubmissionButtonVisible(submission)) {
       items.push({
-        label: 'Mark as reimbursed',
+        label: 'Mark bills as reimbursement in progress',
+        icon: 'pi pi-spinner-dotted',
+        command: () => this.onMarkAsReimbursementInProgress.emit(submission)
+      });
+    }
+    if (markAsReimbursedSubmissionButtonVisible(submission)) {
+      items.push({
+        label: 'Mark bills as reimbursed',
         icon: 'pi pi-check-circle',
         command: () => this.onMarkAsReimbursed.emit(submission)
       });
@@ -92,5 +111,4 @@ export class SubmissionsTableComponent {
     });
     return items;
   }
-
 }

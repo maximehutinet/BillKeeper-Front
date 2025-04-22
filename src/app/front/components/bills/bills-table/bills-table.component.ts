@@ -65,6 +65,12 @@ export class BillsTableComponent {
   onMarkBillAsReimbursed: EventEmitter<Bill> = new EventEmitter();
 
   @Input()
+  displayMarkAsReimbursementInProgressButton = false;
+
+  @Output()
+  onMarkBillAsReimbursementInProgress: EventEmitter<Bill> = new EventEmitter();
+
+  @Input()
   displayDeleteButton = false;
 
   @Output()
@@ -99,6 +105,13 @@ export class BillsTableComponent {
       });
     }
     if (this.displayMarkAsReimbursedButton && bill.status?.valueOf() === BillStatus.FILED.valueOf()) {
+      items.push({
+        label: 'Mark as reimbursement in progress',
+        icon: 'pi pi-spinner-dotted',
+        command: () => this.onMarkBillAsReimbursementInProgress.emit(bill)
+      });
+    }
+    if (this.displayMarkAsReimbursedButton && bill.status?.valueOf() === BillStatus.REIMBURSEMENT_IN_PROGRESS.valueOf()) {
       items.push({
         label: 'Mark as reimbursed',
         icon: 'pi pi-check-circle',

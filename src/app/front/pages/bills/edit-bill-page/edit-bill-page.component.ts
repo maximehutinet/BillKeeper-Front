@@ -54,6 +54,7 @@ export class EditBillPageComponent {
   statusOptions: {name: string, billStatus: EnumDropdownOption}[] = [
     {name: "To file", billStatus: {value: BillStatus.TO_FILE}},
     {name: "Filed", billStatus: {value: BillStatus.FILED}},
+    {name: "Reimbursement in progress", billStatus: {value: BillStatus.REIMBURSEMENT_IN_PROGRESS}},
     {name: "Reimbursed", billStatus: {value: BillStatus.REIMBURSED}},
     {name: "Rejected", billStatus: {value: BillStatus.REJECTED}}
   ];
