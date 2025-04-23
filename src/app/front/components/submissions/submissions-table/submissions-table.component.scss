@@ -3,24 +3,6 @@ td:not(.expand-row-td) {
 }
 
 ::ng-deep {
-  p-menu {
-    font-size: 0.8rem;
-
-    p-menu-submenu-label {
-      font-size: 0.9rem;
-    }
-
-    & > div {
-      top: unset !important;
-      left: unset !important;
-      min-width: unset;
-
-      .p-menu-item-icon {
-        font-size: 0.8rem;
-      }
-    }
-  }
-
   .p-datatable-table-container {
     overflow: unset !important;
   }

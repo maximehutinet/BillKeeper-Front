@@ -49,7 +49,7 @@
       </td>
       <td><i *ngIf="row.bill.paidDateTime" class="pi pi-check"></i></td>
       <td class="bill-action">
-        <p-menu #menu [model]="row.menuItems" [popup]="true" />
+        <p-menu #menu [model]="row.menuItems" [popup]="true" appendTo="body"/>
         <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" severity="secondary" />
       </td>
     </tr>

@@ -74,3 +74,17 @@ p-fieldset {
     color: red !important;
   }
 }
+
+.p-menu {
+  .p-menu-item-label {
+    font-size: 0.8rem;
+  }
+
+  .p-menu-submenu-label {
+    font-size: 0.9rem;
+  }
+
+  .p-menu-item-icon {
+    --p-icon-size: 0.7rem;
+  }
+}

@@ -32,7 +32,7 @@
         <p-badge *ngIf="row.submission.status" [value]="submissionStatusToString(row.submission.status)" [severity]="submissionStatusBadge(row.submission.status)" />
       </td>
       <td>
-        <p-menu #menu class="action-row-menu" [model]="row.menuItems" [popup]="true" />
+        <p-menu #menu class="action-row-menu" [model]="row.menuItems" [popup]="true" appendTo="body"/>
         <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" severity="secondary" />
       </td>
     </tr>
