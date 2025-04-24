@@ -30,4 +30,8 @@ export class UserWsService {
     const blob = await this.httpWsService.getBlob("/users/me/picture");
     return URL.createObjectURL(blob);
   }
+
+  async getUsersStartingWith(value: string) {
+    return this.httpWsService.get<User[]>(`/users/suggestions?value=${value}`)
+  }
 }

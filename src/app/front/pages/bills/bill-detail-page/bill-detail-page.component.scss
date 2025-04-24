@@ -10,15 +10,8 @@
   align-items: start;
   gap: 1rem;
 
-  app-comment {
+  app-comment, app-add-comment-textarea {
     display: block;
-    width: 100%;
-  }
-  #post-comment-wrapper {
-    margin-top: 2rem;
-  }
-
-  #post-comment-wrapper, .p-floatlabel, textarea {
     width: 100%;
   }
 }
@@ -31,3 +24,4 @@ app-value-loading-or-ns {
     width: 10rem;
   }
 }
+

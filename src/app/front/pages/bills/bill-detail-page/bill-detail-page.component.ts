@@ -9,11 +9,9 @@ import {
 } from "../../../components/comments/edit-comment-dialog/edit-comment-dialog.component";
 import {EditNameDialogComponent} from "../../../components/commun/edit-name-dialog/edit-name-dialog.component";
 import {Fieldset} from "primeng/fieldset";
-import {FloatLabel} from "primeng/floatlabel";
 import {FormsModule} from "@angular/forms";
 import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.component";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {Textarea} from "primeng/textarea";
 import {Tooltip} from "primeng/tooltip";
 import {Bill, BillStatus, ParsingJobStatus} from '../../../../services/billkeeper-ws/bill/model';
 import {BillDocument} from '../../../../services/billkeeper-ws/document/model';
@@ -31,6 +29,10 @@ import {
   CopyToClipboardIconComponent
 } from '../../../components/commun/copy-to-clipboard-icon/copy-to-clipboard-icon.component';
 import {ValueLoadingOrNsComponent} from '../../../components/commun/value-loading-or-ns/value-loading-or-ns.component';
+import {
+  AddCommentTextareaComponent
+} from '../../../components/comments/add-comment-textarea/add-comment-textarea.component';
+import {CommentWithTaggedUsers} from '../../../components/comments/add-comment-textarea/model';
 
 @Component({
   selector: 'app-bill-detail-page',
@@ -44,18 +46,17 @@ import {ValueLoadingOrNsComponent} from '../../../components/commun/value-loadin
     EditCommentDialogComponent,
     EditNameDialogComponent,
     Fieldset,
-    FloatLabel,
     FormsModule,
     MainLayoutComponent,
     NgForOf,
     NgIf,
     RouterLink,
-    Textarea,
     Tooltip,
     CurrencyPipe,
     TopBarWithBackButtonComponent,
     CopyToClipboardIconComponent,
-    ValueLoadingOrNsComponent
+    ValueLoadingOrNsComponent,
+    AddCommentTextareaComponent
   ],
   templateUrl: './bill-detail-page.component.html',
   styleUrl: './bill-detail-page.component.scss'
@@ -68,7 +69,6 @@ export class BillDetailPageComponent {
   bill: Bill = {};
   documents: BillDocument[] = [];
   comments: BillComment[] = [];
-  newCommentContent: string = "";
   editComment: BillComment = {
     id: "",
     content: "",
@@ -212,10 +212,9 @@ export class BillDetailPageComponent {
     }
   }
 
-  async onAddComment() {
+  async onAddComment(comment: CommentWithTaggedUsers) {
     try {
-      await this.commentWsService.createComment(this.bill.id!, this.newCommentContent);
-      this.newCommentContent = "";
+      await this.commentWsService.createComment(this.bill.id!, comment);
       await this.loadBillComments();
     } catch (e) {
       this.toastMessageService.displayError(e);

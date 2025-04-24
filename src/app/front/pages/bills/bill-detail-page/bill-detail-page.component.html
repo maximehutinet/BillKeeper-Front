@@ -105,14 +105,9 @@
           (onEditEvent)="onShowEditCommentDialog(comment)"
           (onDeleteEvent)="onDeleteComment(comment.id)"
         ></app-comment>
-
-        <div id="post-comment-wrapper" class="textarea-wrapper">
-          <p-floatlabel>
-            <textarea pTextarea id="bill-comment-input"  [(ngModel)]="newCommentContent" rows="5" cols="40" style="resize: none"></textarea>
-            <label for="bill-comment-input">Comment</label>
-          </p-floatlabel>
-          <p-button [disabled]="newCommentContent.length === 0" severity="success" label="Add" (click)="onAddComment()"/>
-        </div>
+        <app-add-comment-textarea
+          (onAddComment)="onAddComment($event)"
+        ></app-add-comment-textarea>
       </div>
     </p-fieldset>
 
