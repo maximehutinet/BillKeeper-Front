@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {User} from '../../../../services/billkeeper-ws/user/model';
 import {NgForOf} from '@angular/common';
-import {Avatar} from 'primeng/avatar';
+import {UserAvatarComponent} from '../user-avatar/user-avatar.component';
 
 @Component({
   selector: 'app-suggested-users-menu',
   imports: [
     NgForOf,
-    Avatar
+    UserAvatarComponent
   ],
   templateUrl: './suggested-users-menu.component.html',
   styleUrl: './suggested-users-menu.component.scss'

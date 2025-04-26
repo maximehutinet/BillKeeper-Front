@@ -1,7 +1,7 @@
 <div class="comment">
   <div class="comment-header">
     <div class="user-wrapper" *ngIf="comment.user">
-      <p-avatar [image]="userProfilePicture" size="normal" shape="circle" />
+      <app-user-avatar [user]="comment.user"></app-user-avatar>
       <span>{{ comment.user.firstname }}</span>
       <span class="comment-datetime">• {{ comment.dateTime | date: 'longDate' }}</span>
     </div>

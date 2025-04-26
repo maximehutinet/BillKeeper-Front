@@ -98,11 +98,6 @@ export class AddCommentTextareaComponent {
   private async updateSuggestedUsers(user: string) {
     try {
       this.suggestedUsers = await this.userWsService.getUsersStartingWith(user);
-      this.suggestedUsers = await Promise.all(this.suggestedUsers.map(async (user) => {
-          user.profilePicture = await this.userWsService.getProfilePicture(user);
-          return user;
-        })
-      );
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

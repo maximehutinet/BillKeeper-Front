@@ -1,6 +1,6 @@
 <div id="suggested-users-menu-wrapper">
   <div *ngFor="let user of users" (click)="onClickUser.emit(user)">
-    <p-avatar [image]="user.profilePicture" size="normal" shape="circle" />
+    <app-user-avatar [user]="user"></app-user-avatar>
     {{ user.firstname }}
   </div>
 </div>
