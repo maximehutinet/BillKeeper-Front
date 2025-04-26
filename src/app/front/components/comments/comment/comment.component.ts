@@ -3,6 +3,7 @@ import {BillComment} from '../../../../services/billkeeper-ws/comment/model';
 import {DatePipe, NgIf} from '@angular/common';
 import {Button} from 'primeng/button';
 import {UserAvatarComponent} from '../../commun/user-avatar/user-avatar.component';
+import {UserDataService} from '../../../../services/user-data.service';
 
 @Component({
   selector: 'app-comment',
@@ -29,5 +30,10 @@ export class CommentComponent {
 
   @Output()
   onDeleteEvent: EventEmitter<void> = new EventEmitter();
+
+  constructor(
+    public userDataService: UserDataService
+  ) {
+  }
 
 }
