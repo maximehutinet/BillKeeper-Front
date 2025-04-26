@@ -6,10 +6,16 @@ import {TopBarComponent} from '../../../components/layout/top-bar/top-bar.compon
 import {Fieldset} from 'primeng/fieldset';
 import {User} from '../../../../services/billkeeper-ws/user/model';
 import {ToastMessageService} from '../../../../services/toast-message.service';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {Button} from 'primeng/button';
 import {LayoutService} from '../../../../services/layout.service';
 import {Avatar} from 'primeng/avatar';
+import {Family} from '../../../../services/billkeeper-ws/family/model';
+import {FamilyWsService} from '../../../../services/billkeeper-ws/family/family-ws.service';
+import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
+import {UserAvatarComponent} from '../../../components/commun/user-avatar/user-avatar.component';
+import {EditEmailDialogComponent} from '../../../components/commun/edit-email-dialog/edit-email-dialog.component';
+import {SuccessDialogComponent} from '../../../components/commun/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -21,7 +27,12 @@ import {Avatar} from 'primeng/avatar';
     Fieldset,
     NgIf,
     Button,
-    Avatar
+    Avatar,
+    EditNameDialogComponent,
+    NgForOf,
+    UserAvatarComponent,
+    EditEmailDialogComponent,
+    SuccessDialogComponent
   ],
   templateUrl: './user-profile-page.component.html',
   styleUrl: './user-profile-page.component.scss'
@@ -29,10 +40,16 @@ import {Avatar} from 'primeng/avatar';
 export class UserProfilePageComponent {
 
   currentUser: User | undefined;
-  profilePicture: string = "assets/images/profile_placeholder.png";
+  profilePicture: string = "/assets/images/profile_placeholder.png";
+  family?: Family;
+  showFamilyNameDialog = false;
+  showAddMemberDialog = false;
+  showAddMemberSuccessDialog = false;
+  addMemberSuccessDialogText = "";
 
   constructor(
     private userWsService: UserWsService,
+    private familyWsService: FamilyWsService,
     private toastMessageService: ToastMessageService,
     private layoutService: LayoutService
   ) {
@@ -42,6 +59,7 @@ export class UserProfilePageComponent {
     try {
       this.currentUser = await this.userWsService.getCurrentUserProfile();
       this.profilePicture = await this.userWsService.getCurrentUserProfilePicture();
+      this.family = await this.familyWsService.getCurrentUserFamily();
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
@@ -60,6 +78,27 @@ export class UserProfilePageComponent {
   private async uploadProfilePicture(file: File) {
     try {
       await this.userWsService.uploadCurrentUserProfilePicture(file);
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onValidateFamilyName(name: string) {
+    try {
+      this.showFamilyNameDialog = false;
+      await this.familyWsService.createFamily(name);
+      this.family = await this.familyWsService.getCurrentUserFamily();
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onValidateAddMemberEmail(email: string) {
+    try {
+      this.showAddMemberDialog = false;
+      await this.familyWsService.addMemberToFamily(email);
+      this.addMemberSuccessDialogText = `An invitation email was sent to ${email}, the member will be visible as soon as they accept the invitation`;
+      this.showAddMemberSuccessDialog = true;
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

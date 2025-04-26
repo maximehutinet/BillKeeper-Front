@@ -23,5 +23,64 @@
         </div>
       </div>
     </p-fieldset>
+
+    <p-fieldset legend="Family" [toggleable]="true">
+      <p *ngIf="!family">You're not yet part of a family, create one to share your bills with other members</p>
+      <p-button *ngIf="!family" label="Create family" icon="pi pi-plus" (onClick)="showFamilyNameDialog = true"></p-button>
+      <div id="family-detail-wrapper" *ngIf="family">
+        <div class="card-body">
+          <div class="card-entry">
+            <label>Name: </label>
+            <span>{{ family.name }}</span>
+          </div>
+          <div class="card-entry">
+            <label>Owner: </label>
+            @if (family.owner.id === currentUser?.id) {
+              <app-user-avatar [user]="family.owner"></app-user-avatar>
+              <span>{{ family.owner.firstname }} (me)</span>
+            } @else {
+              <span>{{ family.owner.firstname }}</span>
+            }
+          </div>
+          <div class="card-entry">
+            <label>Members: </label>
+          </div>
+          <div *ngFor="let member of family.members" class="member-wrapper">
+            @if (member.id === currentUser?.id) {
+              <app-user-avatar [user]="member"></app-user-avatar>
+              <span>{{ member.firstname }} (me)</span>
+            } @else {
+              <app-user-avatar [user]="member"></app-user-avatar>
+              <span>{{ member.firstname }}</span>
+            }
+          </div>
+        </div>
+      </div>
+      <p-button
+        *ngIf="family && family.members.length > 0"
+        id="add-member-button"
+        label="Add member"
+        icon="pi pi-plus"
+        (onClick)="showAddMemberDialog = true"
+      ></p-button>
+    </p-fieldset>
+
+    <app-edit-name-dialog
+      header="Family name"
+      [(showDialog)]="showFamilyNameDialog"
+      (onValidate)="onValidateFamilyName($event)"
+    ></app-edit-name-dialog>
+
+    <app-edit-email-dialog
+      header="Email address"
+      [(showDialog)]="showAddMemberDialog"
+      (onValidate)="onValidateAddMemberEmail($event)"
+    ></app-edit-email-dialog>
+
+    <app-success-dialog
+      header="Operation in progress"
+      [text]="addMemberSuccessDialogText"
+      [(showDialog)]="showAddMemberSuccessDialog"
+    ></app-success-dialog>
   </ng-container>
 </app-main-layout>

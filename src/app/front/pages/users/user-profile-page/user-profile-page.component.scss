@@ -14,3 +14,18 @@
     right: -1rem;
   }
 }
+
+.member-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  app-user-avatar {
+    display: block;
+  }
+}
+
+#add-member-button {
+  display: block;
+  margin-top: 1rem;
+}

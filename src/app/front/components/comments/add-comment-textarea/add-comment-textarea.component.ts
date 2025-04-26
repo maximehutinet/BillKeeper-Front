@@ -52,6 +52,7 @@ export class AddCommentTextareaComponent {
     const currentWord = this.getCurrentWord(this.commentTextArea.nativeElement.value, cursorPosition);
     this.commentTextArea.nativeElement.value = this.replaceString(this.commentTextArea.nativeElement.value, currentWord.startIndex, currentWord.endIndex, "@" + user.firstname);
     this.commentTextArea.nativeElement.focus();
+    this.content = this.commentTextArea.nativeElement.value;
   }
 
   private userIsAlreadyTagged(user: User) {
