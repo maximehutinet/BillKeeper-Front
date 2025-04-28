@@ -1,7 +1,10 @@
 import {Component} from '@angular/core';
 import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.component";
 import {TableModule} from "primeng/table";
-import {InsuranceSubmissionWithBills} from '../../../../services/billkeeper-ws/submission/model';
+import {
+  CreateUpdateInsuranceSubmissionRequest,
+  InsuranceSubmissionWithBills
+} from '../../../../services/billkeeper-ws/submission/model';
 import {SubmissionWsService} from '../../../../services/billkeeper-ws/submission/submission-ws.service';
 import {LayoutService} from '../../../../services/layout.service';
 import {SubmissionsTableComponent} from '../../../components/submissions/submissions-table/submissions-table.component';
@@ -15,6 +18,7 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
+import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
 
 @Component({
   selector: 'app-submissions-list-page',
@@ -28,7 +32,8 @@ import {NgIf} from '@angular/common';
     InputIcon,
     InputText,
     FormsModule,
-    NgIf
+    NgIf,
+    EditNameDialogComponent
   ],
   templateUrl: './submissions-list-page.component.html',
   styleUrl: './submissions-list-page.component.scss'
@@ -38,6 +43,8 @@ export class SubmissionsListPageComponent {
   submissions: InsuranceSubmissionWithBills[] = [];
   filteredSubmissions: InsuranceSubmissionWithBills[] = [];
   searchKeyword: string | undefined;
+  showAddEclaimIdDialog = false;
+  editedSubmission: InsuranceSubmissionWithBills | undefined;
 
 
   constructor(
@@ -112,6 +119,25 @@ export class SubmissionsListPageComponent {
         await this.submissionWsService.deleteSubmission(submission.id!);
         await this.loadSubmissions();
       });
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onAddEclaimId(submission: InsuranceSubmissionWithBills) {
+    this.editedSubmission = submission;
+    this.showAddEclaimIdDialog = true;
+  }
+
+  async onValidateEclaimIdValue(value: string) {
+    try {
+      const request: CreateUpdateInsuranceSubmissionRequest = {
+        eClaimId: value
+      }
+      await this.submissionWsService.updateSubmission(this.editedSubmission!.id!, request);
+      this.showAddEclaimIdDialog = false;
+      this.editedSubmission = undefined;
+      await this.loadSubmissions();
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

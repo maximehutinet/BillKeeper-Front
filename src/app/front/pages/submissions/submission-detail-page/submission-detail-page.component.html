@@ -30,18 +30,27 @@
           <span>{{ submission.name }}</span>
           <app-copy-to-clipboard-icon *ngIf="submission.name" [value]="submission.name"></app-copy-to-clipboard-icon>
         </div>
+        <div *ngIf="submission.totalUsdAmount" class="card-entry">
+          <label>Amount: </label>
+          <span>{{ submission.totalUsdAmount | currency }}</span>
+        </div>
         <div class="card-entry">
           <label>eClaimId: </label>
-          <span>{{ submission.eclaimId ?? 'N/S' }}</span>
+          <span>
+            <app-value-loading-or-ns [value]="submission.eclaimId" [loading]="false">
+              {{ submission.eclaimId }}
+            </app-value-loading-or-ns>
+          </span>
           <app-copy-to-clipboard-icon *ngIf="submission.eclaimId" [value]="submission.eclaimId"></app-copy-to-clipboard-icon>
+        </div>
+        <div class="card-entry">
+          <label>Status: </label>
+          <p-badge *ngIf="submission.status" [value]="submissionStatusToString(submission.status)" [severity]="submissionStatusBadge(submission.status)" />
         </div>
         <div class="card-entry">
           <label>Created on: </label>
           <span>{{ submission.dateTime | date: 'longDate' }}</span>
-        </div>
-        <div *ngIf="submission.totalUsdAmount" class="card-entry">
-          <label>Amount: </label>
-          <span>{{ submission.totalUsdAmount | currency }}</span>
+          <span *ngIf="submission.user">by {{ submission.user.firstname }}</span>
         </div>
       </div>
     </p-fieldset>

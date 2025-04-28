@@ -18,6 +18,13 @@
       (onMarkAsReimbursementInProgress)="onMarkSubmissionAsReimbursementInProgress($event)"
       (onMarkAsReimbursed)="onMarkSubmissionAsReimbursed($event)"
       (onDeleteSubmission)="onDeleteSubmission($event)"
+      (onAddEclaimId)="onAddEclaimId($event)"
     ></app-submissions-table>
+
+    <app-edit-name-dialog
+      header="eClaimId"
+      [(showDialog)]="showAddEclaimIdDialog"
+      (onValidate)="onValidateEclaimIdValue($event)"
+    ></app-edit-name-dialog>
   </ng-container>
 </app-main-layout>

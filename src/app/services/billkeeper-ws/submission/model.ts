@@ -1,4 +1,5 @@
 import {Bill} from '../bill/model';
+import {User} from '../user/model';
 
 export enum SubmissionStatus {
   OPEN = "OPEN",
@@ -11,6 +12,7 @@ export interface InsuranceSubmission {
   name?: string;
   eclaimId?: string;
   status?: SubmissionStatus;
+  user?: User;
 }
 
 export interface InsuranceSubmissionWithBills extends InsuranceSubmission {

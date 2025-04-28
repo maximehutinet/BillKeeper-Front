@@ -11,7 +11,12 @@ import {SubmissionWsService} from '../../../../services/billkeeper-ws/submission
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {LayoutService} from '../../../../services/layout.service';
 import {ToastMessageService} from '../../../../services/toast-message.service';
-import {markAsPaidSubmissionButtonVisible, markAsReimbursedSubmissionButtonVisible} from "../../../../services/utils";
+import {
+  markAsPaidSubmissionButtonVisible,
+  markAsReimbursedSubmissionButtonVisible,
+  submissionStatusBadge,
+  submissionStatusToString
+} from "../../../../services/utils";
 import {Bill} from '../../../../services/billkeeper-ws/bill/model';
 import {ValidationService} from '../../../../services/validation.service';
 import {Button} from 'primeng/button';
@@ -21,24 +26,28 @@ import {
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
 import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
 import {
-    CopyToClipboardIconComponent
+  CopyToClipboardIconComponent
 } from "../../../components/commun/copy-to-clipboard-icon/copy-to-clipboard-icon.component";
+import {Badge} from 'primeng/badge';
+import {ValueLoadingOrNsComponent} from '../../../components/commun/value-loading-or-ns/value-loading-or-ns.component';
 
 @Component({
   selector: 'app-submission-detail-page',
-    imports: [
-        BillsTableComponent,
-        DatePipe,
-        Fieldset,
-        MainLayoutComponent,
-        CurrencyPipe,
-        Button,
-        Tooltip,
-        TopBarWithBackButtonComponent,
-        NgIf,
-        RouterLink,
-        CopyToClipboardIconComponent
-    ],
+  imports: [
+    BillsTableComponent,
+    DatePipe,
+    Fieldset,
+    MainLayoutComponent,
+    CurrencyPipe,
+    Button,
+    Tooltip,
+    TopBarWithBackButtonComponent,
+    NgIf,
+    RouterLink,
+    CopyToClipboardIconComponent,
+    Badge,
+    ValueLoadingOrNsComponent
+  ],
   templateUrl: './submission-detail-page.component.html',
   styleUrl: './submission-detail-page.component.scss'
 })
@@ -46,6 +55,8 @@ export class SubmissionDetailPageComponent {
 
   protected readonly markAsPaidSubmissionButtonVisible = markAsPaidSubmissionButtonVisible;
   protected readonly markAsReimbursedSubmissionButtonVisible = markAsReimbursedSubmissionButtonVisible;
+  protected readonly submissionStatusBadge = submissionStatusBadge;
+  protected readonly submissionStatusToString = submissionStatusToString;
 
   submission: InsuranceSubmissionWithBills = {
     bills: []

@@ -61,6 +61,9 @@ export class SubmissionsTableComponent {
   @Output()
   onDeleteSubmission: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
 
+  @Output()
+  onAddEclaimId: EventEmitter<InsuranceSubmissionWithBills> = new EventEmitter();
+
   private buildTableRows(submissions: InsuranceSubmissionWithBills[]) {
     this.tableRows = submissions.map(submission => {
       return {
@@ -82,9 +85,16 @@ export class SubmissionsTableComponent {
         routerLink: '/submissions/' + submission.id + '/edit'
       }
     ];
+    if (!submission.eclaimId) {
+      items.push({
+        label: 'Add eclaimId',
+        icon: 'pi pi-plus',
+        command: () => this.onAddEclaimId.emit(submission)
+      });
+    }
     if (markAsPaidSubmissionButtonVisible(submission)) {
       items.push({
-        label: 'Mark as paid',
+        label: 'Mark bills as paid',
         icon: 'pi pi-dollar',
         command: () => this.onMarkAsPaid.emit(submission)
       });
