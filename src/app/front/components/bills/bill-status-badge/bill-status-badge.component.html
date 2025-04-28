@@ -1,6 +1,6 @@
-@if (bill.status !== BillStatus.TO_FILE && bill.submission) {
+@if (bill.status !== BillStatus.TO_FILE && bill.submissionId) {
   <p-badge
-    [routerLink]="'/submissions/' + bill.submission.id"
+    [routerLink]="'/submissions/' + bill.submissionId"
     pTooltip="See submission"
     showDelay="500"
     hideDelay="300"

@@ -1,5 +1,4 @@
 import {Beneficiary} from '../beneficiary/model';
-import {InsuranceSubmission} from '../submission/model';
 import {User} from '../user/model';
 
 export interface Bill {
@@ -14,7 +13,7 @@ export interface Bill {
   provider?: string;
   status?: BillStatus;
   beneficiary?: Beneficiary;
-  submission?: InsuranceSubmission;
+  submissionId?: string;
   parsingJobStatus?: ParsingJobStatus;
 }
 
