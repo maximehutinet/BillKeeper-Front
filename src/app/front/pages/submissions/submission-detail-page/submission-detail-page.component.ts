@@ -30,6 +30,7 @@ import {
 } from "../../../components/commun/copy-to-clipboard-icon/copy-to-clipboard-icon.component";
 import {Badge} from 'primeng/badge';
 import {ValueLoadingOrNsComponent} from '../../../components/commun/value-loading-or-ns/value-loading-or-ns.component';
+import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
 
 @Component({
   selector: 'app-submission-detail-page',
@@ -46,7 +47,8 @@ import {ValueLoadingOrNsComponent} from '../../../components/commun/value-loadin
     RouterLink,
     CopyToClipboardIconComponent,
     Badge,
-    ValueLoadingOrNsComponent
+    ValueLoadingOrNsComponent,
+    EditNameDialogComponent
   ],
   templateUrl: './submission-detail-page.component.html',
   styleUrl: './submission-detail-page.component.scss'
@@ -61,6 +63,7 @@ export class SubmissionDetailPageComponent {
   submission: InsuranceSubmissionWithBills = {
     bills: []
   };
+  showAddEclaimIdDialog = false;
 
   constructor(
     private submissionWsService: SubmissionWsService,
@@ -137,6 +140,19 @@ export class SubmissionDetailPageComponent {
         await this.submissionWsService.deleteSubmission(this.submission.id!);
         this.location.back()
       });
+    } catch (e) {
+      this.toastMessageService.displayError(e);
+    }
+  }
+
+  async onValidateEclaimIdValue(value: string) {
+    try {
+      const request: CreateUpdateInsuranceSubmissionRequest = {
+        eClaimId: value
+      }
+      await this.submissionWsService.updateSubmission(this.submission!.id!, request);
+      this.showAddEclaimIdDialog = false;
+      await this.loadSubmission();
     } catch (e) {
       this.toastMessageService.displayError(e);
     }

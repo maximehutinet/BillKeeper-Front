@@ -2,6 +2,12 @@
   <ng-container main-content>
     <app-top-bar-with-back-button>
       <div right class="buttons-wrapper">
+        <p-button *ngIf="!submission.eclaimId"
+                  (click)="showAddEclaimIdDialog = true"
+                  label="Add eClaimId"
+                  icon="pi pi-plus"
+                  severity="info"
+        />
         <p-button
           *ngIf="markAsPaidSubmissionButtonVisible(submission)"
           severity="help"
@@ -60,5 +66,11 @@
       [displayDeleteButton]="true"
       (onDelete)="onRemoveBillFromSubmission($event)"
     ></app-bills-table>
+
+    <app-edit-name-dialog
+      header="eClaimId"
+      [(showDialog)]="showAddEclaimIdDialog"
+      (onValidate)="onValidateEclaimIdValue($event)"
+    ></app-edit-name-dialog>
   </ng-container>
 </app-main-layout>
