@@ -2,7 +2,7 @@
   <ng-container main-content>
     <app-top-bar>
       <h1 left>Submissions</h1>
-      <p-floatlabel right *ngIf="submissions.length > 0">
+      <p-floatlabel right *ngIf="submissions.length > 0" id="search-bar">
         <p-iconfield>
           <p-inputicon class="pi pi-search" />
           <input pInputText id="input-search" [(ngModel)]="searchKeyword" (keyup)="applySearchFilter()" autocomplete="off" />

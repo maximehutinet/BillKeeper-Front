@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgForOf, NgIf, UpperCasePipe} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {MenuItem} from './model';
@@ -29,6 +29,12 @@ import {UserWsService} from '../../../../services/billkeeper-ws/user/user-ws.ser
   styleUrl: './side-menu.component.scss'
 })
 export class SideMenuComponent {
+
+  @Input()
+  open: boolean = true;
+
+  @Output()
+  openChange: EventEmitter<boolean> = new EventEmitter();
 
   items: MenuItem[] = [
     {

@@ -1,7 +1,6 @@
-#page-wrapper {
-  display: flex;
-  flex-direction: row;
+@use "theme/breakpoints" as *;
 
+#page-wrapper {
   #side-menu-wrapper {
     position: fixed;
     top: 0;
@@ -9,12 +8,28 @@
     bottom: 0;
     height: 100%;
     width: var(--app-side-menu-width);
+    z-index: 2;
+
+    &.closed {
+      width: var(--app-side-menu-closed-width);
+    }
+
+    &.transition-active {
+      transition: width 0.5s ease;
+    }
   }
 
   #main-content-wrapper {
     display: block;
-    margin-left: var(--app-side-menu-width);
     padding: var(--app-content-padding-y) var(--app-content-padding-x);
-    flex-grow: 1;
+    margin-left: var(--app-side-menu-width);
+
+    &.menu-closed {
+      margin-left: var(--app-side-menu-closed-width);
+    }
+
+    &.transition-active {
+      transition: margin 0.5s ease;
+    }
   }
 }

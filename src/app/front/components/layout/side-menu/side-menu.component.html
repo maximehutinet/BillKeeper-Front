@@ -1,5 +1,11 @@
-<div id="side-menu">
-  <div id="menu-header"></div>
+<div id="side-menu" [class.closed]="!open">
+  <div id="menu-header">
+    @if (open) {
+      <i class="pi pi-times" (click)="openChange.emit(false)"></i>
+    } @else {
+      <i class="pi pi-bars" (click)="openChange.emit(true)"></i>
+    }
+  </div>
   <div id="menu-content">
     <div class="menu-group" *ngFor="let item of items">
       <div class="menu-group-title">
@@ -8,7 +14,7 @@
       <div class="menu-group-items">
         <div class="menu-item label-with-icon" [class.active]="isCurrentPage(child.link)" *ngFor="let child of item.items" [routerLink]="child.link">
           <i *ngIf="child.icon" [class]="child.icon"></i>
-          <span>{{ child.label }}</span>
+          <span class="menu-text">{{ child.label }}</span>
           <span *ngIf="child.badgeValue && child.badgeValue > 0">
             <p-badge [value]="child.badgeValue" severity="danger" badgeSize="small"></p-badge>
           </span>
@@ -22,7 +28,7 @@
     <div id="log-out-button" (click)="menu.toggle($event)">
       <div id="user-detail">
         <p-avatar [image]="userProfilePicture" size="normal" shape="circle" />
-        <span>{{ userFirstname }}</span>
+        <span class="menu-text">{{ userFirstname }}</span>
       </div>
     </div>
   </div>

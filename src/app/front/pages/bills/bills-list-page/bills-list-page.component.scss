@@ -1,3 +1,5 @@
+@use "theme/breakpoints" as *;
+
 #top-bar {
   display: flex;
   justify-content: space-between;

@@ -1,0 +1,9 @@
+@use "theme/breakpoints" as *;
+
+#search-bar {
+  display: none;
+
+  @include from($md) {
+    display: block;
+  }
+}

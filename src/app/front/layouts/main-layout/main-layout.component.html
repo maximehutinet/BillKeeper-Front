@@ -1,8 +1,11 @@
 <div id="page-wrapper">
-  <div id="side-menu-wrapper">
-      <app-side-menu></app-side-menu>
+  <div id="side-menu-wrapper" [class.transition-active]="transitionAnimationActive" [class.closed]="!menuOpen">
+      <app-side-menu
+        [(open)]="menuOpen"
+        (openChange)="onMenuOpenChange($event)"
+      ></app-side-menu>
   </div>
-  <div id="main-content-wrapper">
+  <div id="main-content-wrapper" [class.transition-active]="transitionAnimationActive" [class.menu-closed]="!menuOpen">
     <ng-content select="[main-content]"></ng-content>
   </div>
 </div>

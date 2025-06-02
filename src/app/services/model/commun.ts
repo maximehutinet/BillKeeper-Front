@@ -4,8 +4,6 @@ export interface EnumDropdownOption {
   value: BillStatus | Currency | undefined
 }
 
-export interface ExchangeRate {
-  source: Currency;
-  destination: Currency;
-  rate: number;
+export class LocalStorageKeys {
+  static readonly MENU_STATE = 'last_menu_state';
 }

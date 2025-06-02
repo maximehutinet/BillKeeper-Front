@@ -1,7 +1,19 @@
+@use "theme/breakpoints" as *;
+
 :root {
   --app-side-menu-width: 15rem;
-  --app-content-padding-x: 3rem;
-  --app-content-padding-y: 2rem;
+  --app-side-menu-closed-width: 4rem;
+  --app-content-padding-x: 1.5rem;
+  --app-content-padding-y: 1rem;
+
+  @include from($md) {
+    --app-content-padding-x: 3rem;
+    --app-content-padding-y: 2rem;
+  }
+}
+
+body {
+  font-size: var(--app-text-font-size);
 }
 
 h1 {
