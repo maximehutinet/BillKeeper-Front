@@ -35,6 +35,7 @@ export class BillsFilterComponent {
   set bills(value: Bill[]) {
     this._bills = value;
     this.updateSelectOptions();
+    this.initSelectedFilters();
   }
 
   @Output()
@@ -98,6 +99,16 @@ export class BillsFilterComponent {
       return this.statusOptionsContainsStatus(this.selectedStatus, bill.status);
     }
     return false;
+  }
+
+  private initSelectedFilters() {
+    if (this.statusOptionsContainsStatus(this.statusOptions, BillStatus.TO_FILE)) {
+      this.selectedStatus.push({
+        name: billStatusToString(BillStatus.TO_FILE),
+        billStatus: {value: BillStatus.TO_FILE}
+      });
+      this.onSelectChange();
+    }
   }
 
   onSelectChange() {
