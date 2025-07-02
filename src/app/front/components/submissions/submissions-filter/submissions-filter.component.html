@@ -1,0 +1,9 @@
+<p-multiselect
+  *ngIf="statusOptions.length > 1"
+  [options]="statusOptions"
+  [(ngModel)]="selectedStatus"
+  (onChange)="onSelectChange()"
+  placeholder="Select status"
+  optionLabel="name"
+  display="chip">
+</p-multiselect>

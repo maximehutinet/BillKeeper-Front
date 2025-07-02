@@ -19,6 +19,9 @@ import {InputText} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
+import {
+  SubmissionsFilterComponent
+} from '../../../components/submissions/submissions-filter/submissions-filter.component';
 
 @Component({
   selector: 'app-submissions-list-page',
@@ -33,7 +36,8 @@ import {EditNameDialogComponent} from '../../../components/commun/edit-name-dial
     InputText,
     FormsModule,
     NgIf,
-    EditNameDialogComponent
+    EditNameDialogComponent,
+    SubmissionsFilterComponent
   ],
   templateUrl: './submissions-list-page.component.html',
   styleUrl: './submissions-list-page.component.scss'
@@ -141,5 +145,9 @@ export class SubmissionsListPageComponent {
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
+  }
+
+  onSubmissionFilterChange(submissions: InsuranceSubmissionWithBills[]) {
+    this.filteredSubmissions = submissions;
   }
 }

@@ -8,5 +8,5 @@ export interface BeneficiarySelectOption {
 
 export interface StatusSelectOption {
   name: string;
-  billStatus: EnumDropdownOption;
+  status: EnumDropdownOption;
 }

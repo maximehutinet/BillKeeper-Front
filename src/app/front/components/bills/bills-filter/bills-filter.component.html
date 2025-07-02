@@ -1,4 +1,9 @@
 <div id="bill-filters-wrapper">
+  <div id="bills-to-pay-only-filter-wrapper">
+    <p-checkbox (onChange)="onSelectChange()" [(ngModel)]="showBillsToPayOnly" [binary]="true" />
+    <span>To pay</span>
+  </div>
+
   <p-multiselect
     *ngIf="beneficiaryOptions.length > 1"
     [options]="beneficiaryOptions"
