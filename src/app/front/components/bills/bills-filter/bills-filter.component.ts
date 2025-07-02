@@ -8,6 +8,7 @@ import {billStatusToString} from '../../../../services/utils';
 import {NgIf} from '@angular/common';
 import {Observable, Subscription} from 'rxjs';
 import {Button} from 'primeng/button';
+import {Checkbox} from 'primeng/checkbox';
 
 @Component({
   selector: 'app-bills-filter',
@@ -15,7 +16,8 @@ import {Button} from 'primeng/button';
     MultiSelect,
     FormsModule,
     NgIf,
-    Button
+    Button,
+    Checkbox
   ],
   templateUrl: './bills-filter.component.html',
   styleUrl: './bills-filter.component.scss'
@@ -27,6 +29,7 @@ export class BillsFilterComponent {
 
   statusOptions: StatusSelectOption[] = [];
   selectedStatus: StatusSelectOption[] = [];
+  showBillsToPayOnly = false;
 
   private _bills: Bill[] = [];
   private resetFiltersSubscription!: Subscription;
@@ -63,7 +66,7 @@ export class BillsFilterComponent {
       if (bill.status && !this.statusOptionsContainsStatus(this.statusOptions, bill.status)) {
         this.statusOptions.push({
           name: billStatusToString(bill.status),
-          billStatus: {value: bill.status}
+          status: {value: bill.status}
         });
       }
     });
@@ -77,7 +80,7 @@ export class BillsFilterComponent {
 
   private statusOptionsContainsStatus(options: StatusSelectOption[], status: BillStatus): boolean {
     return options
-      .filter(option => option.billStatus.value === status)
+      .filter(option => option.status.value === status)
       .length > 0;
   }
 
@@ -105,7 +108,7 @@ export class BillsFilterComponent {
     if (this.statusOptionsContainsStatus(this.statusOptions, BillStatus.TO_FILE)) {
       this.selectedStatus.push({
         name: billStatusToString(BillStatus.TO_FILE),
-        billStatus: {value: BillStatus.TO_FILE}
+        status: {value: BillStatus.TO_FILE}
       });
       this.onSelectChange();
     }
@@ -113,6 +116,7 @@ export class BillsFilterComponent {
 
   onSelectChange() {
     const filteredBills = this._bills
+      .filter(bill => this.showBillsToPayOnly ? !bill.paidDateTime : true)
       .filter(bill => this.billHasSelectedBeneficiary(bill))
       .filter(bill => this.billHasSelectedStatus(bill));
     this.billsChange.emit(filteredBills);
