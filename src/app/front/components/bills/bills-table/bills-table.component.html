@@ -24,27 +24,27 @@
       <td class="td-checkbox" *ngIf="makeBillSelectable">
         <p-checkbox [(ngModel)]="row.checked" (onChange)="onCheckboxChange()" [binary]="true"/>
       </td>
-      <td [routerLink]="'/bill/' + row.bill.id">
+      <td [routerLink]="'/bill/' + row.bill.id" [queryParams]="submissionViewParamActive ? { submissionView: true } : null">
         <app-value-loading-or-ns [value]="row.bill.serviceDateTime" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.serviceDateTime | date: 'longDate' }}
         </app-value-loading-or-ns>
       </td>
-      <td [routerLink]="'/bill/' + row.bill.id">
+      <td [routerLink]="'/bill/' + row.bill.id" [queryParams]="submissionViewParamActive ? { submissionView: true } : null">
         <app-value-loading-or-ns [value]="row.bill.name" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.name }}
         </app-value-loading-or-ns>
       </td>
-      <td [routerLink]="'/bill/' + row.bill.id">
+      <td [routerLink]="'/bill/' + row.bill.id" [queryParams]="submissionViewParamActive ? { submissionView: true } : null">
         <app-value-loading-or-ns [value]="row.bill.amount" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.amount | currency:row.bill.currency }}
         </app-value-loading-or-ns>
       </td>
-      <td [routerLink]="'/bill/' + row.bill.id">
+      <td [routerLink]="'/bill/' + row.bill.id" [queryParams]="submissionViewParamActive ? { submissionView: true } : null">
         <app-value-loading-or-ns [value]="row.bill.beneficiary?.firstname" [loading]="row.bill.parsingJobStatus === ParsingJobStatus.IN_PROGRESS">
           {{ row.bill.beneficiary?.firstname }}
         </app-value-loading-or-ns>
       </td>
-      <td [routerLink]="'/bill/' + row.bill.id">
+      <td [routerLink]="'/bill/' + row.bill.id" [queryParams]="submissionViewParamActive ? { submissionView: true } : null">
         <app-bill-status-badge [bill]="row.bill"></app-bill-status-badge>
       </td>
       <td><i *ngIf="row.bill.paidDateTime" class="pi pi-check"></i></td>

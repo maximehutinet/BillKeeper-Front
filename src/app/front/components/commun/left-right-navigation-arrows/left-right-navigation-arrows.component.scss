@@ -1,0 +1,31 @@
+#navigation-arrows-wrapper {
+  display: flex;
+  justify-content: center;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 15rem;
+
+    .arrow-button {
+      padding: 1rem;
+      border-radius: 50%;
+      background-color: var(--app-dark-grey-color);
+      cursor: pointer;
+
+      &.invisible {
+        visibility: hidden;
+      }
+
+      &:hover {
+        background-color: var(--app-black-color);
+      }
+
+      i {
+        color: var(--app-white-color);
+      }
+    }
+  }
+
+}

@@ -145,8 +145,13 @@
         [value]="editedDocument.description ?? ''"
         [(showDialog)]="editDocumentDescriptionDialogVisible"
         (onValidate)="onValidateNewDocumentDescription($event)"
-      >
-      </app-edit-name-dialog>
+      ></app-edit-name-dialog>
     </p-fieldset>
+
+    <app-left-right-navigation-arrows
+      *ngIf="submissionNavigation"
+      [routerLinks]="submissionNavigation"
+      [navigationIndex]="navigationIndex"
+    ></app-left-right-navigation-arrows>
   </ng-container>
 </app-main-layout>

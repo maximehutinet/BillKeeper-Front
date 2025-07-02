@@ -33,6 +33,12 @@ import {
   AddCommentTextareaComponent
 } from '../../../components/comments/add-comment-textarea/add-comment-textarea.component';
 import {CommentWithTaggedUsers} from '../../../components/comments/add-comment-textarea/model';
+import {
+  LeftRightNavigationArrowsComponent
+} from '../../../components/commun/left-right-navigation-arrows/left-right-navigation-arrows.component';
+import {SubmissionWsService} from '../../../../services/billkeeper-ws/submission/submission-ws.service';
+import {LeftRightNavigation, NavigationIndex} from '../../../components/commun/left-right-navigation-arrows/model';
+import {combineLatest} from 'rxjs';
 
 @Component({
   selector: 'app-bill-detail-page',
@@ -56,7 +62,8 @@ import {CommentWithTaggedUsers} from '../../../components/comments/add-comment-t
     TopBarWithBackButtonComponent,
     CopyToClipboardIconComponent,
     ValueLoadingOrNsComponent,
-    AddCommentTextareaComponent
+    AddCommentTextareaComponent,
+    LeftRightNavigationArrowsComponent
   ],
   templateUrl: './bill-detail-page.component.html',
   styleUrl: './bill-detail-page.component.scss'
@@ -78,6 +85,8 @@ export class BillDetailPageComponent {
   editDocumentDescriptionDialogVisible = false;
   editedDocument: BillDocument = {};
   private dragCounter = 0;
+  submissionNavigation: LeftRightNavigation | undefined;
+  navigationIndex: NavigationIndex | undefined;
 
   constructor(
     private billWsService: BillWsService,
@@ -87,21 +96,63 @@ export class BillDetailPageComponent {
     private layoutService: LayoutService,
     private router: Router,
     private validationService: ValidationService,
-    private toastMessageService: ToastMessageService
+    private toastMessageService: ToastMessageService,
+    private submissionService: SubmissionWsService,
   ) {
   }
 
   async ngOnInit() {
     try {
-      await this.layoutService.withPageLoading(async () => {
-        const billId = await this.activatedRoute.snapshot.params['billId'];
-        this.bill = await this.billWsService.getBill(billId);
-        await this.loadBillDocuments();
-        await this.loadBillComments();
+      combineLatest([
+        this.activatedRoute.params,
+        this.activatedRoute.queryParams
+      ]).subscribe(async ([params, queryParams]) => {
+        await this.layoutService.withPageLoading(async () => {
+          const submissionViewActivated = queryParams['submissionView'] === 'true';
+          this.bill = await this.billWsService.getBill(params['billId']);
+          if (submissionViewActivated && this.bill.submissionId) {
+            await this.updateSubmissionNavigation();
+          }
+          await this.loadBillDocuments();
+          await this.loadBillComments();
+        });
       });
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
+  }
+
+  async updateSubmissionNavigation() {
+    const submission = await this.submissionService.getSubmission(this.bill.submissionId!);
+    const billsIds = submission.bills.map(bill => bill.id!);
+
+    if (billsIds.length === 1) {
+      return;
+    }
+
+    const currentBillIndex = billsIds.findIndex(value => value === this.bill.id);
+
+    this.submissionNavigation = this.buildRouterLinks(billsIds, currentBillIndex);
+    this.navigationIndex = {
+      currentPage: currentBillIndex + 1,
+      totalPages: billsIds.length
+    }
+  }
+
+  private buildRouterLinks(billsIds: string[], currentBillIndex: number): LeftRightNavigation {
+    const isFirst = currentBillIndex === 0;
+    const isLast = currentBillIndex === billsIds.length - 1;
+
+    const previousBillId = !isFirst ? billsIds[currentBillIndex - 1] : undefined;
+    const nextBillId = !isLast ? billsIds[currentBillIndex + 1] : undefined;
+
+    const buildLink = (id: string) => `/bill/${id}`;
+    const queryParams = {submissionView: true};
+
+    return {
+      leftRouterLink: previousBillId ? {link: buildLink(previousBillId), queryParams: queryParams} : undefined,
+      rightRouterLink: nextBillId ? {link: buildLink(nextBillId), queryParams: queryParams} : undefined,
+    };
   }
 
   async loadBillDocuments() {

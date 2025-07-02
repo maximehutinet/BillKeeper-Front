@@ -76,6 +76,9 @@ export class BillsTableComponent {
   @Output()
   onDelete: EventEmitter<Bill> = new EventEmitter();
 
+  @Input()
+  submissionViewParamActive = false;
+
   private buildTableRows(bills: Bill[]) {
     this.tableRows = bills.map(bill => {
       return {
