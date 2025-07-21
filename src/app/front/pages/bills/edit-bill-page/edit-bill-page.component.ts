@@ -24,6 +24,7 @@ import {
   TopBarWithBackButtonComponent
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
 import {AutoComplete, AutoCompleteCompleteEvent} from 'primeng/autocomplete';
+import {billStatusToString} from '../../../../services/utils';
 
 @Component({
   selector: 'app-edit-bill-page',
@@ -51,13 +52,7 @@ export class EditBillPageComponent {
   bill: Bill = { }
   documents: BillDocument[] = [];
   form!: FormGroup;
-  statusOptions: {name: string, billStatus: EnumDropdownOption}[] = [
-    {name: "To file", billStatus: {value: BillStatus.TO_FILE}},
-    {name: "Filed", billStatus: {value: BillStatus.FILED}},
-    {name: "Reimbursement in progress", billStatus: {value: BillStatus.REIMBURSEMENT_IN_PROGRESS}},
-    {name: "Reimbursed", billStatus: {value: BillStatus.REIMBURSED}},
-    {name: "Rejected", billStatus: {value: BillStatus.REJECTED}}
-  ];
+  statusOptions: {name: string, billStatus: EnumDropdownOption}[] = [];
   currencyOptions: {name: string, currency: EnumDropdownOption}[] = [
     {name: "CHF", currency: {value: Currency.CHF}},
     {name: "EURO", currency: {value: Currency.EURO}}
@@ -93,6 +88,7 @@ export class EditBillPageComponent {
             value: this.bill.currency
           }
         }
+        this.buildStatusOptions();
         const beneficiaries = await this.beneficiaryWSService.getAllBeneficiaries();
         this.buildBeneficiaryOptions(beneficiaries);
         this.buildForm();
@@ -100,6 +96,15 @@ export class EditBillPageComponent {
     } catch (e) {
       this.toastMessageService.displayError(e);
     }
+  }
+
+  private buildStatusOptions() {
+    Object.values(BillStatus).forEach(status => {
+      this.statusOptions.push({
+        name: billStatusToString(status),
+        billStatus: {value: status}
+      })
+    });
   }
 
   private buildBeneficiaryOptions(beneficiaries: Beneficiary[]) {

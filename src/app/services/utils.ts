@@ -3,6 +3,8 @@ import {InsuranceSubmissionWithBills, SubmissionStatus} from './billkeeper-ws/su
 
 export function billStatusToString(status: BillStatus | undefined): string {
   switch (status) {
+    case BillStatus.TO_PAY:
+      return "To pay";
     case BillStatus.TO_FILE:
       return "To file";
     case BillStatus.FILED:
@@ -20,6 +22,8 @@ export function billStatusToString(status: BillStatus | undefined): string {
 
 export function billStatusBadge(status: BillStatus | undefined): "info" | "success" | "warn" | "danger" | "secondary" | "contrast" | "help" | "primary" {
   switch (status) {
+    case BillStatus.TO_PAY:
+      return "danger";
     case BillStatus.TO_FILE:
       return "warn";
     case BillStatus.FILED:

@@ -23,6 +23,7 @@ export enum Currency {
 }
 
 export enum BillStatus {
+  TO_PAY = "TO_PAY",
   TO_FILE = "TO_FILE",
   FILED = "FILED",
   REIMBURSEMENT_IN_PROGRESS = "REIMBURSEMENT_IN_PROGRESS",

@@ -8,7 +8,6 @@ import {billStatusToString} from '../../../../services/utils';
 import {NgIf} from '@angular/common';
 import {Observable, Subscription} from 'rxjs';
 import {Button} from 'primeng/button';
-import {Checkbox} from 'primeng/checkbox';
 
 @Component({
   selector: 'app-bills-filter',
@@ -16,8 +15,7 @@ import {Checkbox} from 'primeng/checkbox';
     MultiSelect,
     FormsModule,
     NgIf,
-    Button,
-    Checkbox
+    Button
   ],
   templateUrl: './bills-filter.component.html',
   styleUrl: './bills-filter.component.scss'
@@ -29,10 +27,10 @@ export class BillsFilterComponent {
 
   statusOptions: StatusSelectOption[] = [];
   selectedStatus: StatusSelectOption[] = [];
-  showBillsToPayOnly = false;
 
   private _bills: Bill[] = [];
   private resetFiltersSubscription!: Subscription;
+  private initialStatusFilters: BillStatus[] = [BillStatus.TO_PAY, BillStatus.TO_FILE];
 
   @Input()
   set bills(value: Bill[]) {
@@ -105,18 +103,19 @@ export class BillsFilterComponent {
   }
 
   private initSelectedFilters() {
-    if (this.statusOptionsContainsStatus(this.statusOptions, BillStatus.TO_FILE)) {
-      this.selectedStatus.push({
-        name: billStatusToString(BillStatus.TO_FILE),
-        status: {value: BillStatus.TO_FILE}
-      });
-      this.onSelectChange();
-    }
+    this.initialStatusFilters.forEach(status => {
+      if (this.statusOptionsContainsStatus(this.statusOptions, status)) {
+        this.selectedStatus.push({
+          name: billStatusToString(status),
+          status: {value: status}
+        });
+        this.onSelectChange();
+      }
+    });
   }
 
   onSelectChange() {
     const filteredBills = this._bills
-      .filter(bill => this.showBillsToPayOnly ? !bill.paidDateTime : true)
       .filter(bill => this.billHasSelectedBeneficiary(bill))
       .filter(bill => this.billHasSelectedStatus(bill));
     this.billsChange.emit(filteredBills);
