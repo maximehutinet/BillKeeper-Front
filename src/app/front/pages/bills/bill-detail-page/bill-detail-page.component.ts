@@ -37,7 +37,11 @@ import {
   LeftRightNavigationArrowsComponent
 } from '../../../components/commun/left-right-navigation-arrows/left-right-navigation-arrows.component';
 import {SubmissionWsService} from '../../../../services/billkeeper-ws/submission/submission-ws.service';
-import {LeftRightNavigation, NavigationIndex} from '../../../components/commun/left-right-navigation-arrows/model';
+import {
+  LeftRightNavigation,
+  NavigationIndex,
+  NavigationLink
+} from '../../../components/commun/left-right-navigation-arrows/model';
 import {combineLatest} from 'rxjs';
 
 @Component({
@@ -87,6 +91,7 @@ export class BillDetailPageComponent {
   private dragCounter = 0;
   submissionNavigation: LeftRightNavigation | undefined;
   navigationIndex: NavigationIndex | undefined;
+  validateLink: NavigationLink | undefined;
 
   constructor(
     private billWsService: BillWsService,
@@ -137,6 +142,7 @@ export class BillDetailPageComponent {
       currentPage: currentBillIndex + 1,
       totalPages: billsIds.length
     }
+    this.validateLink = { link: `/submissions/${submission.id}`, queryParams: {} }
   }
 
   private buildRouterLinks(billsIds: string[], currentBillIndex: number): LeftRightNavigation {

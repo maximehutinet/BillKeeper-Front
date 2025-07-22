@@ -8,22 +8,25 @@
     align-items: center;
     width: 15rem;
 
-    .arrow-button {
+    .round-button {
       padding: 1rem;
       border-radius: 50%;
-      background-color: var(--app-dark-grey-color);
       cursor: pointer;
 
       &.invisible {
         visibility: hidden;
       }
 
-      &:hover {
-        background-color: var(--app-black-color);
-      }
-
       i {
         color: var(--app-white-color);
+      }
+    }
+
+    .arrow-button {
+      background-color: var(--app-dark-grey-color);
+
+      &:hover {
+        background-color: var(--app-black-color);
       }
     }
   }

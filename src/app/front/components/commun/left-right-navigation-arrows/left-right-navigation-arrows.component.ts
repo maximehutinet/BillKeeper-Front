@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
-import {LeftRightNavigation, NavigationIndex} from './model';
+import {LeftRightNavigation, NavigationIndex, NavigationLink} from './model';
 
 @Component({
   selector: 'app-left-right-navigation-arrows',
@@ -19,5 +19,8 @@ export class LeftRightNavigationArrowsComponent {
 
   @Input()
   navigationIndex: NavigationIndex | undefined;
+
+  @Input()
+  validateLink: NavigationLink | undefined;
 
 }
