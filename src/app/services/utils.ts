@@ -7,6 +7,8 @@ export function billStatusToString(status: BillStatus | undefined): string {
       return "To pay";
     case BillStatus.TO_FILE:
       return "To file";
+    case BillStatus.FILING_IN_PROGRESS:
+      return "Filing in progress";
     case BillStatus.FILED:
       return "Filed";
     case BillStatus.REIMBURSEMENT_IN_PROGRESS:
@@ -20,12 +22,14 @@ export function billStatusToString(status: BillStatus | undefined): string {
   }
 }
 
-export function billStatusBadge(status: BillStatus | undefined): "info" | "success" | "warn" | "danger" | "secondary" | "contrast" | "help" | "primary" {
+export function billStatusBadge(status: BillStatus | undefined): "info" | "success" | "warn" | "danger" | "secondary" | "contrast" {
   switch (status) {
     case BillStatus.TO_PAY:
       return "danger";
     case BillStatus.TO_FILE:
       return "warn";
+    case BillStatus.FILING_IN_PROGRESS:
+      return "secondary";
     case BillStatus.FILED:
       return "info";
     case BillStatus.REIMBURSEMENT_IN_PROGRESS:
@@ -50,7 +54,7 @@ export function submissionStatusToString(status: SubmissionStatus): string {
   }
 }
 
-export function submissionStatusBadge(status: SubmissionStatus): "info" | "success" | "warn" | "danger" | "secondary" | "contrast" | "help" | "primary" {
+export function submissionStatusBadge(status: SubmissionStatus): "info" | "success" | "warn" | "danger" | "secondary" | "contrast" {
   switch (status) {
     case SubmissionStatus.OPEN:
       return "info";
