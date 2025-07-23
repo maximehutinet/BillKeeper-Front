@@ -3,7 +3,6 @@ import {Button} from "primeng/button";
 import {Dialog} from "primeng/dialog";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputText} from "primeng/inputtext";
-import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-edit-email-dialog',
@@ -12,7 +11,6 @@ import {NgIf} from '@angular/common';
     Dialog,
     FormsModule,
     InputText,
-    NgIf,
     ReactiveFormsModule
   ],
   templateUrl: './edit-email-dialog.component.html',

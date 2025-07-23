@@ -6,7 +6,6 @@ import {TopBarComponent} from '../../../components/layout/top-bar/top-bar.compon
 import {Fieldset} from 'primeng/fieldset';
 import {User} from '../../../../services/billkeeper-ws/user/model';
 import {ToastMessageService} from '../../../../services/toast-message.service';
-import {NgForOf, NgIf} from '@angular/common';
 import {Button} from 'primeng/button';
 import {LayoutService} from '../../../../services/layout.service';
 import {Avatar} from 'primeng/avatar';
@@ -25,11 +24,9 @@ import {SuccessDialogComponent} from '../../../components/commun/success-dialog/
     ReactiveFormsModule,
     TopBarComponent,
     Fieldset,
-    NgIf,
     Button,
     Avatar,
     EditNameDialogComponent,
-    NgForOf,
     UserAvatarComponent,
     EditEmailDialogComponent,
     SuccessDialogComponent

@@ -4,7 +4,6 @@ import {ToastMessageService} from '../../../../services/toast-message.service';
 import {BillDocument} from '../../../../services/billkeeper-ws/document/model';
 import {MainLayoutComponent} from '../../../layouts/main-layout/main-layout.component';
 import {DocumentCardComponent} from '../../../components/documents/document-card/document-card.component';
-import {NgForOf} from '@angular/common';
 import {
   DocumentViewerDialogComponent
 } from '../../../components/documents/document-viewer-dialog/document-viewer-dialog.component';
@@ -22,7 +21,6 @@ import {TopBarComponent} from '../../../components/layout/top-bar/top-bar.compon
   imports: [
     MainLayoutComponent,
     DocumentCardComponent,
-    NgForOf,
     DocumentViewerDialogComponent,
     LinkDocumentToBillDialogComponent,
     TopBarComponent

@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {InsuranceSubmissionWithBills, SubmissionStatus} from '../../../../services/billkeeper-ws/submission/model';
-import {NgIf} from '@angular/common';
 import {StatusSelectOption} from '../../bills/bills-filter/model';
 import {submissionStatusToString} from '../../../../services/utils';
 import {MultiSelect} from 'primeng/multiselect';
@@ -9,7 +8,6 @@ import {FormsModule} from '@angular/forms';
 @Component({
   selector: 'app-submissions-filter',
   imports: [
-    NgIf,
     MultiSelect,
     FormsModule
   ],

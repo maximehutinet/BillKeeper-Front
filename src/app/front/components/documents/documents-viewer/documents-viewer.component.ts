@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BillDocument} from '../../../../services/billkeeper-ws/document/model';
 import {Button} from 'primeng/button';
-import {NgIf} from '@angular/common';
 import {PDFSource, PdfViewerModule} from 'ng2-pdf-viewer';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
 import {AuthService} from '../../../../services/auth/auth.service';
@@ -11,7 +10,6 @@ import {DocumentPdfViewerComponent} from '../document-pdf-viewer/document-pdf-vi
   selector: 'app-documents-viewer',
   imports: [
     Button,
-    NgIf,
     PdfViewerModule,
     Tab,
     TabList,

@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {Button} from "primeng/button";
-import {DropdownModule} from "primeng/dropdown";
 import {FloatLabel} from "primeng/floatlabel";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputText} from "primeng/inputtext";
 import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.component";
-import {Location, NgIf} from "@angular/common";
+import {Location} from "@angular/common";
 import {
   TopBarWithBackButtonComponent
 } from "../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component";
@@ -22,12 +21,10 @@ import {ActivatedRoute} from '@angular/router';
   selector: 'app-edit-submission-page',
   imports: [
     Button,
-    DropdownModule,
     FloatLabel,
     FormsModule,
     InputText,
     MainLayoutComponent,
-    NgIf,
     ReactiveFormsModule,
     TopBarWithBackButtonComponent
   ],

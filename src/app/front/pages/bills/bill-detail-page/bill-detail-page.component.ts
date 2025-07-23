@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {BillStatusBadgeComponent} from "../../../components/bills/bill-status-badge/bill-status-badge.component";
 import {Button} from "primeng/button";
 import {CommentComponent} from "../../../components/comments/comment/comment.component";
-import {CurrencyPipe, DatePipe, NgForOf, NgIf} from "@angular/common";
+import {CurrencyPipe, DatePipe} from "@angular/common";
 import {DocumentsViewerComponent} from "../../../components/documents/documents-viewer/documents-viewer.component";
 import {
   EditCommentDialogComponent
@@ -58,8 +58,6 @@ import {combineLatest} from 'rxjs';
     Fieldset,
     FormsModule,
     MainLayoutComponent,
-    NgForOf,
-    NgIf,
     RouterLink,
     Tooltip,
     CurrencyPipe,

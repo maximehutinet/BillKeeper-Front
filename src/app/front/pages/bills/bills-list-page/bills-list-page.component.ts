@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {BillsFilterComponent} from "../../../components/bills/bills-filter/bills-filter.component";
 import {BillsTableComponent} from "../../../components/bills/bills-table/bills-table.component";
 import {Button} from "primeng/button";
 import {EditNameDialogComponent} from "../../../components/commun/edit-name-dialog/edit-name-dialog.component";
 import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.component";
-import {NgIf} from "@angular/common";
 import {Bill, BillStatus} from '../../../../services/billkeeper-ws/bill/model';
 import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
 import {DocumentWsService} from '../../../../services/billkeeper-ws/document/document-ws.service';
@@ -25,7 +24,6 @@ import {ValidationService} from '../../../../services/validation.service';
     Button,
     EditNameDialogComponent,
     MainLayoutComponent,
-    NgIf,
     TopBarComponent
   ],
   templateUrl: './bills-list-page.component.html',

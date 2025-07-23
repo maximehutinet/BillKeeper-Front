@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Button} from "primeng/button";
 import {Checkbox} from "primeng/checkbox";
-import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
+import {CurrencyPipe, DatePipe} from "@angular/common";
 import {TableModule} from "primeng/table";
 import {Bill, BillStatus, ParsingJobStatus} from "../../../../services/billkeeper-ws/bill/model";
 import {RouterLink} from '@angular/router';
@@ -18,7 +18,6 @@ import {Menu} from 'primeng/menu';
     Button,
     Checkbox,
     DatePipe,
-    NgIf,
     TableModule,
     RouterLink,
     BillStatusBadgeComponent,
@@ -121,7 +120,7 @@ export class BillsTableComponent {
         command: () => this.onMarkBillAsReimbursed.emit(bill)
       });
     }
-    if (this.displayDeleteButton) {
+    if (this.displayDeleteButton && !bill.submissionId) {
       items.push({
         label: 'Delete',
         icon: 'pi pi-trash',

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {FullScreenLoadingComponent} from '../../components/commun/full-screen-loading/full-screen-loading.component';
-import {NgIf} from '@angular/common';
 import {LayoutService} from '../../../services/layout.service';
 import {ValidationDialogComponent} from '../../components/commun/validation-dialog/validation-dialog.component';
 import {ToastMessageComponent} from '../../components/commun/toast-message/toast-message.component';
@@ -13,7 +12,6 @@ import {LocalStorageKeys} from '../../../services/model/commun';
   selector: 'app-main-layout',
   imports: [
     FullScreenLoadingComponent,
-    NgIf,
     ValidationDialogComponent,
     ToastMessageComponent,
     SideMenuComponent,

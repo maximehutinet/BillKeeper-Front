@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Dialog} from "primeng/dialog";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import {BillStatusBadgeComponent} from '../../bills/bill-status-badge/bill-status-badge.component';
-import {CurrencyPipe, DatePipe, NgIf} from '@angular/common';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 import {TableModule} from 'primeng/table';
 import {Bill} from '../../../../services/billkeeper-ws/bill/model';
 import {RadioButton} from 'primeng/radiobutton';
@@ -17,7 +17,6 @@ import {Button} from 'primeng/button';
     BillStatusBadgeComponent,
     CurrencyPipe,
     DatePipe,
-    NgIf,
     TableModule,
     RadioButton,
     FormsModule,

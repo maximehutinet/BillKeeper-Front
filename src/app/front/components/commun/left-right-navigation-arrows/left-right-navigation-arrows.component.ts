@@ -1,12 +1,10 @@
 import {Component, Input} from '@angular/core';
-import {NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {LeftRightNavigation, NavigationIndex, NavigationLink} from './model';
 
 @Component({
   selector: 'app-left-right-navigation-arrows',
   imports: [
-    NgIf,
     RouterLink
   ],
   templateUrl: './left-right-navigation-arrows.component.html',

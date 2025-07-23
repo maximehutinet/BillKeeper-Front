@@ -7,27 +7,37 @@
     }
   </div>
   <div id="menu-content">
-    <div class="menu-group" *ngFor="let item of items">
-      <div class="menu-group-title">
-        <span>{{ item.label | uppercase }}</span>
-      </div>
-      <div class="menu-group-items">
-        <div class="menu-item label-with-icon" [class.active]="isCurrentPage(child.link)" *ngFor="let child of item.items" [routerLink]="child.link">
-          <i *ngIf="child.icon" [class]="child.icon"></i>
-          <span class="menu-text">{{ child.label }}</span>
-          <span *ngIf="child.badgeValue && child.badgeValue > 0">
-            <p-badge [value]="child.badgeValue" severity="danger" badgeSize="small"></p-badge>
-          </span>
+    @for (item of items; track item) {
+      <div class="menu-group">
+        <div class="menu-group-title">
+          <span>{{ item.label | uppercase }}</span>
+        </div>
+        <div class="menu-group-items">
+          @for (child of item.items; track child) {
+            <div class="menu-item label-with-icon" [class.active]="isCurrentPage(child.link)" [routerLink]="child.link">
+              @if (child.icon) {
+                <i [class]="child.icon"></i>
+              }
+
+              <span class="menu-text">{{ child.label }}</span>
+
+              @if (child.badgeValue && child.badgeValue > 0) {
+                <span>
+                <p-badge [value]="child.badgeValue" severity="danger" badgeSize="small"></p-badge>
+              </span>
+              }
+            </div>
+          }
         </div>
       </div>
-    </div>
+    }
   </div>
   <div id="menu-footer">
-    <p-toast />
-    <p-menu #menu [model]="profileItems" [popup]="true" />
+    <p-toast/>
+    <p-menu #menu [model]="profileItems" [popup]="true"/>
     <div id="log-out-button" (click)="menu.toggle($event)">
       <div id="user-detail">
-        <p-avatar [image]="userProfilePicture" size="normal" shape="circle" />
+        <p-avatar [image]="userProfilePicture" size="normal" shape="circle"/>
         <span class="menu-text">{{ userFirstname }}</span>
       </div>
     </div>

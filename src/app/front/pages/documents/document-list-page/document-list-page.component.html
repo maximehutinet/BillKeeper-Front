@@ -5,13 +5,14 @@
     </app-top-bar>
 
     <div id="documents-wrapper">
-      <app-document-card
-        *ngFor="let document of documents"
-        [document]="document"
-        (onSeeDocumentClick)="onSeeDocumentClick(document)"
-        (onLinkDocumentClick)="onLinkDocumentClick(document)"
-        (onDeleteDocumentClick)="onDeleteDocumentClick(document)"
-      ></app-document-card>
+      @for (document of documents; track document.id) {
+        <app-document-card
+          [document]="document"
+          (onSeeDocumentClick)="onSeeDocumentClick(document)"
+          (onLinkDocumentClick)="onLinkDocumentClick(document)"
+          (onDeleteDocumentClick)="onDeleteDocumentClick(document)"
+        ></app-document-card>
+      }
     </div>
 
     <app-document-viewer-dialog [(visible)]="documentDialogVisible" [document]="visibleDocument"></app-document-viewer-dialog>

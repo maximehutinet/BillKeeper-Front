@@ -29,7 +29,9 @@
         </app-value-loading-or-ns>
       </td>
       <td>
-        <p-badge *ngIf="row.submission.status" [value]="submissionStatusToString(row.submission.status)" [severity]="submissionStatusBadge(row.submission.status)" />
+        @if (row.submission.status) {
+          <p-badge [value]="submissionStatusToString(row.submission.status)" [severity]="submissionStatusBadge(row.submission.status)" />
+        }
       </td>
       <td>
         <p-menu #menu class="action-row-menu" [model]="row.menuItems" [popup]="true" appendTo="body"/>

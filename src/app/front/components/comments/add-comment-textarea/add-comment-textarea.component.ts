@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import {Button} from "primeng/button";
-import {NgIf, NgStyle} from "@angular/common";
+import {NgStyle} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Textarea} from "primeng/textarea";
 import {User} from '../../../../services/billkeeper-ws/user/model';
@@ -13,7 +13,6 @@ import {CommentWithTaggedUsers} from './model';
   selector: 'app-add-comment-textarea',
   imports: [
     Button,
-    NgIf,
     ReactiveFormsModule,
     Textarea,
     NgStyle,

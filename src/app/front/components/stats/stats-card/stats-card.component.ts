@@ -1,10 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {CurrencyPipe, NgIf} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-stats-card',
   imports: [
-    NgIf,
     CurrencyPipe
   ],
   templateUrl: './stats-card.component.html',

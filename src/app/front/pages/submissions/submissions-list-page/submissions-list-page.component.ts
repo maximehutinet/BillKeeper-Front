@@ -17,7 +17,6 @@ import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
-import {NgIf} from '@angular/common';
 import {EditNameDialogComponent} from '../../../components/commun/edit-name-dialog/edit-name-dialog.component';
 import {
   SubmissionsFilterComponent
@@ -35,7 +34,6 @@ import {
     InputIcon,
     InputText,
     FormsModule,
-    NgIf,
     EditNameDialogComponent,
     SubmissionsFilterComponent
   ],

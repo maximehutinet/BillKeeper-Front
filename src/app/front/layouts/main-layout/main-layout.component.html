@@ -11,5 +11,12 @@
 </div>
 <app-toast-message></app-toast-message>
 <app-validation-dialog></app-validation-dialog>
-<app-full-screen-loading *ngIf="layoutService.pageLoading"></app-full-screen-loading>
-<app-full-screen-focusing *ngIf="layoutService.pageFocusing"></app-full-screen-focusing>
+
+@if (layoutService.pageLoading) {
+  <app-full-screen-loading></app-full-screen-loading>
+}
+
+@if (layoutService.pageFocusing) {
+  <app-full-screen-focusing></app-full-screen-focusing>
+}
+

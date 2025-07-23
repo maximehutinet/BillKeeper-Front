@@ -4,7 +4,6 @@ import {SettingsWsService} from '../../../../services/billkeeper-ws/settings/set
 import {MessageType, ToastMessageService} from '../../../../services/toast-message.service';
 import {Settings} from '../../../../services/billkeeper-ws/settings/model';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgForOf, NgIf} from '@angular/common';
 import {FloatLabel} from 'primeng/floatlabel';
 import {TopBarComponent} from '../../../components/layout/top-bar/top-bar.component';
 import {Button} from 'primeng/button';
@@ -20,14 +19,12 @@ import {ValidationService} from '../../../../services/validation.service';
   imports: [
     MainLayoutComponent,
     FormsModule,
-    NgIf,
     FloatLabel,
     ReactiveFormsModule,
     TopBarComponent,
     Button,
     InputNumberModule,
     Fieldset,
-    NgForOf,
     EditNameDialogComponent,
   ],
   templateUrl: './settings-page.component.html',

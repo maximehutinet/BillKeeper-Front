@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgForOf, NgIf, UpperCasePipe} from '@angular/common';
+import {UpperCasePipe} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {MenuItem} from './model';
 import {MenuItem as PrimeMenuItem} from 'primeng/api';
@@ -16,8 +16,6 @@ import {UserWsService} from '../../../../services/billkeeper-ws/user/user-ws.ser
 @Component({
   selector: 'app-side-menu',
   imports: [
-    NgIf,
-    NgForOf,
     UpperCasePipe,
     Avatar,
     RouterLink,

@@ -8,7 +8,9 @@
       <i class="pi pi-arrow-left"></i>
     </div>
 
-    <span *ngIf="navigationIndex">{{ navigationIndex.currentPage + '/' + navigationIndex.totalPages }}</span>
+    @if (navigationIndex) {
+      <span>{{ navigationIndex.currentPage + '/' + navigationIndex.totalPages }}</span>
+    }
 
     <div [class.invisible]="!routerLinks?.rightRouterLink?.link"
          class="round-button arrow-button"

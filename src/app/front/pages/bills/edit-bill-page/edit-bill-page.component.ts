@@ -8,9 +8,8 @@ import {ToastMessageService} from '../../../../services/toast-message.service';
 import {BillWsService} from '../../../../services/billkeeper-ws/bill/bill-ws.service';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
-import {Location, NgIf} from '@angular/common';
+import {Location} from '@angular/common';
 import {InputNumberModule} from 'primeng/inputnumber';
-import {DropdownModule} from 'primeng/dropdown';
 import {InputMask} from 'primeng/inputmask';
 import {BeneficiaryWsService} from '../../../../services/billkeeper-ws/beneficiary/beneficiary-ws.service';
 import {EnumDropdownOption} from '../../../../services/model/commun';
@@ -25,6 +24,7 @@ import {
 } from '../../../components/layout/top-bar-with-back-button/top-bar-with-back-button.component';
 import {AutoComplete, AutoCompleteCompleteEvent} from 'primeng/autocomplete';
 import {billStatusToString} from '../../../../services/utils';
+import {Select} from 'primeng/select';
 
 @Component({
   selector: 'app-edit-bill-page',
@@ -35,14 +35,13 @@ import {billStatusToString} from '../../../../services/utils';
     FloatLabel,
     InputText,
     FormsModule,
-    NgIf,
     InputNumberModule,
-    DropdownModule,
     InputMask,
     DocumentsViewerComponent,
     Fieldset,
     TopBarWithBackButtonComponent,
     AutoComplete,
+    Select,
   ],
   templateUrl: './edit-bill-page.component.html',
   styleUrl: './edit-bill-page.component.scss'

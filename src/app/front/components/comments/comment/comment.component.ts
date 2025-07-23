@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BillComment} from '../../../../services/billkeeper-ws/comment/model';
-import {DatePipe, NgIf} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {Button} from 'primeng/button';
 import {UserAvatarComponent} from '../../commun/user-avatar/user-avatar.component';
 import {UserDataService} from '../../../../services/user-data.service';
@@ -10,7 +10,6 @@ import {UserDataService} from '../../../../services/user-data.service';
   imports: [
     DatePipe,
     Button,
-    NgIf,
     UserAvatarComponent
   ],
   templateUrl: './comment.component.html',

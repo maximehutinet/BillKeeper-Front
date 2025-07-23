@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {BillsTableComponent} from "../../../components/bills/bills-table/bills-table.component";
-import {CurrencyPipe, DatePipe, Location, NgIf} from "@angular/common";
+import {CurrencyPipe, DatePipe, Location} from "@angular/common";
 import {Fieldset} from "primeng/fieldset";
 import {MainLayoutComponent} from "../../../layouts/main-layout/main-layout.component";
 import {
@@ -43,7 +43,6 @@ import {EditNameDialogComponent} from '../../../components/commun/edit-name-dial
     Button,
     Tooltip,
     TopBarWithBackButtonComponent,
-    NgIf,
     RouterLink,
     CopyToClipboardIconComponent,
     Badge,

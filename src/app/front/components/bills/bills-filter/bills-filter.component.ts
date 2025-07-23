@@ -5,7 +5,6 @@ import {BeneficiarySelectOption, StatusSelectOption} from './model';
 import {MultiSelect} from 'primeng/multiselect';
 import {FormsModule} from '@angular/forms';
 import {billStatusToString} from '../../../../services/utils';
-import {NgIf} from '@angular/common';
 import {Observable, Subscription} from 'rxjs';
 import {Button} from 'primeng/button';
 
@@ -14,7 +13,6 @@ import {Button} from 'primeng/button';
   imports: [
     MultiSelect,
     FormsModule,
-    NgIf,
     Button
   ],
   templateUrl: './bills-filter.component.html',

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BillsTableComponent} from "../../bills/bills-table/bills-table.component";
 import {Button} from "primeng/button";
-import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
+import {CurrencyPipe, DatePipe} from "@angular/common";
 import {Ripple} from "primeng/ripple";
 import {TableModule} from "primeng/table";
 import {InsuranceSubmissionWithBills} from '../../../../services/billkeeper-ws/submission/model';
@@ -31,8 +31,7 @@ import {Badge} from 'primeng/badge';
     RouterLink,
     ValueLoadingOrNsComponent,
     Menu,
-    Badge,
-    NgIf
+    Badge
   ],
   templateUrl: './submissions-table.component.html',
   styleUrl: './submissions-table.component.scss'
@@ -113,12 +112,14 @@ export class SubmissionsTableComponent {
         command: () => this.onMarkAsReimbursed.emit(submission)
       });
     }
-    items.push({
-      label: 'Delete',
-      icon: 'pi pi-trash',
-      command: () => this.onDeleteSubmission.emit(submission),
-      styleClass: 'menu-warning'
-    });
+    if (!submission.eclaimId) {
+      items.push({
+        label: 'Delete',
+        icon: 'pi pi-trash',
+        command: () => this.onDeleteSubmission.emit(submission),
+        styleClass: 'menu-warning'
+      });
+    }
     return items;
   }
 }

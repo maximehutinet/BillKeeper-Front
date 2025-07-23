@@ -4,31 +4,32 @@
       <h1 left>Submissions</h1>
 
       <div id="submissions-filters-wrapper" right>
-        <app-submissions-filter
-          *ngIf="submissions.length > 0"
-          [submissions]="submissions"
-          (submissionsChange)="onSubmissionFilterChange($event)"
-        ></app-submissions-filter>
-        <p-floatlabel *ngIf="submissions.length > 0" id="search-bar">
-          <p-iconfield>
-            <p-inputicon class="pi pi-search" />
-            <input pInputText id="input-search" [(ngModel)]="searchKeyword" (keyup)="applySearchFilter()" autocomplete="off" />
-          </p-iconfield>
-          <label for="input-search">Search</label>
-        </p-floatlabel>
+        @if (submissions.length > 0) {
+          <app-submissions-filter
+            [submissions]="submissions"
+            (submissionsChange)="onSubmissionFilterChange($event)"
+          ></app-submissions-filter>
+          <p-floatlabel id="search-bar">
+            <p-iconfield>
+              <p-inputicon class="pi pi-search" />
+              <input pInputText id="input-search" [(ngModel)]="searchKeyword" (keyup)="applySearchFilter()" autocomplete="off" />
+            </p-iconfield>
+            <label for="input-search">Search</label>
+          </p-floatlabel>
+        }
       </div>
-
     </app-top-bar>
 
-    <app-submissions-table
-      *ngIf="submissions.length > 0"
-      [submissions]="filteredSubmissions"
-      (onMarkAsPaid)="onMarkSubmissionAsPaid($event)"
-      (onMarkAsReimbursementInProgress)="onMarkSubmissionAsReimbursementInProgress($event)"
-      (onMarkAsReimbursed)="onMarkSubmissionAsReimbursed($event)"
-      (onDeleteSubmission)="onDeleteSubmission($event)"
-      (onAddEclaimId)="onAddEclaimId($event)"
-    ></app-submissions-table>
+    @if (submissions.length > 0) {
+      <app-submissions-table
+        [submissions]="filteredSubmissions"
+        (onMarkAsPaid)="onMarkSubmissionAsPaid($event)"
+        (onMarkAsReimbursementInProgress)="onMarkSubmissionAsReimbursementInProgress($event)"
+        (onMarkAsReimbursed)="onMarkSubmissionAsReimbursed($event)"
+        (onDeleteSubmission)="onDeleteSubmission($event)"
+        (onAddEclaimId)="onAddEclaimId($event)"
+      ></app-submissions-table>
+    }
 
     <app-edit-name-dialog
       header="eClaimId"

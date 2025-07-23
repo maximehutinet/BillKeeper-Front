@@ -2,30 +2,39 @@
   <ng-container main-content>
     <app-top-bar-with-back-button>
       <div right class="buttons-wrapper">
-        <p-button *ngIf="!submission.eclaimId"
-                  (click)="showAddEclaimIdDialog = true"
-                  label="Add eClaimId"
-                  icon="pi pi-plus"
-                  severity="info"
-        />
-        <p-button
-          *ngIf="markAsPaidSubmissionButtonVisible(submission)"
-          severity="help"
-          icon="pi pi-dollar"
-          (onClick)="onMarkSubmissionAsPaid()"
-          pTooltip="Mark as paid"
-          showDelay="500"
-          hideDelay="300"></p-button>
-        <p-button
-          *ngIf="markAsReimbursedSubmissionButtonVisible(submission)"
-          severity="success"
-          icon="pi pi-check-circle"
-          (onClick)="onMarkSubmissionAsReimbursed()"
-          pTooltip="Mark as reimbursed"
-          showDelay="500"
-          hideDelay="300"></p-button>
+        @if (!submission.eclaimId) {
+          <p-button (click)="showAddEclaimIdDialog = true"
+                    label="Add eClaimId"
+                    icon="pi pi-plus"
+                    severity="info"
+          ></p-button>
+        }
+
+        @if (markAsPaidSubmissionButtonVisible(submission)) {
+          <p-button
+            severity="help"
+            icon="pi pi-dollar"
+            (onClick)="onMarkSubmissionAsPaid()"
+            pTooltip="Mark as paid"
+            showDelay="500"
+            hideDelay="300"></p-button>
+        }
+
+        @if (markAsReimbursedSubmissionButtonVisible(submission)) {
+          <p-button
+            severity="success"
+            icon="pi pi-check-circle"
+            (onClick)="onMarkSubmissionAsReimbursed()"
+            pTooltip="Mark as reimbursed"
+            showDelay="500"
+            hideDelay="300"></p-button>
+        }
+
         <p-button severity="info" icon="pi pi-pencil" [routerLink]="'/submissions/' + submission.id + '/edit'"></p-button>
-        <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteSubmission()"></p-button>
+
+        @if (!submission.eclaimId) {
+          <p-button severity="danger" icon="pi pi-trash" (onClick)="onDeleteSubmission()"></p-button>
+        }
       </div>
     </app-top-bar-with-back-button>
 
@@ -34,12 +43,19 @@
         <div class="card-entry">
           <label>Name: </label>
           <span>{{ submission.name }}</span>
-          <app-copy-to-clipboard-icon *ngIf="submission.name" [value]="submission.name"></app-copy-to-clipboard-icon>
+
+          @if (submission.name) {
+            <app-copy-to-clipboard-icon [value]="submission.name"></app-copy-to-clipboard-icon>
+          }
         </div>
-        <div *ngIf="submission.totalUsdAmount" class="card-entry">
-          <label>Amount: </label>
-          <span>{{ submission.totalUsdAmount | currency }}</span>
-        </div>
+
+        @if (submission.totalUsdAmount) {
+          <div class="card-entry">
+            <label>Amount: </label>
+            <span>{{ submission.totalUsdAmount | currency }}</span>
+          </div>
+        }
+
         <div class="card-entry">
           <label>eClaimId: </label>
           <span>
@@ -47,16 +63,22 @@
               {{ submission.eclaimId }}
             </app-value-loading-or-ns>
           </span>
-          <app-copy-to-clipboard-icon *ngIf="submission.eclaimId" [value]="submission.eclaimId"></app-copy-to-clipboard-icon>
+          @if (submission.eclaimId) {
+            <app-copy-to-clipboard-icon [value]="submission.eclaimId"></app-copy-to-clipboard-icon>
+          }
         </div>
         <div class="card-entry">
           <label>Status: </label>
-          <p-badge *ngIf="submission.status" [value]="submissionStatusToString(submission.status)" [severity]="submissionStatusBadge(submission.status)" />
+          @if (submission.status) {
+            <p-badge [value]="submissionStatusToString(submission.status)" [severity]="submissionStatusBadge(submission.status)" />
+          }
         </div>
         <div class="card-entry">
           <label>Created on: </label>
           <span>{{ submission.dateTime | date: 'longDate' }}</span>
-          <span *ngIf="submission.user">by {{ submission.user.firstname }}</span>
+          @if (submission.user) {
+            <span>by {{ submission.user.firstname }}</span>
+          }
         </div>
       </div>
     </p-fieldset>
