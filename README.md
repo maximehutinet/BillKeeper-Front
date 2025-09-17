@@ -19,8 +19,8 @@ Bill Keeper is a medical bill management tool that integrates a web-app 💻 and
 
 The project has been built using:
 
-* Angular 20 for the frontend
-* Spring Boot 3.5.3 for the backend ([Backend repository](https://github.com/maximehutinet/BillKeeper-Backend))
-* Swift and SwiftUI for the iOS app ([iOS repository](https://github.com/maximehutinet/BillKeeper-iOS))
-* Keycloak for the authentication
+* [Angular 20](https://angular.dev/) with TypeScript 5.8.3 for the frontend
+* [Spring Boot 3.5.3](https://spring.io/projects/spring-boot) with Java 21 for the backend ([Backend repository](https://github.com/maximehutinet/BillKeeper-Backend))
+* [Swift and SwiftUI](https://developer.apple.com/swiftui/) for the iOS app ([iOS repository](https://github.com/maximehutinet/BillKeeper-iOS))
+* [Keycloak](https://www.keycloak.org/) for the authentication
 
